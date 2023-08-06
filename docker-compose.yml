@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  dev:
+    build:
+      context: ./
+      dockerfile: ./src/docker/dockerfile.dev
+    ports:
+      - '5173:5173'
+    volumes:
+      - /app/node_modules
+      - ./:/app
+    profiles: ['dev']
+  prod:
+    build:
+      context: ./
+      dockerfile: ./src/docker/dockerfile.prod
+    ports:
+      - '8080:80'
+    profiles: ['prod']
