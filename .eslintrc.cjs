@@ -29,6 +29,8 @@ module.exports = {
     semi: 'off',
     'no-extra-semi': 'error',
     'no-shadow': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
   },
   settings: {
     'import/resolver': {
