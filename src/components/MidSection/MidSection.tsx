@@ -1,3 +1,3 @@
-interface MiddleSectionProps {}
+interface MidSectionProps {}
 
-export default function MiddleSection({}: MiddleSectionProps) {}
+export default function MidSection({}: MidSectionProps) {}
