@@ -9,11 +9,11 @@ export default function TabButton({ text, active, onClick }: TabButtonProps) {
     <>
       <div
         onClick={onClick}
-        className="w-full px-1 mt-1 text-center rounded-t-lg hover:bg-gray-200"
+        className="mt-1 w-full rounded-t-lg px-1 text-center hover:bg-gray-200"
       >
         <div
           style={{ borderBottomColor: active ? 'blue' : '' }}
-          className="flex items-center justify-center py-2 text-xs font-semibold  border-b-2"
+          className="flex items-center justify-center border-b-2 py-2 text-xs  font-semibold"
         >
           {text}
         </div>
