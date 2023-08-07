@@ -10,7 +10,7 @@ interface RightSectionProps {}
 export default function RightSection({}: RightSectionProps) {
   return (
     <div>
-      <div className="relative hidden h-full bg-white border-r border-gray-300 shadow-xl md:block transform transition-all duration-500 ease-in-out w-96">
+      <div className="bg-white relative h-full md:block w-96 border-r border-gray-300 shadow-xl transform transition-all duration-500 ease-in-out">
         <RightHeader />
         <ChatNav />
         <ChatList />

@@ -1,19 +1,23 @@
 interface TabButtonProps {
   text: string
   active: boolean
+  onClick: (e: React.MouseEvent<HTMLDivElement>) => void
 }
 
-export default function TabButton({ text, active }: TabButtonProps) {
+export default function TabButton({ text, active, onClick }: TabButtonProps) {
   return (
     <>
-      <li className="flex-auto px-1 mx-1 -mb-px text-center rounded-t-lg cursor-pointer last:mr-0 hover:bg-gray-200">
-        <a
-          style={{ borderBottomColor: active ? 'blue' : 'none'}}
-          className="flex items-center justify-center block py-2 text-xs font-semibold leading-normal tracking-wide border-b-2"
+      <div
+        onClick={onClick}
+        className="w-full px-1 mt-1 text-center rounded-t-lg hover:bg-gray-200"
+      >
+        <div
+          style={{ borderBottomColor: active ? 'blue' : '' }}
+          className="flex items-center justify-center py-2 text-xs font-semibold  border-b-2"
         >
           {text}
-        </a>
-      </li>
+        </div>
+      </div>
     </>
   )
 }
