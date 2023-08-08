@@ -1,6 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer utilities {
+  .ltr {
+    direction: ltr;
+  }
+  .rtl {
+    direction: rtl;
+  }
+}
+@layer components {
+  .tail-left:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 100%;
+    transform: translate(-100%, -100%);
+    width: 0;
+    height: 0;
+    border: 1em solid transparent;
+    border-right-color: #ffffff;
+    border-left: 0;
+    border-bottom: 0;
+  }
 
+  .tail-right:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 100%;
+    transform: translate(100%, -100%);
+    width: 0;
+    height: 0;
+    border: 1em solid transparent;
+    border-left-color: #ffffff;
+    border-right: 0;
+    border-bottom: 0;
+  }
+}
 :root {
 }
