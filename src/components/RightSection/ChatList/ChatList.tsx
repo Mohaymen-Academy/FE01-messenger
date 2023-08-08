@@ -1,12 +1,12 @@
-import ChatBox from '../ChatBox'
 import img from '@/assets/download.jpeg'
+import ChatBox from '../ChatBox'
 
 interface ChatListProps {}
 
 export default function ChatList({}: ChatListProps) {
   return (
-    <div className="relative mt-2 mb-4 overflow-x-hidden h-[calc(100%_-_40px)] overflow-y-auto scrolling-touch lg:max-h-sm scrollbar-w-2 scrollbar-track-gray-lighter scrollbar-thumb-rounded scrollbar-thumb-gray">
-      <div className="flex flex-col w-full h-screen px-2">
+    <div className="relative mb-4 mt-2 h-[calc(100%_-_40px)] overflow-x-hidden">
+      <div className="flex h-screen w-full flex-col overflow-y-auto px-2">
         <ChatBox
           unReadMessage={3}
           seen={true}
