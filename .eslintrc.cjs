@@ -27,8 +27,18 @@ module.exports = {
       { allowConstantExport: true },
     ],
     semi: 'off',
+    '@typescript-eslint/semi': ['error', 'never'],
     'no-extra-semi': 'error',
     'no-shadow': 'off',
+    'import/extensions': ['error', 'never'],
+    'no-restricted-exports': [
+      'error',
+      {
+        restrictedNamedExports: [],
+      },
+    ],
+    'no-param-reassign': 'off',
+    eqeqeq: 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
   },
