@@ -1,24 +1,24 @@
-import { FaPen } from 'react-icons/fa'
-import IconButton from '../Common/IconButton/IconButton'
-import ChatList from './ChatList'
-import ChatNav from './ChatNav'
-import RightHeader from './RightHeader/RightHeader'
-import FabButton from '../Common/FabButton/FabButton'
+import { useState } from 'react'
+import ChatsColumn from './ChatsColumn/ChatsColumn'
+import SettingsColumn from './SettingsColumn/SettingsColumn'
 
 interface RightSectionProps {}
 
 export default function RightSection({}: RightSectionProps) {
+  const [settingsActivate, setSettingsActivate] = useState(false)
+  const navMenuHandler = () => {
+    setSettingsActivate(true)
+  }
+  const closeSettingsHandler = () => {
+    setSettingsActivate(false)
+  }
   return (
-    <div>
-      <div className="relative h-full w-96 border-r border-gray-300 bg-white shadow-xl transition-all duration-500 ease-in-out md:block">
-        <RightHeader />
-        <ChatNav />
-        <ChatList />
-        <FabButton
-          primary={true}
-          icon={<FaPen className="h-5 w-5 fill-current text-white" />}
-        />
-      </div>
+    <div className="relative  h-full w-96">
+      <ChatsColumn onClick={navMenuHandler} isActive={!settingsActivate} />
+      <SettingsColumn
+        onClick={closeSettingsHandler}
+        isActive={settingsActivate}
+      />
     </div>
   )
 }

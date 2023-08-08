@@ -5,7 +5,7 @@ interface DetailsColumnProps {}
 
 export default function DetailsColumn({}: DetailsColumnProps) {
   return (
-    <div className="overflow-y-auto bg-gray-100">
+    <div className="absolute left-0 top-0 overflow-y-auto bg-gray-100">
       <Info />
       <MediaList />
     </div>
