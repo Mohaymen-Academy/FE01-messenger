@@ -13,7 +13,7 @@ export default function MainPage({}: MainPageProps) {
   }
   return (
     <div
-      className="relative flex h-screen w-full overflow-hidden bg-gray-200 antialiased"
+      className="relative flex h-screen w-full overflow-hidden bg-gray-200 antialiased dark:bg-black"
       style={{ backgroundImage: `url(${wallpaper})` }}
     >
       <RightSection />
