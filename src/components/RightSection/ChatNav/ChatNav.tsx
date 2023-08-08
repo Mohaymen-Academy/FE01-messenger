@@ -1,25 +1,30 @@
-import TabButton from '@/components/Common/TabButton'
 import { useState } from 'react'
+import TabButton from '@/components/Common/TabButton'
 
 interface ChatNavProps {}
 
 export default function ChatNav({}: ChatNavProps) {
-  const [activate, setActivation] = useState([false, false, false, false])
+  const [activate, setActivation] = useState(new Array(5))
+  const changeIndexActivate = (index: number) => {
+    const s = new Array(5).fill(false)
+    s[index] = true
+    setActivation(s)
+  }
   const changeActive = (e: React.MouseEvent<HTMLDivElement>) => {
     // @ts-ignore
     const title = e.target.innerText
     if (title === 'تمامی گفتگوها') {
-      setActivation([true, false, false, false])
+      changeIndexActivate(0)
     } else if (title === 'شخصی') {
-      setActivation([false, true, false, false])
+      changeIndexActivate(1)
     } else if (title === 'گروه ها') {
-      setActivation([false, false, true, false])
+      changeIndexActivate(2)
     } else if (title === 'کانال ها') {
-      setActivation([false, false, false, true])
+      changeIndexActivate(3)
     }
   }
   return (
-    <nav className="flex flex-row items-center px-2 border-b">
+    <nav className="flex flex-row items-center border-b px-2">
       <TabButton
         onClick={changeActive}
         text="تمامی گفتگوها"

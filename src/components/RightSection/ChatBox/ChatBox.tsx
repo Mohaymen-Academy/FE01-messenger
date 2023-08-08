@@ -22,7 +22,7 @@ export default function ChatBox({
   img,
 }: ChatBoxProps) {
   return (
-    <div className="flex flex-nowrap items-center rounded-lg py-[10px] pl-2 text-black  hover:bg-gray-200">
+    <div className="flex items-center rounded-lg py-[10px] pl-2 text-black  hover:bg-gray-200">
       <div className="flex w-full justify-between">
         <div className="relative ml-2 mr-3 flex h-12 w-12 items-center justify-center rounded-full bg-blue-500 text-xl font-semibold text-white">
           <div
