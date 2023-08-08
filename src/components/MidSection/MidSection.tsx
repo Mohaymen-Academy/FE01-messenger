@@ -6,7 +6,7 @@ interface MidSectionProps {}
 
 export default function MidSection({}: MidSectionProps) {
   return (
-    <div className="relative z-10 flex flex-1 flex-col">
+    <div className="relative flex w-0 flex-1 flex-col">
       <ChatHeader />
       <div className="inset-0 flex flex-1 flex-col overflow-hidden bg-transparent bg-cover bg-bottom">
         <Conversation />
