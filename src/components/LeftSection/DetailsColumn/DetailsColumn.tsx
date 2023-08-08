@@ -1,12 +1,14 @@
 import Info from './Info'
 import MediaList from './MediaList/MediaList'
 
-interface DetailsColumnProps {}
+interface DetailsColumnProps {
+  onClick: () => void
+}
 
-export default function DetailsColumn({}: DetailsColumnProps) {
+export default function DetailsColumn({ onClick }: DetailsColumnProps) {
   return (
-    <div className="absolute left-0 top-0 overflow-y-auto bg-gray-100">
-      <Info />
+    <div className="absolute overflow-y-auto bg-gray-100">
+      <Info onClick={onClick} />
       <MediaList />
     </div>
   )

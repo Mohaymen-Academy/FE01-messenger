@@ -34,7 +34,7 @@ export default function SettingsColumn({
       />
       <InfoRow
         title="Bio"
-        subTitle="bio"
+        subTitle="بیوگرافی"
         icon={<BsInfoCircle className="h-6 w-6 fill-current text-gray-600" />}
       />
     </div>
