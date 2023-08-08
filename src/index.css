@@ -1,43 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer utilities {
+  .ltr {
+    direction: ltr;
+  }
+  .rtl {
+    direction: rtl;
+  }
+}
 @layer components {
-  .tail-left {
-    --r: 25px; /* the radius */
-    --t: 30px; /* the size of the tail */
-    --d: 0%; /* left */
-    padding: calc(2 * var(--r) / 3);
-    -webkit-mask: radial-gradient(var(--t) at var(--d) 0, #0000 98%, #000 102%)
-        var(--d) 100% / calc(100% - var(--r)) var(--t) no-repeat,
-      conic-gradient(at var(--r) var(--r), #000 75%, #0000 0)
-        calc(var(--r) / -2) calc(var(--r) / -2) padding-box,
-      radial-gradient(50% 50%, #000 98%, #0000 101%) 0 0 / var(--r) var(--r)
-        space padding-box;
-    background: white border-box;
-    color: #fff;
-
-    border-left: var(--t) solid #0000;
-    margin-right: var(--t);
-    place-self: start;
+  .tail-left:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 100%;
+    transform: translate(-100%, -100%);
+    width: 0;
+    height: 0;
+    border: 1em solid transparent;
+    border-right-color: #ffffff;
+    border-left: 0;
+    border-bottom: 0;
   }
 
-  .tail-right {
-    --r: 25px; /* the radius */
-    --t: 30px; /* the size of the tail */
-    --d: 100%; /* right */
-    padding: 10px calc(2 * var(--r) / 3);
-    -webkit-mask: radial-gradient(var(--t) at var(--d) 0, #0000 98%, #000 102%)
-        var(--d) 100% / calc(100% - var(--r)) var(--t) no-repeat,
-      conic-gradient(at var(--r) var(--r), #000 75%, #0000 0)
-        calc(var(--r) / -2) calc(var(--r) / -2) padding-box,
-      radial-gradient(50% 50%, #000 98%, #0000 101%) 0 0 / var(--r) var(--r)
-        space padding-box;
-    background: white border-box;
-    color: #fff;
-    border-right: var(--t) solid #0000;
-    margin-left: var(--t);
-
-    place-self: end;
+  .tail-right:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 100%;
+    transform: translate(100%, -100%);
+    width: 0;
+    height: 0;
+    border: 1em solid transparent;
+    border-left-color: #ffffff;
+    border-right: 0;
+    border-bottom: 0;
   }
 }
 :root {
