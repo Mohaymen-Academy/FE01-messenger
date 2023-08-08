@@ -6,7 +6,7 @@ import ChatNav from '../ChatNav'
 import RightHeader from '../RightHeader'
 
 interface ChatsColumnProps {
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+  onClick: () => void
   isActive: boolean
 }
 
@@ -22,10 +22,12 @@ export default function ChatsColumn({ onClick, isActive }: ChatsColumnProps) {
         <RightHeader onClick={onClick} />
         <ChatNav />
         <ChatList />
-        <FabButton
-          primary={true}
-          icon={<FaPen className="h-5 w-5 fill-current text-white" />}
-        />
+        <div className="sticky bottom-3 left-5 z-40 mb-6 ml-4 flex flex-row justify-end">
+          <FabButton
+            primary={true}
+            icon={<FaPen className="h-5 w-5 fill-current text-white" />}
+          />
+        </div>
       </div>
     </div>
   )
