@@ -1,10 +1,4 @@
 import { useState } from 'react'
-import IconButton from '../Common/IconButton/IconButton'
-import TabButton from '../Common/TabButton/TabButton'
-import ChatBox from './ChatBox'
-import ChatList from './ChatList'
-import ChatNav from './ChatNav'
-import RightHeader from './RightHeader/RightHeader'
 import ChatsColumn from './ChatsColumn/ChatsColumn'
 import SettingsColumn from './SettingsColumn/SettingsColumn'
 

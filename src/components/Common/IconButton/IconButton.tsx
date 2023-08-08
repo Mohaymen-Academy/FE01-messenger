@@ -1,5 +1,4 @@
-import { FaPen } from 'react-icons/fa'
-
+import { ReactElement } from 'react'
 
 interface IconButtonProps {
   icon: ReactElement
