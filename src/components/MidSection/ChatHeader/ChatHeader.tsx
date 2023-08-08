@@ -1,11 +1,6 @@
-import {
-  BsBell,
-  BsMenuApp,
-  BsSearch,
-  BsThreeDots,
-  BsThreeDotsVertical,
-} from 'react-icons/bs'
+import { BsSearch, BsThreeDotsVertical } from 'react-icons/bs'
 import IconButton from '@/components/Common/IconButton/IconButton'
+import mrHashemi from '@/assets/download.jpeg'
 
 interface ChatHeaderProps {}
 
@@ -13,10 +8,12 @@ export default function ChatHeader({}: ChatHeaderProps) {
   return (
     <div className="z-20 flex w-full shrink-0 grow-0 items-center border-b bg-white pr-3">
       <div className="flex w-full justify-between">
-        <div className="w-12 h-12 mx-4 my-2 bg-blue-500 bg-center bg-no-repeat bg-cover rounded-full cursor-pointer bg[url(https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=200&q=50)]"></div>
+        <div className="mx-4 my-2 h-12 w-12 cursor-pointer rounded-full bg-blue-500 bg-cover bg-center bg-no-repeat">
+          <img className="rounded-full" src={mrHashemi} />
+        </div>
         <div className="flex flex-1 cursor-pointer flex-col justify-center overflow-hidden">
           <div className="overflow-hidden whitespace-nowrap text-base font-medium leading-tight text-gray-600">
-            Karen
+            Mr. Hashemi
           </div>
           <div className="overflow-hidden whitespace-nowrap text-sm font-medium leading-tight text-gray-600">
             Online
