@@ -1,4 +1,3 @@
-import { json } from 'stream/consumers'
 import { FiAtSign, FiLogOut } from 'react-icons/fi'
 import {
   BsTelephone,
@@ -48,8 +47,8 @@ export default function SettingsColumn({
   }
   return (
     <div
-      style={{ right: isActive ? '0px' : '-384px' }}
-      className="absolute right-[-384px] z-10 h-full w-96 border-r border-gray-300 bg-primary/100 shadow-xl transition-all duration-500 ease-in-out"
+      style={{ transform: isActive ? '' : 'translateX(100%)' }}
+      className="absolute z-10 h-full w-full overflow-x-hidden bg-primary/100 shadow-xl transition-all duration-500 ease-in-out max-sm:w-full"
     >
       <SettingsHeader onClick={onClick} />
       <InfoImage onlineStatus="آنلاین" infoName="Ahmad" img={img} />

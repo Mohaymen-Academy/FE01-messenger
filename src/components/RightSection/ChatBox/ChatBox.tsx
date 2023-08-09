@@ -9,6 +9,7 @@ interface ChatBoxProps {
   seen: boolean
   seenEnable: boolean
   img?: string
+  onClick: () => void
 }
 
 export default function ChatBox({
@@ -20,9 +21,13 @@ export default function ChatBox({
   seen,
   seenEnable,
   img,
+  onClick,
 }: ChatBoxProps) {
   return (
-    <div className="flex items-center rounded-lg py-[10px] pl-2 text-secondary/100  hover:bg-chatBoxHover">
+    <div
+      className="flex items-center rounded-lg py-[10px] pl-2 text-secondary/100  hover:bg-chatBoxHover"
+      onClick={onClick}
+    >
       <div className="flex w-full justify-between">
         <div className="relative ml-2 mr-3 flex h-12 w-12 items-center justify-center rounded-full bg-blue-500 text-xl font-semibold text-white">
           <div

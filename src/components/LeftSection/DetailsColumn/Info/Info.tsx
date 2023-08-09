@@ -11,7 +11,7 @@ interface InfoProps {
 
 export default function Info({ onClick }: InfoProps) {
   return (
-    <div className="right-0 flex w-96 flex-col  border-gray-300 bg-primary/100 pb-4 xl:block">
+    <div className="right-0 flex w-96 flex-col border-gray-300 bg-primary/100 pb-4 max-sm:w-full xl:block">
       <InfoHeader onClick={onClick} />
       <InfoImage onlineStatus="آنلاین" infoName="Ahmad" img={img} />
       <InfoRow

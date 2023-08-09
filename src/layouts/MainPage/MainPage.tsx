@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import wallpaper from '@/assets/wp.jpg'
+import { RightSectionProvider } from '@/components/RightSection/context/responsiveContext'
 import LeftSection from '../../components/LeftSection/LeftSection'
 import MidSection from '../../components/MidSection'
 import RightSection from '../../components/RightSection/RightSection'
@@ -16,7 +17,9 @@ export default function MainPage({}: MainPageProps) {
       className="relative flex h-screen w-full overflow-hidden bg-gray-200 antialiased"
       style={{ backgroundImage: `url(${wallpaper})` }}
     >
-      <RightSection />
+      <RightSectionProvider>
+        <RightSection />
+      </RightSectionProvider>
       <MidSection />
       <LeftSection onClick={closeLeftSection} active={activeDetails} />
     </div>
