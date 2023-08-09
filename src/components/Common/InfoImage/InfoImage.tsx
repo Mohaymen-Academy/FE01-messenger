@@ -11,12 +11,16 @@ export default function InfoImage({
 }: InfoImageProps) {
   return (
     <div className="relative mb-4 flex justify-center">
-      <div className="block w-full content-center overflow-hidden text-center focus:outline-none">
+      <div className="block h-[370px] w-full content-center overflow-hidden text-center focus:outline-none">
         <div className="hidden h-[370px] w-full items-center justify-center bg-blue-500 text-7xl text-white">
           <p>{infoName.charAt(0)}</p>
         </div>
         <img
-          className="h-[370px] w-full content-center object-cover"
+          className="absolute max-h-[370px] w-full content-center object-cover blur-md max-sm:object-cover"
+          src={img}
+        />
+        <img
+          className="absolute z-10 max-h-[370px] w-full content-center object-cover max-sm:object-contain"
           src={img}
         />
       </div>
