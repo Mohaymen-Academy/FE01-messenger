@@ -18,9 +18,6 @@ export default function SettingsHeader({ onClick }: SettingsHeaderProps) {
       <IconButton
         icon={<BiPencil className="h-6 w-6 fill-current text-gray-600" />}
       />
-      <IconButton
-        icon={<AiOutlineMore className="h-6 w-6 fill-current text-gray-600" />}
-      />
     </div>
   )
 }

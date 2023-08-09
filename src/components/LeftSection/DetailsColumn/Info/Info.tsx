@@ -5,12 +5,14 @@ import InfoHeader from '../InfoHeader'
 import InfoImage from '../../../Common/InfoImage'
 import InfoRow from '../../../Common/InfoRow'
 
-interface InfoProps {}
+interface InfoProps {
+  onClick: () => void
+}
 
-export default function Info({}: InfoProps) {
+export default function Info({ onClick }: InfoProps) {
   return (
-    <div className="right-0 flex w-96 flex-col border-l border-gray-300 bg-white pb-4 xl:block">
-      <InfoHeader />
+    <div className="right-0 flex w-96 flex-col  border-gray-300 bg-primary/100 pb-4 xl:block">
+      <InfoHeader onClick={onClick} />
       <InfoImage onlineStatus="آنلاین" infoName="Ahmad" img={img} />
       <InfoRow
         title="mr_Hashemi@"
@@ -24,7 +26,7 @@ export default function Info({}: InfoProps) {
       />
       <InfoRow
         title="Bio"
-        subTitle="bio"
+        subTitle="بیوگرافی"
         icon={<BsInfoCircle className="h-6 w-6 fill-current text-gray-600" />}
       />
     </div>

@@ -8,10 +8,10 @@ interface CheckmarkProps {
 export default function Checkmark({ mode }: CheckmarkProps) {
   switch (mode) {
     case 'loading':
-      return <BsClock className="h-3 w-3 fill-current text-gray-500" />
+      return <BsClock className="h-3 w-3 fill-current text-secondary" />
     case 'sent':
       return (
-        <IoCheckmarkOutline className="h-4 w-4 fill-current text-gray-500" />
+        <IoCheckmarkOutline className="h-4 w-4 fill-current text-secondary" />
       )
     case 'seen':
       return (

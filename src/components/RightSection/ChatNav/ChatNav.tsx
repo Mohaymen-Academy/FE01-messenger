@@ -24,7 +24,7 @@ export default function ChatNav({}: ChatNavProps) {
     }
   }
   return (
-    <nav className="flex flex-row items-center border-b px-2">
+    <nav className="flex flex-row items-center  bg-primary/100 px-2">
       <TabButton
         onClick={changeActive}
         text="تمامی گفتگوها"
