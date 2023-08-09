@@ -13,7 +13,7 @@ export default function RightSection({}: RightSectionProps) {
     setSettingsActivate(false)
   }
   return (
-    <div className="relative  h-full w-96  overflow-hidden">
+    <div className="relative  h-full w-96  overflow-hidden bg-primary/100 text-primary/100">
       <ChatsColumn onClick={navMenuHandler} isActive={!settingsActivate} />
       <SettingsColumn
         onClick={closeSettingsHandler}

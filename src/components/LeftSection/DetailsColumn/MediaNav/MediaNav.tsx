@@ -28,7 +28,7 @@ export default function MediaNav({}: MediaNavProps) {
     }
   }
   return (
-    <div className="mb-1 flex select-none list-none flex-row items-center justify-around border-b px-3">
+    <div className="mb-1 flex select-none list-none flex-row items-center justify-around px-3">
       <TabButton onClick={changeActive} text="رسانه" active={activate[0]} />
       <TabButton onClick={changeActive} text="فایل ها" active={activate[1]} />
       <TabButton onClick={changeActive} text="لینک" active={activate[2]} />

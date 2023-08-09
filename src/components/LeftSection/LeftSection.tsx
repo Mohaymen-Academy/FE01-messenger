@@ -12,7 +12,7 @@ export default function LeftSection({ active, onClick }: LeftSectionProps) {
   return (
     <div
       className={classNames(
-        'h-screen w-96 overflow-x-hidden',
+        'h-screen w-96 overflow-x-hidden bg-primary/100',
         active
           ? ''
           : 'hidden left-[-384px] transition-all duration-1000 ease-in-out'

@@ -1,3 +1,4 @@
+import { json } from 'stream/consumers'
 import { FiAtSign, FiLogOut } from 'react-icons/fi'
 import {
   BsTelephone,
@@ -6,7 +7,7 @@ import {
   BsSun,
 } from 'react-icons/bs'
 import classNames from 'classnames'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import InfoImage from '@/components/Common/InfoImage'
 import InfoRow from '@/components/Common/InfoRow'
 import img from '@/assets/download.jpeg'
@@ -21,23 +22,34 @@ export default function SettingsColumn({
   isActive,
   onClick,
 }: SettingsColumnProps) {
-  const [darkmodeActive, setDarkModeActive] = useState(
-    !!localStorage.getItem('them')
-  )
+  const [darkmodeActive, setDarkModeActive] = useState(true)
+
+  useEffect(() => {
+    const darkMode = localStorage.getItem('theme')
+    if (darkMode === 'true') {
+      setDarkModeActive(true)
+      document.documentElement.classList.add('dark')
+    }
+    if (darkMode === 'false') {
+      setDarkModeActive(false)
+    }
+  }, [])
+
   const darkModeHandler = () => {
     if (!darkmodeActive) {
       document.documentElement.classList.add('dark')
-      localStorage.setItem('theme', 'dark')
+      localStorage.setItem('theme', 'true')
+      setDarkModeActive(true)
     } else {
       document.documentElement.classList.remove('dark')
-      localStorage.setItem('theme', 'light')
+      localStorage.setItem('theme', 'false')
+      setDarkModeActive(false)
     }
-    setDarkModeActive(!darkmodeActive)
   }
   return (
     <div
       style={{ right: isActive ? '0px' : '-384px' }}
-      className="absolute right-[-384px] z-10 h-full w-96 border-r border-gray-300 bg-white shadow-xl transition-all duration-500 ease-in-out"
+      className="absolute right-[-384px] z-10 h-full w-96 border-r border-gray-300 bg-primary/100 shadow-xl transition-all duration-500 ease-in-out"
     >
       <SettingsHeader onClick={onClick} />
       <InfoImage onlineStatus="آنلاین" infoName="Ahmad" img={img} />
@@ -69,7 +81,7 @@ export default function SettingsColumn({
           />
           <BsSun
             className={classNames(
-              'h-6 w-6',
+              'h-6 w-6 text-secondary',
               darkmodeActive ? 'flex' : 'hidden'
             )}
           />
@@ -79,7 +91,7 @@ export default function SettingsColumn({
         </div>
       </div>
 
-      <button className="mr-3 mt-2 flex w-[355px] justify-start gap-2 rounded-lg py-2 pr-1 text-red-500 transition-all duration-300 ease-in-out hover:bg-red-500 hover:text-white">
+      <button className="mr-3 mt-2 flex w-[355px] justify-start gap-2 rounded-lg py-2 pr-1 text-red-500 transition-all duration-300 ease-in-out hover:bg-logout hover:text-white">
         <div className="fill-current">
           <FiLogOut className="h-7 w-7" />
         </div>

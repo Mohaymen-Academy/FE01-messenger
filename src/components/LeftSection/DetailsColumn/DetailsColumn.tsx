@@ -7,7 +7,7 @@ interface DetailsColumnProps {
 
 export default function DetailsColumn({ onClick }: DetailsColumnProps) {
   return (
-    <div className="absolute overflow-y-auto bg-gray-100">
+    <div className="absolute overflow-y-auto bg-primary/100">
       <Info onClick={onClick} />
       <MediaList />
     </div>

@@ -22,7 +22,7 @@ export default function ChatBox({
   img,
 }: ChatBoxProps) {
   return (
-    <div className="flex items-center rounded-lg py-[10px] pl-2 text-black  hover:bg-gray-200">
+    <div className="flex items-center rounded-lg py-[10px] pl-2 text-secondary/100  hover:bg-chatBoxHover">
       <div className="flex w-full justify-between">
         <div className="relative ml-2 mr-3 flex h-12 w-12 items-center justify-center rounded-full bg-blue-500 text-xl font-semibold text-white">
           <div
@@ -45,7 +45,9 @@ export default function ChatBox({
         </div>
         <div className="min-w-0 flex-1 items-center">
           <div className="mb-1 flex justify-between">
-            <h2 className="text-sm font-semibold text-black">{senderName}</h2>
+            <h2 className="text-sm font-semibold text-primary/100">
+              {senderName}
+            </h2>
             <div
               style={{ display: seenEnable ? 'flex' : 'none' }}
               className="w-full justify-end"
@@ -59,7 +61,7 @@ export default function ChatBox({
                 className="ml-2 h-4 w-4 fill-current"
               />
             </div>
-            <span className="ml-1 text-xs font-medium text-gray-600">
+            <span className="ml-1 text-xs font-medium text-secondary/100">
               {lastMessageTime}
             </span>
           </div>

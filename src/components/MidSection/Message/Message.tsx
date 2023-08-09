@@ -17,9 +17,9 @@ export default function Message({ self, message, mode, time }: MessageProps) {
   return (
     <div
       className={classNames(
-        'my-2 max-w-[400px] relative text-black flex flex-row bg-white px-2 rounded-t-lg ',
+        'my-2 max-w-[400px] relative text-primary flex flex-row bg-primary px-2 rounded-t-lg ',
         self
-          ? 'self-start rounded-l-lg tail-right rtl'
+          ? 'self-start rounded-l-lg tail-right rtl bg-primary'
           : 'self-end rounded-r-lg tail-left ltr',
         oneLiner ? 'w-fit' : 'w-full'
       )}
@@ -27,13 +27,15 @@ export default function Message({ self, message, mode, time }: MessageProps) {
       <span
         className={classNames(
           'max-w-full py-1',
-          oneLiner ? 'w-fit whitespace-nowrap' : 'break-words w-0 grow'
+          oneLiner
+            ? 'w-fit whitespace-nowrap'
+            : 'break-words w-0 grow bg-primary'
         )}
         dir="auto"
       >
         {message}
       </span>
-      <div className="mx-1 flex grow-0 flex-row items-end justify-end gap-1 pb-1 text-xs text-gray-400">
+      <div className="mx-1 flex grow-0 flex-row items-end justify-end gap-1 bg-primary pb-1 text-xs text-secondary">
         {time}
         <div className={classNames(self ? 'left-2' : 'right-2')}>
           <Checkmark mode={mode} />
