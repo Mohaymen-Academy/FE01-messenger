@@ -1,10 +1,10 @@
 import { Input } from '@material-tailwind/react'
 
-interface LoginInputProps {
+interface TextInputProps {
   palceHolder: string
 }
 
-export default function LoginInput({ palceHolder }: LoginInputProps) {
+export default function TextInput({ palceHolder }: TextInputProps) {
   return (
     <div className="relative h-11 w-full min-w-[200px]">
       <input

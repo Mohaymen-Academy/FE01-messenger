@@ -1,6 +1,6 @@
 import { BiArrowBack } from 'react-icons/bi'
 import logo from '@/assets/Telegram_logo.svg.webp'
-import LoginInput from '../Common/LoginInput/LoginInput'
+import LoginInput from '../Common/TextInput/TextInput'
 
 interface SignUpProps {
   active: boolean

@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import ChatsColumn from './ChatsColumn/ChatsColumn'
 import SettingsColumn from './SettingsColumn/SettingsColumn'
 import { RightSectionOpen } from './context/responsiveContext'
+import EditSettingsColumn from './ProfileSettingsColumn'
 
 interface RightSectionProps {}
 
@@ -28,6 +29,7 @@ export default function RightSection({}: RightSectionProps) {
         onClick={closeSettingsHandler}
         isActive={settingsActivate}
       />
+      <EditSettingsColumn isActive={true} />
     </div>
   )
 }

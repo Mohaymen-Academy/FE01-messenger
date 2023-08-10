@@ -1,5 +1,5 @@
 import { BiArrowBack } from 'react-icons/bi'
-import LoginInput from '../Common/LoginInput/LoginInput'
+import LoginInput from '../Common/TextInput/TextInput'
 
 interface LoginProps {
   active: boolean
