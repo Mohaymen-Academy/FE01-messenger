@@ -24,6 +24,11 @@ export default function LoginPage({}: LoginPageProps) {
       setLoginLandingActive(false)
     }
   }
+  const backtoLoginLandingPage = () => {
+    setLoginActive(false)
+      setSignUpActive(false)
+      setLoginLandingActive(true)
+  }
   return (
     <div
       style={{
@@ -39,8 +44,8 @@ export default function LoginPage({}: LoginPageProps) {
             onClick={loginLandingHandler}
             active={loginLandingActive}
           />
-          <Login active={loginActive} />
-          <SignUp active={signUpActive} />
+          <Login onClick={backtoLoginLandingPage} active={loginActive} />
+          <SignUp onClick={backtoLoginLandingPage} active={signUpActive} />
         </div>
       </div>
     </div>

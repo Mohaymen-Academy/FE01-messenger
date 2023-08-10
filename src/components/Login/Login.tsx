@@ -3,20 +3,23 @@ import LoginInput from '../Common/LoginInput/LoginInput'
 
 interface LoginProps {
   active: boolean
-  onClick: (e) => void
+  onClick: () => void
 }
 
-export default function Login({ active , onClick }: LoginProps) {
+export default function Login({ active, onClick }: LoginProps) {
   return (
     <div
       style={{ display: active ? '' : 'none' }}
-      className="absolute right-[8%] top-0 mt-8 w-[80%] rounded-lg bg-white shadow sm:right-[15%] sm:max-w-md md:right-[25%] lg:right-[34%]"
+      className="absolute right-[8%] top-0 mt-8 w-[80%] rounded-lg bg-white shadow transition-all duration-700 ease-in sm:right-[15%] sm:max-w-md md:right-[25%] lg:right-[34%]"
     >
       <div className="w-full space-y-4 px-4 pb-6 pt-3 sm:px-8 md:space-y-6">
         <div className="flex flex-col">
-          <div onClick={onClick} className="flex w-full justify-end text-sm font-light text-gray-500">
+          <button
+            onClick={onClick}
+            className="flex w-full justify-end text-sm font-light text-gray-500"
+          >
             <BiArrowBack className="h-6 w-10" />
-          </div>
+          </button>
           <h1 className="text-center text-xl font-bold text-gray-900  md:text-2xl">
             پیامرسان هرمس
           </h1>
@@ -32,7 +35,7 @@ export default function Login({ active , onClick }: LoginProps) {
                   className="h-4 w-4 rounded border border-gray-300 bg-gray-50"
                 />
               </div>
-              <div className="mr-3 text-sm">
+              <div className="mr-2 text-sm">
                 <label className="text-gray-500">مرا به خاطر بسپار</label>
               </div>
             </div>

@@ -4,19 +4,23 @@ import LoginInput from '../Common/LoginInput/LoginInput'
 
 interface SignUpProps {
   active: boolean
+  onClick: () => void
 }
 
-export default function SignUp({ active }: SignUpProps) {
+export default function SignUp({ active, onClick }: SignUpProps) {
   return (
     <div
       style={{ display: active ? 'flex' : 'none' }}
-      className="absolute right-[8%] top-0 flex w-[80%] items-center justify-center rounded-lg bg-white px-4 shadow sm:right-[15%] sm:max-w-md md:right-[25%] lg:right-[34%]"
+      className="absolute right-[8%] top-0 flex w-[80%] items-center justify-center rounded-lg bg-white shadow transition-all duration-700 ease-in sm:right-[15%] sm:max-w-md md:right-[25%] lg:right-[34%]"
     >
-      <div className="w-full space-y-4 px-4 pb-6 pt-3 sm:px-8 md:space-y-6">
+      <div className="w-full space-y-4 px-4 pb-6 pt-3 sm:px-6 md:space-y-6">
         <div className="flex flex-col">
-          <div className="flex w-full justify-end text-sm font-light text-gray-500">
+          <button
+            onClick={onClick}
+            className="flex w-full justify-end text-sm font-light text-gray-500"
+          >
             <BiArrowBack className="h-6 w-10" />
-          </div>
+          </button>
           <h1 className="text-center text-xl font-bold text-gray-900  md:text-2xl">
             ثبت نام
           </h1>
