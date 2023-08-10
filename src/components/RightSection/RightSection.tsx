@@ -1,3 +1,4 @@
+import { createContext } from 'vm'
 import { useState, useContext } from 'react'
 import classNames from 'classnames'
 import ChatsColumn from './ChatsColumn/ChatsColumn'
@@ -9,7 +10,13 @@ interface RightSectionProps {}
 
 export default function RightSection({}: RightSectionProps) {
   const [settingsActivate, setSettingsActivate] = useState(false)
+
+  const openProfileSettings = () => {
+    console.log(123)
+  }
+
   const context = useContext(RightSectionOpen)
+  const openProfileSettingsContext = createContext(openProfileSettings)
 
   const navMenuHandler = () => {
     setSettingsActivate(true)
@@ -17,6 +24,7 @@ export default function RightSection({}: RightSectionProps) {
   const closeSettingsHandler = () => {
     setSettingsActivate(false)
   }
+
   return (
     <div
       className={classNames(
@@ -25,11 +33,13 @@ export default function RightSection({}: RightSectionProps) {
       )}
     >
       <ChatsColumn onClick={navMenuHandler} isActive={!settingsActivate} />
-      <SettingsColumn
-        onClick={closeSettingsHandler}
-        isActive={settingsActivate}
-      />
-      <EditSettingsColumn isActive={true} />
+      <openProfileSettingsContext.Provider value={openProfileSettings}>
+        <SettingsColumn
+          onClick={closeSettingsHandler}
+          isActive={settingsActivate}
+        />
+      </openProfileSettingsContext.Provider>
+      <EditSettingsColumn isActive={false} />
     </div>
   )
 }

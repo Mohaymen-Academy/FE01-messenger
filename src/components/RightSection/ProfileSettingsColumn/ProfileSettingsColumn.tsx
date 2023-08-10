@@ -34,12 +34,12 @@ export default function ProfileSettingsColumn({
           role="button"
           className="h-32 w-32 content-center overflow-hidden rounded-full p-1 text-center focus:outline-none"
         >
-          <div className="relative">
+          <div className="group relative">
             <img
-              className="h-full w-full content-center rounded-full border-2 border-gray-200 object-cover"
+              className="h-full w-full content-center rounded-full border-2 border-gray-200 object-cover blur-[2px] group-hover:blur-none"
               src={img}
             />
-            <div className="absolute right-7 top-7 transition-all duration-500 ease-in-out hover:right-5 hover:top-5">
+            <div className="absolute right-7 top-7 transition-all duration-500 ease-in-out hover:right-5 hover:top-5 ">
               <img
                 className="z-10 h-16 w-16 content-center object-cover transition-all duration-500 ease-in-out hover:h-20 hover:w-20"
                 src={camera}
