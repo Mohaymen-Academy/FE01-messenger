@@ -1,5 +1,7 @@
 import { BiArrowBack } from 'react-icons/bi'
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
+import { useRef, useState } from 'react'
+import classNames from 'classnames'
 import LoginInput from '../Common/TextInput/TextInput'
 
 interface SignUpProps {
@@ -19,15 +21,34 @@ export default function SignUp({ active, onClick }: SignUpProps) {
       passwordCheck: '',
     },
   })
+  const [passwordCheckValidate, setPasswordCheckValidate] = useState(true)
   const onSubmit: SubmitHandler<FieldValues> = data => {
-    console.log(1)
+    if (data.password !== data.passwordCheck) {
+      setPasswordCheckValidate(false)
+    } else {
+      setPasswordCheckValidate(true)
+    }
   }
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
   const emailRegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+  const btnRef = useRef(null)
+  const checkBoxRef = useRef(null)
+
+  const checkBoxChangeHandler = () => {
+    if (btnRef.current != null && checkBoxRef.current != null) {
+      btnRef.current.disabled = !checkBoxRef.current.checked
+      if (btnRef.current.disabled) {
+        btnRef.current.style.backgroundColor = 'red'
+      } else {
+        btnRef.current.style.backgroundColor = 'green'
+      }
+    }
+  }
   return (
     <div
       style={{ display: active ? 'flex' : 'none' }}
-      className="absolute right-[8%] top-0 flex w-[80%] items-center justify-center rounded-lg bg-white shadow transition-all duration-700 ease-in sm:right-[15%] sm:max-w-md md:right-[25%] lg:right-[34%]"
+      className="absolute right-[8%] top-0 flex w-[80%] items-center justify-center rounded-lg bg-white shadow transition-all duration-700 ease-in sm:right-[15%] sm:max-w-md md:right-[25%] xl:right-[34%]"
     >
       <div className="w-full space-y-4 px-4 pb-6 pt-4 sm:px-6 md:space-y-6">
         <div className="flex flex-col">
@@ -45,6 +66,14 @@ export default function SignUp({ active, onClick }: SignUpProps) {
           onSubmit={handleSubmit(onSubmit)}
           className="space-y-4 md:space-y-6"
         >
+          <div
+            className={classNames(
+              'w-full text-sm text-red-500',
+              passwordCheckValidate ? 'hidden' : 'flex'
+            )}
+          >
+            نام کاربری یا رمز عبور اشتباه است.
+          </div>
           <LoginInput
             formId="email"
             palceHolder="ایمیل"
@@ -74,8 +103,10 @@ export default function SignUp({ active, onClick }: SignUpProps) {
           <div className="flex items-start">
             <div className="flex h-5 items-center">
               <input
+                ref={checkBoxRef}
                 type="checkbox"
                 className="w-4 rounded border border-gray-300 bg-gray-50 dark:h-4 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
+                onChange={checkBoxChangeHandler}
               />
             </div>
             <div className="ml-3 text-sm">
@@ -88,8 +119,9 @@ export default function SignUp({ active, onClick }: SignUpProps) {
             </div>
           </div>
           <button
+            ref={btnRef}
             type="submit"
-            className="mb-4 w-full rounded-lg bg-blue-500 px-5 py-2.5  text-sm font-medium text-white focus:outline-none focus:ring-4"
+            className="mb-4 w-full rounded-lg bg-red-500 px-5 py-2.5  text-sm font-medium text-white focus:outline-none focus:ring-4"
           >
             ثبت نام
           </button>
