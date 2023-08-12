@@ -25,9 +25,11 @@ export default function LoginPage({}: LoginPageProps) {
     }
   }
   const backtoLoginLandingPage = () => {
-    setLoginActive(false)
+    setLoginLandingActive(true)
+    setTimeout(() => {
+      setLoginActive(false)
       setSignUpActive(false)
-      setLoginLandingActive(true)
+    }, 200)
   }
   return (
     <div

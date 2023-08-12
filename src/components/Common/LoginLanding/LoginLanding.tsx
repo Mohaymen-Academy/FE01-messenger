@@ -1,4 +1,4 @@
-import logo from '@/assets/Telegram_logo.svg.webp'
+import logo from '@/assets/logo.jpeg'
 
 interface LoginLandingProps {
   onClick: (e) => void
@@ -11,7 +11,7 @@ export default function LoginLanding({ onClick, active }: LoginLandingProps) {
       style={{ top: active ? '0' : '-440px' }}
       className="relative right-[2%] top-0 z-10 w-[90%] overflow-hidden rounded-lg bg-white shadow transition-all duration-300 ease-out sm:right-[13%] sm:w-[80%] sm:max-w-md md:right-[23.5%] lg:right-[33.5%]"
     >
-      <div className="mb-6 flex items-center justify-center text-2xl font-semibold text-gray-900">
+      <div className="my-6 flex items-center justify-center text-2xl font-semibold text-gray-900">
         <img src={logo} className="mt-4 h-36 w-36" alt="logo" />
       </div>
       <div className="flex flex-col items-center justify-center">

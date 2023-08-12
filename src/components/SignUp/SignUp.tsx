@@ -1,5 +1,5 @@
 import { BiArrowBack } from 'react-icons/bi'
-import logo from '@/assets/Telegram_logo.svg.webp'
+import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import LoginInput from '../Common/TextInput/TextInput'
 
 interface SignUpProps {
@@ -8,12 +8,24 @@ interface SignUpProps {
 }
 
 export default function SignUp({ active, onClick }: SignUpProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FieldValues>({
+    defaultValues: {
+      email: '',
+      password: '',
+      passwordCheck: '',
+    },
+  })
+  const onSubmit: SubmitHandler<FieldValues> = data => {}
   return (
     <div
       style={{ display: active ? 'flex' : 'none' }}
       className="absolute right-[8%] top-0 flex w-[80%] items-center justify-center rounded-lg bg-white shadow transition-all duration-700 ease-in sm:right-[15%] sm:max-w-md md:right-[25%] lg:right-[34%]"
     >
-      <div className="w-full space-y-4 px-4 pb-6 pt-3 sm:px-6 md:space-y-6">
+      <div className="w-full space-y-4 px-4 pb-6 pt-4 sm:px-6 md:space-y-6">
         <div className="flex flex-col">
           <button
             onClick={onClick}
@@ -25,10 +37,34 @@ export default function SignUp({ active, onClick }: SignUpProps) {
             ثبت نام
           </h1>
         </div>
-        <form className="space-y-4 md:space-y-6" action="#">
-          <LoginInput palceHolder="ایمیل" />
-          <LoginInput palceHolder="رمز عبور" />
-          <LoginInput palceHolder="تایید رمز عبور" />
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-4 md:space-y-6"
+        >
+          <LoginInput
+            formId="email"
+            palceHolder="ایمیل"
+            type="email"
+            register={register}
+            errors={errors}
+            required
+          />
+          <LoginInput
+            formId="password"
+            type="password"
+            palceHolder="رمز عبور"
+            register={register}
+            errors={errors}
+            required
+          />
+          <LoginInput
+            formId="checkpassword"
+            type="password"
+            palceHolder="تایید رمز عبور"
+            register={register}
+            errors={errors}
+            required
+          />
           <div className="flex items-start">
             <div className="flex h-5 items-center">
               <input

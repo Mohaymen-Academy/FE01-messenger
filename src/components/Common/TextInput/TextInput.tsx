@@ -1,13 +1,19 @@
-import { Input } from '@material-tailwind/react'
+import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form'
 
 interface TextInputProps {
   palceHolder: string
+  errors?: FieldErrors
+  register?: UseFormRegister<FieldValues>
+  type?: 'password' | 'email'
+  required?: boolean
+  formId?: 'string'
 }
 
-export default function TextInput({ palceHolder }: TextInputProps) {
+export default function TextInput({ palceHolder, type , register }: TextInputProps) {
   return (
     <div className="relative h-11 w-full min-w-[200px]">
       <input
+        type={type}
         className="peer h-full w-full border-b border-gray-200 bg-transparent pb-1.5 pt-4 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border-gray-200 focus:border-gray-500 focus:outline-0 disabled:border-0 disabled:bg-gray-50"
         placeholder=" "
       />

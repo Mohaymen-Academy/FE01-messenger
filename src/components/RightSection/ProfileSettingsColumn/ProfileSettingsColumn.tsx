@@ -1,18 +1,19 @@
 import { IoArrowForward } from 'react-icons/io5'
+import { useContext } from 'react'
 import IconButton from '@/components/Common/IconButton'
 import TextInput from '@/components/Common/TextInput/TextInput'
 import img from '@/assets/download.jpeg'
 import camera from '@/assets/camera-add.svg'
+import { Context } from '../context/Context'
 
 interface ProfileSettingsColumnProps {
   isActive: boolean
-  onClick?: () => void
 }
 
 export default function ProfileSettingsColumn({
   isActive,
-  onClick,
 }: ProfileSettingsColumnProps) {
+  const value = useContext(Context)
   return (
     <div
       style={{ transform: isActive ? '' : 'translateX(100%)' }}
@@ -21,7 +22,7 @@ export default function ProfileSettingsColumn({
       <div className="relative w-full bg-primary shadow-xl max-sm:w-full">
         <div className="flex w-full items-center justify-between p-3">
           <IconButton
-            onClick={onClick}
+            onClick={value}
             icon={
               <IoArrowForward className="h-6 w-6 fill-current text-gray-600" />
             }
