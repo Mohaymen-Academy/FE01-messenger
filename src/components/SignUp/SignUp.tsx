@@ -19,7 +19,11 @@ export default function SignUp({ active, onClick }: SignUpProps) {
       passwordCheck: '',
     },
   })
-  const onSubmit: SubmitHandler<FieldValues> = data => {}
+  const onSubmit: SubmitHandler<FieldValues> = data => {
+    console.log(1)
+  }
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+  const emailRegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   return (
     <div
       style={{ display: active ? 'flex' : 'none' }}
@@ -48,6 +52,7 @@ export default function SignUp({ active, onClick }: SignUpProps) {
             register={register}
             errors={errors}
             required
+            pattern={emailRegExp}
           />
           <LoginInput
             formId="password"
@@ -55,6 +60,7 @@ export default function SignUp({ active, onClick }: SignUpProps) {
             palceHolder="رمز عبور"
             register={register}
             errors={errors}
+            pattern={passwordRegex}
             required
           />
           <LoginInput
@@ -74,7 +80,7 @@ export default function SignUp({ active, onClick }: SignUpProps) {
             </div>
             <div className="ml-3 text-sm">
               <label className="font-light text-gray-500 dark:text-gray-300">
-                <a className="font-medium hover:underline" href="#">
+                <a className="mr-1 font-medium hover:underline" href="#">
                   شرایط و قوانین{' '}
                 </a>
                 پیامرسان حامی را می پذیرم

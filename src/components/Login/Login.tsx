@@ -1,4 +1,5 @@
 import { BiArrowBack } from 'react-icons/bi'
+import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import LoginInput from '../Common/TextInput/TextInput'
 
 interface LoginProps {
@@ -7,6 +8,19 @@ interface LoginProps {
 }
 
 export default function Login({ active, onClick }: LoginProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FieldValues>({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  })
+  const onSubmit: SubmitHandler<FieldValues> = data => {
+    console.log(1)
+  }
   return (
     <div
       style={{ display: active ? '' : 'none' }}
@@ -25,8 +39,22 @@ export default function Login({ active, onClick }: LoginProps) {
           </h1>
         </div>
         <form className="space-y-4 md:space-y-6" action="#">
-          <LoginInput palceHolder="ایمیل" />
-          <LoginInput palceHolder="رمز عبور" />
+          <LoginInput
+            formId="email"
+            type="email"
+            palceHolder="ایمیل"
+            register={register}
+            errors={errors}
+            required
+          />
+          <LoginInput
+            formId="password"
+            type="password"
+            register={register}
+            errors={errors}
+            required
+            palceHolder="رمز عبور"
+          />
           <div className="flex items-center justify-between">
             <div className="flex items-start">
               <div className="flex h-5 items-center">
