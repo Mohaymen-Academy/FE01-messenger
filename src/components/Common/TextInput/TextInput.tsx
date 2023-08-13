@@ -1,14 +1,22 @@
-import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form'
+import {
+  FieldErrors,
+  FieldValues,
+  UseFormRegister,
+  UseFormSetValue,
+} from 'react-hook-form'
 import { useMemo, useRef, useState } from 'react'
 
 interface TextInputProps {
   palceHolder: string
   errors?: FieldErrors
   register?: UseFormRegister<FieldValues>
-  type?: 'password' | 'email' | 'checkpassword'
+  type?: 'password' | 'email' | 'checkpassword' | 'text' | 'tel'
   required?: boolean
   formId?: string
   pattern?: RegExp
+  initialValue?: string
+  onClick?: () => void
+  // setValue?: UseFormSetValue<FieldValues>
 }
 
 export default function TextInput({
@@ -18,6 +26,7 @@ export default function TextInput({
   required,
   formId,
   pattern,
+  onClick,
 }: TextInputProps) {
   const [borderBColor, setBorderBottomColor] = useState('rgb(156 163 175)')
   const [isValid, setIsValid] = useState(true)
@@ -26,9 +35,16 @@ export default function TextInput({
     return { register: 'no Register' }
   }, [register])
 
+  // const removeValueAttribute = () => {
+  //   console.log(1)
+  //   setValue
+  //   console.log(2)
+  // }
+
   const textValidation = e => {
+    if (pattern == null) return
     const inputText = e.target.value
-    if (pattern?.test(inputText)) {
+    if (pattern.test(inputText)) {
       setBorderBottomColor('green')
       setIsValid(true)
     } else {
@@ -45,6 +61,8 @@ export default function TextInput({
       }}
     >
       <input
+        dir="auto"
+        onClick={onClick}
         style={{
           borderBottomColor: formId !== 'checkpassword' ? borderBColor : 'gray',
         }}

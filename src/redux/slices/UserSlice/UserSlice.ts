@@ -25,21 +25,21 @@ export const UserSlice = createSlice({
       state: ActiveChatSliceType,
       action: { payload: { name: string } }
     ) => {
-      const { name } = action.payload
+      const name = action.payload
       state.name = name
     },
     setUserName: (
       state: ActiveChatSliceType,
       action: { payload: { userName: string } }
     ) => {
-      const { userName } = action.payload
+      const userName = action.payload
       state.userName = userName
     },
     setBio: (
       state: ActiveChatSliceType,
       action: { payload: { bio: string } }
     ) => {
-      const { bio } = action.payload
+      const bio = action.payload
       state.bio = bio
     },
   },
