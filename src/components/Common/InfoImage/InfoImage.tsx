@@ -9,8 +9,9 @@ export default function InfoImage({
   onlineStatus,
   infoName,
 }: InfoImageProps) {
+  console.log(img)
   return (
-    <div className="relative mb-4 flex justify-center">
+    <div className="relative mb-4 flex w-full justify-center">
       <div className="block h-[370px] w-full content-center overflow-hidden text-center focus:outline-none">
         <div
           style={{ display: img ? 'none' : 'flex' }}

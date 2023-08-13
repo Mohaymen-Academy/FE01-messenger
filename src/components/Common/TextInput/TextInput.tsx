@@ -1,10 +1,5 @@
-import {
-  FieldErrors,
-  FieldValues,
-  UseFormRegister,
-  UseFormSetValue,
-} from 'react-hook-form'
-import { useMemo, useRef, useState } from 'react'
+import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form'
+import { useMemo, useState } from 'react'
 
 interface TextInputProps {
   palceHolder: string
@@ -34,12 +29,6 @@ export default function TextInput({
     if (register && formId) return register(formId, { required, pattern })
     return { register: 'no Register' }
   }, [register])
-
-  // const removeValueAttribute = () => {
-  //   console.log(1)
-  //   setValue
-  //   console.log(2)
-  // }
 
   const textValidation = e => {
     if (pattern == null) return

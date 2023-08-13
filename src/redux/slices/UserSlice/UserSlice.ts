@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export interface UserSliceType {
   name: string
   userName: string
-  image: string
+  image: object
   imageColor: string
   bio: string
   number: string
@@ -21,26 +21,27 @@ export const UserSlice = createSlice({
     theme: '',
   },
   reducers: {
-    setName: (
-      state: ActiveChatSliceType,
-      action: { payload: { name: string } }
-    ) => {
+    setName: (state: UserSliceType, action: { payload: { name: string } }) => {
       const name = action.payload
       state.name = name
     },
     setUserName: (
-      state: ActiveChatSliceType,
+      state: UserSliceType,
       action: { payload: { userName: string } }
     ) => {
       const userName = action.payload
       state.userName = userName
     },
-    setBio: (
-      state: ActiveChatSliceType,
-      action: { payload: { bio: string } }
-    ) => {
+    setBio: (state: UserSliceType, action: { payload: { bio: string } }) => {
       const bio = action.payload
       state.bio = bio
+    },
+    setImage: (
+      state: UserSliceType,
+      action: { payload: { image: object } }
+    ) => {
+      const image = action.payload
+      state.image = image
     },
   },
 })

@@ -1,8 +1,10 @@
 import { IoArrowForward } from 'react-icons/io5'
-import { useContext } from 'react'
+import { useContext, useRef, useState } from 'react'
 import { BsCheck2 } from 'react-icons/bs'
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
+import Box from '@mui/material/Box'
+import Modal from '@mui/material/Modal'
 import IconButton from '@/components/Common/IconButton'
 import TextInput from '@/components/Common/TextInput/TextInput'
 import img from '@/assets/download.jpeg'
@@ -10,7 +12,9 @@ import camera from '@/assets/camera-add.svg'
 import FabButton from '@/components/Common/FabButton/FabButton'
 import { UserSlice } from '@/redux/slices/UserSlice'
 import { storeStateTypes } from '@/types/types'
+import { UISlice } from '@/redux/slices/UISlice'
 import { Context } from '../context/Context'
+import ImageInput from '../ImageInput/ImageInput'
 
 interface ProfileSettingsColumnProps {
   isActive: boolean
@@ -41,6 +45,33 @@ export default function ProfileSettingsColumn({
     dispatch(UserSlice.actions.setBio(data.bio))
     dispatch(UserSlice.actions.setUserName(data.userName))
   }
+  // cropper image
+  const defaultSrc = img
+  const [imageCropperActive, setImageCropperActive] = useState(false)
+  const [image, setImage] = useState(defaultSrc)
+  const openModal = useSelector(
+    (state: storeStateTypes) => state.UI.cropperModal
+  )
+  const cropImage = e => {
+    e.preventDefault()
+    let files
+    if (e.dataTransfer) {
+      files = e.dataTransfer.files
+    } else if (e.target) {
+      files = e.target.files
+    }
+    const reader = new FileReader()
+    reader.onload = () => {
+      setImage(reader.result as any)
+    }
+    reader.readAsDataURL(files[0])
+    setImageCropperActive(true)
+    dispatch(UISlice.actions.openCropperModal())
+  }
+
+  const handleClose = () => {
+    dispatch(UISlice.actions.closeCropperModal())
+  }
 
   return (
     <form
@@ -48,6 +79,7 @@ export default function ProfileSettingsColumn({
       onSubmit={handleSubmit(onSubmit)}
       className="absolute z-10 h-full w-full overflow-x-hidden bg-primary/100 shadow-xl transition-all duration-500 ease-in-out max-sm:w-full"
     >
+      {/* header */}
       <div className="relative w-full bg-primary shadow-xl max-sm:w-full">
         <div className="flex w-full items-center justify-between p-3">
           <IconButton
@@ -59,7 +91,8 @@ export default function ProfileSettingsColumn({
           <div className="ml-auto mr-4 text-lg font-medium">ویرایش پروفایل</div>
         </div>
       </div>
-      <div className="mb-2 mt-4 flex justify-center">
+      {/* change photo */}
+      <div className="mb-2 mt-4 flex w-full justify-center">
         <label
           role="button"
           className="h-32 w-32 content-center overflow-hidden rounded-full p-1 text-center focus:outline-none"
@@ -78,13 +111,24 @@ export default function ProfileSettingsColumn({
           </div>
 
           <input
+            onChange={cropImage}
             type="file"
             accept="image/png , image/jpeg"
             className="hidden"
           />
         </label>
+        <Modal
+          open={openModal}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box className="mt-32 flex items-center justify-center">
+            <ImageInput isActive={imageCropperActive} image={image} />
+          </Box>
+        </Modal>
       </div>
-
+      {/* inputs */}
       <div className="flex flex-col items-center justify-center gap-5 px-5 py-10">
         <TextInput
           formId="name"

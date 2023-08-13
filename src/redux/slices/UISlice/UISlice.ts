@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export interface UISliceType {
   infoColumn: boolean
   midColumn: boolean
+  cropperModal: boolean
 }
 
 export const UISlice = createSlice({
@@ -10,6 +11,7 @@ export const UISlice = createSlice({
   initialState: {
     infoColumn: false,
     midColumn: false,
+    cropperModal: false,
   },
   reducers: {
     openInfoColumn: (state: UISliceType) => {
@@ -20,6 +22,12 @@ export const UISlice = createSlice({
     },
     openMidColumn: (state: UISliceType) => {
       state.midColumn = true
+    },
+    openCropperModal: (state: UISliceType) => {
+      state.cropperModal = true
+    },
+    closeCropperModal: (state: UISliceType) => {
+      state.cropperModal = false
     },
   },
 })

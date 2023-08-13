@@ -1,4 +1,5 @@
 import { userInfo } from 'os'
+import { url } from 'inspector'
 import { FiAtSign, FiLogOut } from 'react-icons/fi'
 import {
   BsTelephone,
@@ -51,13 +52,15 @@ export default function SettingsColumn({
   const name = useSelector((state: storeStateTypes) => state.user.name)
   const userName = useSelector((state: storeStateTypes) => state.user.userName)
   const bio = useSelector((state: storeStateTypes) => state.user.bio)
+  const image = useSelector((state: storeStateTypes) => state.user.image)
+
   return (
     <div
       style={{ transform: isActive ? '' : 'translateX(100%)' }}
       className="absolute z-10 h-full w-full overflow-x-hidden bg-primary/100 shadow-xl transition-all duration-500 ease-in-out max-sm:w-full"
     >
       <SettingsHeader onClick={onClick} />
-      <InfoImage onlineStatus="آنلاین" infoName={name} img={img} />
+      <InfoImage onlineStatus={true} infoName={name} img={image} />
       <InfoRow
         title={userName}
         subTitle="آیدی"
