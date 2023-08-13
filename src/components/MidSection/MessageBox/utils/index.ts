@@ -9,7 +9,7 @@ export default function setCaretPosition(
 
   Array.from(el.childNodes).every(child => {
     if (child.nodeType == 3 && child.nodeValue) {
-      console.log(child.nodeValue.length, pos)
+      // console.log(child.nodeValue.length, pos)
       if (child.nodeValue.length >= pos) {
         // finally add our range
         const range = document.createRange()
@@ -51,4 +51,52 @@ export default function setCaretPosition(
     }
     return pos; // needed because of recursion stuff
 } */
+}
+export function processText(text: string): string {
+  return text
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/&lt;\s*br\s*\/?s*&gt;/g, '<br />')
+}
+
+export function purifyChar(char: string): string {
+  // if (char === '<') {
+  //   return '&lt;'
+  // }
+  // if (char === '>') {
+  //   return '&gt;'
+  // }
+  // if (char === '&') {
+  //   return '&amp;'
+  // }
+  // if (char === '"') {
+  //   return '&quot;'
+  // }
+  // if (char === "'") {
+  //   return '&#039;'
+  // }
+  return char
+}
+export function getCaretCharacterOffsetWithin(element: HTMLDivElement) {
+  let caretOffset = 0
+  const doc = element.ownerDocument
+  const win = doc.defaultView!
+  let sel
+  if (typeof win.getSelection != 'undefined') {
+    sel = win.getSelection()!
+    if (sel.rangeCount > 0) {
+      const range = sel.getRangeAt(0)
+      const preCaretRange = range.cloneRange()
+      preCaretRange.selectNodeContents(element)
+      preCaretRange.setEnd(range.endContainer, range.endOffset)
+      caretOffset = preCaretRange.toString().length
+    }
+  } else if ((sel = doc.getSelection()) && sel.type != 'Control') {
+    const textRange = sel.createRange()
+    const preCaretTextRange = doc.body.createTextRange()
+    preCaretTextRange.moveToElementText(element)
+    preCaretTextRange.setEndPoint('EndToEnd', textRange)
+    caretOffset = preCaretTextRange.text.length
+  }
+  return caretOffset
 }
