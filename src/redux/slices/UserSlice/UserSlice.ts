@@ -16,7 +16,7 @@ export const UserSlice = createSlice({
     userName: '@Hossein_Asd',
     image: '',
     imageColor: '',
-    bio: 'Hello!!',
+    bio: 'سلام دوستان!!!',
     number: '',
     theme: '',
   },

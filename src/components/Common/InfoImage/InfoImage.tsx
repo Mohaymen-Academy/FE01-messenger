@@ -20,14 +20,14 @@ export default function InfoImage({
         </div>
         <img
           style={{ display: img ? 'block' : 'none' }}
-          className="absolute z-10 max-h-[370px] w-full content-center object-cover max-sm:object-contain"
+          className="absolute max-h-[370px] w-full content-center object-cover max-sm:object-contain"
           src={img}
         />
       </div>
-      <div className="absolute bottom-0 right-0 w-full bg-gradient-to-t from-[#00000088] to-transparent pb-5 pr-5">
+      <div className="absolute bottom-0 right-0 z-10 w-full bg-gradient-to-t from-[#00000088] to-transparent pb-5 pr-5">
         <p className="text-lg font-semibold text-white">{infoName}</p>
         <p className="text-sm font-medium text-gray-400">
-          {onlineStatus ? 'انلاین' : 'آخرین بازدید به تازگی'}
+          {onlineStatus ? 'آنلاین' : 'آخرین بازدید به تازگی'}
         </p>
       </div>
     </div>

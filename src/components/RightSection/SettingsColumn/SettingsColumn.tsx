@@ -64,7 +64,7 @@ export default function SettingsColumn({
         icon={<FiAtSign className="h-6 w-6 text-gray-600" />}
       />
       <InfoRow
-        title="989332905168+"
+        title="+989332905168"
         subTitle="شماره همراه"
         icon={<BsTelephone className="h-6 w-6 fill-current text-gray-600" />}
       />

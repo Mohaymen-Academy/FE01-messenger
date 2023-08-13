@@ -13,7 +13,10 @@ export default function InfoRow({ title, subTitle, icon }: InfoRowProps) {
         {icon}
       </div>
       <div>
-        <div className="ml-4 mr-auto text-sm font-semibold text-primary">
+        <div
+          dir="auto"
+          className="ml-4 mr-auto text-sm font-semibold text-primary"
+        >
           {title}
         </div>
         <div className="ml-4 mr-auto mt-1 text-sm font-semibold leading-none text-secondary">
