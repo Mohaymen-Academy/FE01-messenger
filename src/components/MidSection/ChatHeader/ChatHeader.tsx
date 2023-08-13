@@ -1,18 +1,21 @@
 import { BsSearch, BsThreeDotsVertical } from 'react-icons/bs'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import IconButton from '@/components/Common/IconButton/IconButton'
 import mrHashemi from '@/assets/download.jpeg'
 import { UISlice } from '@/redux/slices/UISlice'
+import { storeStateTypes } from '@/types/types'
 
 interface ChatHeaderProps {}
 
 export default function ChatHeader({}: ChatHeaderProps) {
   const dispatch = useDispatch()
   const openInfoColumn = () => {
-    console.log(3)
     dispatch(UISlice.actions.openInfoColumn())
-    console.log(4)
   }
+  const activeId = useSelector((state: storeStateTypes) => state.activeChat.id)
+  const activeChat = useSelector((state: storeStateTypes) =>
+    state.chatList.chatBoxes.find(compo => compo.id === activeId)
+  )
   return (
     <div
       onClick={openInfoColumn}
@@ -24,10 +27,11 @@ export default function ChatHeader({}: ChatHeaderProps) {
         </div>
         <div className="flex flex-1 cursor-pointer flex-col justify-center overflow-hidden">
           <div className="overflow-hidden whitespace-nowrap text-base font-medium leading-tight text-primary/100">
-            Mr. Hashemi
+            {activeChat?.name}
           </div>
+          {/* remove overflow hidden */}
           <div className="overflow-hidden whitespace-nowrap text-sm font-medium leading-tight text-gray-600">
-            Online
+            {activeChat?.online ? 'آنلاین' : 'آخرین بازدید به تازگی'}
           </div>
         </div>
       </div>

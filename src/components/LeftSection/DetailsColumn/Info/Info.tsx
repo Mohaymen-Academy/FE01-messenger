@@ -7,17 +7,13 @@ import InfoHeader from '../InfoHeader'
 import InfoImage from '../../../Common/InfoImage'
 import InfoRow from '../../../Common/InfoRow'
 
-interface InfoProps {
- 
-}
+interface InfoProps {}
 
-export default function Info({  }: InfoProps) {
+export default function Info({}: InfoProps) {
   const activeId = useSelector((state: storeStateTypes) => state.activeChat.id)
-  console.log(activeId)
   const activeChat = useSelector((state: storeStateTypes) =>
     state.chatList.chatBoxes.find(compo => compo.id === activeId)
   )
-  console.log(activeChat)
   return (
     <div className="right-0 flex w-96 flex-col border-gray-300 bg-primary/100 pb-4 max-sm:w-full xl:block">
       <InfoHeader />
