@@ -4,6 +4,7 @@ export interface UserSliceType {
   name: string
   userName: string
   image: string
+  imageColor: string
   bio: string
   number: string
   theme: string
@@ -14,6 +15,7 @@ export const UserSlice = createSlice({
     name: '',
     userName: '',
     image: '',
+    imageColor: '',
     bio: '',
     number: '',
     theme: '',

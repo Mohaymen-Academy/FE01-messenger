@@ -1,12 +1,23 @@
 import { BsSearch, BsThreeDotsVertical } from 'react-icons/bs'
+import { useDispatch } from 'react-redux'
 import IconButton from '@/components/Common/IconButton/IconButton'
 import mrHashemi from '@/assets/download.jpeg'
+import { UISlice } from '@/redux/slices/UISlice'
 
 interface ChatHeaderProps {}
 
 export default function ChatHeader({}: ChatHeaderProps) {
+  const dispatch = useDispatch()
+  const openInfoColumn = () => {
+    console.log(3)
+    dispatch(UISlice.actions.openInfoColumn())
+    console.log(4)
+  }
   return (
-    <div className="z-20 flex w-full shrink-0 grow-0 items-center border-b bg-primary/100 pr-3 text-primary/100">
+    <div
+      onClick={openInfoColumn}
+      className="z-20 flex w-full shrink-0 grow-0 items-center border-b bg-primary/100 pr-3 text-primary/100"
+    >
       <div className="flex w-full justify-between">
         <div className="mx-4 my-2 h-12 w-12 cursor-pointer rounded-full bg-blue-500 bg-cover bg-center bg-no-repeat">
           <img className="rounded-full" src={mrHashemi} />

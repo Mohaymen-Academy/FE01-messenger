@@ -1,4 +1,8 @@
 import { IoCheckmarkDoneOutline, IoCheckmarkOutline } from 'react-icons/io5'
+import { useDispatch } from 'react-redux'
+import { ActiveChatSlice } from '@/redux/slices/ActiveChatSlice'
+import { ChatListSlice } from '@/redux/slices/ChatListSlice'
+import { UISlice } from '@/redux/slices/UISlice'
 
 interface ChatBoxProps {
   online: boolean
@@ -9,7 +13,8 @@ interface ChatBoxProps {
   seen: boolean
   seenEnable: boolean
   img?: string
-  onClick: () => void
+  id: string
+  active: boolean
 }
 
 export default function ChatBox({
@@ -21,7 +26,8 @@ export default function ChatBox({
   seen,
   seenEnable,
   img,
-  onClick,
+  id,
+  active,
 }: ChatBoxProps) {
   const colors = [
     'blue',
@@ -35,10 +41,17 @@ export default function ChatBox({
     'cyan',
   ]
   const bgColor = Math.floor(Math.random() * colors.length)
+  const dispatch = useDispatch()
+  const activateChat = () => {
+    dispatch(UISlice.actions.openMidColumn())
+    dispatch(ActiveChatSlice.actions.setActiveChat({ id }))
+    dispatch(ChatListSlice.actions.setActive({ id }))
+  }
   return (
     <div
+      style={{ backgroundColor: active ? '#7e85ed' : 'white' }}
       className="flex items-center rounded-lg py-[10px] pl-2 text-secondary/100  hover:bg-chatBoxHover"
-      onClick={onClick}
+      onClick={activateChat}
     >
       <div className="flex w-full justify-between">
         <div
