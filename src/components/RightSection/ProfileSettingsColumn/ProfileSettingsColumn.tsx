@@ -136,7 +136,7 @@ export default function ProfileSettingsColumn({
           type="text"
           register={register}
           errors={errors}
-          onClick={() => setValue('name', '')}
+          onClick={() => setValue('name', name)}
         />
         {/* <TextInput
           formId="phoneNumber"
@@ -153,7 +153,7 @@ export default function ProfileSettingsColumn({
             register={register}
             errors={errors}
             initialValue={bio}
-            onClick={() => setValue('bio', '')}
+            onClick={() => setValue('bio', bio)}
           />
           <p className="pt-1 text-sm text-gray-500">
             شما می‌توانید چند خط درباره خودتان اضافه کنید. هرکس که پروفایل شما
@@ -166,7 +166,8 @@ export default function ProfileSettingsColumn({
           type="text"
           register={register}
           errors={errors}
-          onClick={() => setValue('userName', '')}
+          onClick={() => setValue('userName', userName)
+        }
         />
         <button type="submit" className="absolute bottom-0 left-0">
           <FabButton

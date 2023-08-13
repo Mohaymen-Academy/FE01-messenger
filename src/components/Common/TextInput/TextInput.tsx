@@ -11,7 +11,6 @@ interface TextInputProps {
   pattern?: RegExp
   initialValue?: string
   onClick?: () => void
-  // setValue?: UseFormSetValue<FieldValues>
 }
 
 export default function TextInput({
@@ -50,7 +49,6 @@ export default function TextInput({
       }}
     >
       <input
-        dir="auto"
         onClick={onClick}
         style={{
           borderBottomColor: formId !== 'checkpassword' ? borderBColor : 'gray',

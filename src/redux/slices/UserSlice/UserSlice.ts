@@ -13,10 +13,10 @@ export const UserSlice = createSlice({
   name: 'user',
   initialState: {
     name: 'Hossein',
-    userName: '@Hossein_Asd',
+    userName: 'Hossein_Asd',
     image: '',
     imageColor: '',
-    bio: 'سلام دوستان!!!',
+    bio: 'سلام دوستان',
     number: '',
     theme: '',
   },
