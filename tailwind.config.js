@@ -4,6 +4,9 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        custom: ['Vazir'],
+      },
       textColor: {
         primary: 'rgb(var(--background-color-500))',
         secondary: 'rgb(var(--background-color-50))',

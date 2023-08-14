@@ -32,6 +32,7 @@ export default function ProfileSettingsColumn({
     handleSubmit,
     formState: { errors },
     setValue,
+    getValues,
   } = useForm<FieldValues>({
     defaultValues: {
       name,
@@ -178,6 +179,7 @@ export default function ProfileSettingsColumn({
             initialValue={bio}
             onClick={() => setValue('bio', bio)}
             onChange={showConfirmButton}
+            maxLength={100}
           />
           <p className="pt-1 text-sm text-gray-500">
             شما می‌توانید چند خط درباره خودتان اضافه کنید. هرکس که پروفایل شما
