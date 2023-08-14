@@ -14,23 +14,28 @@ export default function Message({ self, message, mode, time }: MessageProps) {
   const [width, setWidth] = useState(0)
   const ref = useRef<HTMLDivElement>(null)
   useLayoutEffect(() => {
-    setWidth(ref.current?.getBoundingClientRect().width ?? 0)
+    if (ref.current?.getBoundingClientRect().width)
+      setWidth(
+        ref.current?.getBoundingClientRect().width > 350
+          ? 350
+          : ref.current.getBoundingClientRect().width - 70
+      )
   }, [])
   const oneLiner =
-    useTextWidth({ text: message, font: '16px "Segoe UI"' }) < width - 70
+    useTextWidth({ text: message, font: '16px "Segoe UI"' }) < width
   console.log(useTextWidth({ text: message, font: '16px "Segoe UI"' }))
 
   return (
     <div
       ref={ref}
       className={classNames(
-        'my-1 flex w-full max-w-[400px] flex-row rounded-t-lg text-primary',
+        'my-1 flex w-full w-full flex-row rounded-t-lg text-primary',
         self ? 'justify-start' : 'justify-end'
       )}
     >
       <div
         className={classNames(
-          'relative text-primary flex flex-row px-2 rounded-t-lg ',
+          'relative text-primary max-w-[400px] flex flex-row px-2 rounded-t-lg ',
           self
             ? 'rounded-l-lg tail-right rtl bg-selfChatBg border-selfChatBg'
             : 'rounded-r-lg tail-left ltr bg-primary border-primary',
