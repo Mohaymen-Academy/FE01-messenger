@@ -1,4 +1,4 @@
-import logo from '@/assets/logo.jpeg'
+import logo from '@/assets/hermes.png'
 
 interface LoginLandingProps {
   onClick: (e) => void
