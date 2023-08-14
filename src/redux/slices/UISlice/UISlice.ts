@@ -25,6 +25,9 @@ export const UISlice = createSlice({
     openMidColumn: (state: UISliceType) => {
       state.midColumn = true
     },
+    closeMidColumn: (state: UISliceType) => {
+      state.midColumn = false
+    },
     openCropperModal: (state: UISliceType) => {
       state.cropperModal = true
     },

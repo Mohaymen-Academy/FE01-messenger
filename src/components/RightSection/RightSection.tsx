@@ -16,6 +16,9 @@ export default function RightSection({}: RightSectionProps) {
   const profileSettingsActive = useSelector(
     (state: storeStateTypes) => state.UI.profileSettings
   )
+  const shouldClose = useSelector(
+    (state: storeStateTypes) => state.UI.midColumn
+  )
 
   const context = useContext(RightSectionOpen)
 
@@ -30,7 +33,7 @@ export default function RightSection({}: RightSectionProps) {
     <div
       className={classNames(
         'relative right-0 transition-all duration-500 top-0 h-full w-96 overflow-hidden bg-primary/100 text-primary/100 max-sm:absolute max-sm:z-30 max max-sm:max-w-[400px]',
-        !context.isOpen ? 'max-sm:-right-full' : ''
+        shouldClose ? 'max-sm:-right-full' : ''
       )}
     >
       <ChatsColumn onClick={navMenuHandler} isActive={!settingsActivate} />

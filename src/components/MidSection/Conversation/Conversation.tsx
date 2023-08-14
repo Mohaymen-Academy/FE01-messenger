@@ -1,5 +1,5 @@
 import List from 'react-virtualized/dist/commonjs/List'
-import { CellMeasurer, CellMeasurerCache } from 'react-virtualized'
+import { AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized'
 import { BsArrowDown } from 'react-icons/bs'
 import { BiArrowToBottom } from 'react-icons/bi'
 import { useState } from 'react'
@@ -19,44 +19,48 @@ export default function Conversation({}: ConversationProps) {
     fixedWidth: true,
   })
   return (
-    <div className="relative w-full flex-1 self-center">
-      <div className="relative m-auto flex max-w-xl flex-col px-3 py-1">
-        <List
-          className="no-scrollbar"
-          width={576}
-          height={600}
-          rowHeight={cache.rowHeight}
-          rowCount={1000}
-          // onRowsRendered={data => console.log(data)}
-          scrollToIndex={scrollToIndex}
-          scrollToRow={scrollToIndex}
-          onScroll={() => {
-            setScrollToIndex(-1)
-          }}
-          rowRenderer={({ index, key, parent, style }) => (
-            <CellMeasurer
-              cache={cache}
-              columnIndex={0}
-              key={key}
-              parent={parent}
-              rowIndex={index}
-            >
-              {({ registerChild }) => (
-                <div
-                  ref={registerChild}
-                  className="rtl relative m-auto flex w-full flex-col px-3 py-1"
-                  style={style}
+    <div className="relative h-0 w-full flex-1 grow self-center">
+      <div className="relative m-auto flex h-full w-full max-w-xl flex-col px-3 py-1">
+        <AutoSizer>
+          {({ width, height }) => (
+            <List
+              className="no-scrollbar"
+              width={width}
+              height={height}
+              rowHeight={cache.rowHeight}
+              rowCount={1000}
+              // onRowsRendered={data => console.log(data)}
+              scrollToIndex={scrollToIndex}
+              scrollToRow={scrollToIndex}
+              onScroll={() => {
+                setScrollToIndex(-1)
+              }}
+              rowRenderer={({ index, key, parent, style }) => (
+                <CellMeasurer
+                  cache={cache}
+                  columnIndex={0}
+                  key={key}
+                  parent={parent}
+                  rowIndex={index}
                 >
-                  <Message
-                    message={'a'.repeat(index)}
-                    mode="sent"
-                    time={index.toString()}
-                  />
-                </div>
+                  {({ registerChild }) => (
+                    <div
+                      ref={registerChild}
+                      className="rtl relative m-auto flex w-full flex-col px-3 py-1"
+                      style={style}
+                    >
+                      <Message
+                        message={'a'.repeat(index)}
+                        mode="sent"
+                        time={index.toString()}
+                      />
+                    </div>
+                  )}
+                </CellMeasurer>
               )}
-            </CellMeasurer>
+            />
           )}
-        />
+        </AutoSizer>
         {/* <SystemMessage text="۲۳ مرداد" />
         <Message message="سلام" mode="seen" self time="14:25" />
 

@@ -1,16 +1,22 @@
+import classNames from 'classnames'
 import { ReactElement } from 'react'
 
 interface FabButtonProps {
   icon: ReactElement
-  primary: boolean
+  primary?: boolean
 }
 
-export default function FabButton({ icon }: FabButtonProps) {
+export default function FabButton({ icon, primary }: FabButtonProps) {
   return (
-    <div className="sticky bottom-3 left-5 z-40 mb-6 ml-4 flex flex-row justify-end">
-      <button className="ml-2 flex h-14 w-14 items-center justify-center rounded-full bg-fabBg text-xl font-semibold text-white focus:outline-none">
-        {icon}
-      </button>
-    </div>
+    <button
+      className={classNames(
+        'transition-all ease-in ml-2 flex h-14 w-14 items-center justify-center rounded-full text-xl font-semibold focus:outline-none',
+        primary
+          ? 'bg-blue-500'
+          : 'bg-primary hover:bg-blue-500 hover:text-primary text-secondary'
+      )}
+    >
+      {icon}
+    </button>
   )
 }
