@@ -17,7 +17,6 @@ export interface chatBoxType {
 export interface ChatListSliceType {
   chatBoxes: chatBoxType[]
 }
-
 export const ChatListSlice = createSlice({
   name: 'chatList',
   initialState: {

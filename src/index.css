@@ -8,6 +8,12 @@
   .rtl {
     direction: rtl;
   }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
 @layer components {
   .tail-left:after {
@@ -50,7 +56,7 @@
   --background-color-100: 255 255 255;
   --background-color-200: 96 167 240;
   --background-color-300: 51 144 236;
-  --background-color-400: 244 244 245;
+  --chatbox-hover: #efefef;
   --background-color-500: 0 0 0;
   --background-color-600: 239 18 41;
   --self-chat-bg-color: 178, 235, 242;
@@ -60,7 +66,7 @@
   --background-color-100: 15 15 15;
   --background-color-200: 118 106 200;
   --background-color-300: 123 113 198;
-  --background-color-400: 131 120 219;
+  --chatbox-hover: #2f3259;
   --background-color-500: 255 255 255;
   --background-color-600: 118 105 200;
   --self-chat-bg-color: 0, 96, 100;
