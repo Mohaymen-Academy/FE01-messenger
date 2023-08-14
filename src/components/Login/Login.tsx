@@ -14,8 +14,8 @@ export default function Login({ active, onClick }: LoginProps) {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      email: '' ,
-      password: ''
+      email: '',
+      password: '',
     },
   })
   const onSubmit: SubmitHandler<FieldValues> = data => {
@@ -64,7 +64,7 @@ export default function Login({ active, onClick }: LoginProps) {
               <div className="flex h-5 items-center">
                 <input
                   type="checkbox"
-                  className="h-4 w-4 rounded border border-gray-300 bg-gray-50"
+                  className="h-4 w-4 rounded border border-gray-300 bg-gray-50 accent-[#16a085]"
                 />
               </div>
               <div className="mr-2 text-sm">
@@ -74,7 +74,7 @@ export default function Login({ active, onClick }: LoginProps) {
           </div>
           <button
             type="submit"
-            className="w-full rounded-lg bg-blue-500 px-5 py-2.5 text-center text-sm font-medium text-white"
+            className="w-full rounded-lg bg-[#16a085] px-5 py-2.5 text-center text-sm font-medium text-white shadow-md  hover:shadow-lg hover:shadow-[#16a085]/40"
           >
             ورود
           </button>

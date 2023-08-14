@@ -13,7 +13,6 @@ import FabButton from '@/components/Common/FabButton/FabButton'
 import { UserSlice } from '@/redux/slices/UserSlice'
 import { storeStateTypes } from '@/types/types'
 import { UISlice } from '@/redux/slices/UISlice'
-import { Context } from '../context/Context'
 import ImageInput from '../ImageInput/ImageInput'
 
 interface ProfileSettingsColumnProps {
@@ -33,6 +32,7 @@ export default function ProfileSettingsColumn({
     handleSubmit,
     formState: { errors },
     setValue,
+    getValues,
   } = useForm<FieldValues>({
     defaultValues: {
       name,
@@ -55,6 +55,7 @@ export default function ProfileSettingsColumn({
   const openModal = useSelector(
     (state: storeStateTypes) => state.UI.cropperModal
   )
+  const profileImage = useSelector((state: storeStateTypes) => state.user.image)
   const cropImage = e => {
     e.preventDefault()
     let files
@@ -114,13 +115,15 @@ export default function ProfileSettingsColumn({
       {/* change photo */}
       <div className="mb-2 mt-4 flex w-full justify-center">
         <label
+          style={{ backgroundColor: profileImage ? 'white' : 'black' }}
           role="button"
           className="h-32 w-32 content-center overflow-hidden rounded-full p-1 text-center focus:outline-none"
         >
           <div className="group relative">
             <img
+              style={{ display: profileImage ? '' : 'none' }}
               className="h-full w-full content-center rounded-full border-2 border-gray-200 object-cover blur-[2px] group-hover:blur-none"
-              src={img}
+              src={profileImage}
             />
             <div className="absolute right-7 top-7 transition-all duration-500 ease-in-out hover:right-5 hover:top-5 ">
               <img
@@ -176,6 +179,7 @@ export default function ProfileSettingsColumn({
             initialValue={bio}
             onClick={() => setValue('bio', bio)}
             onChange={showConfirmButton}
+            maxLength={100}
           />
           <p className="pt-1 text-sm text-gray-500">
             شما می‌توانید چند خط درباره خودتان اضافه کنید. هرکس که پروفایل شما

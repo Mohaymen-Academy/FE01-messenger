@@ -35,13 +35,16 @@ export default function SignUp({ active, onClick }: SignUpProps) {
   const btnRef = useRef(null)
   const checkBoxRef = useRef(null)
 
+  const [btnActive, setBtnActive] = useState(false)
   const checkBoxChangeHandler = () => {
     if (btnRef.current != null && checkBoxRef.current != null) {
       btnRef.current.disabled = !checkBoxRef.current.checked
       if (btnRef.current.disabled) {
         btnRef.current.style.backgroundColor = 'red'
+        setBtnActive(false)
       } else {
-        btnRef.current.style.backgroundColor = 'green'
+        btnRef.current.style.backgroundColor = '#16a085'
+        setBtnActive(true)
       }
     }
   }
@@ -105,7 +108,7 @@ export default function SignUp({ active, onClick }: SignUpProps) {
               <input
                 ref={checkBoxRef}
                 type="checkbox"
-                className="w-4 rounded border border-gray-300 bg-gray-50 dark:h-4 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
+                className="w-4 rounded border border-gray-300 bg-gray-50 accent-[#16a085] dark:h-4 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
                 onChange={checkBoxChangeHandler}
               />
             </div>
@@ -121,7 +124,12 @@ export default function SignUp({ active, onClick }: SignUpProps) {
           <button
             ref={btnRef}
             type="submit"
-            className="mb-4 w-full rounded-lg bg-red-500 px-5 py-2.5  text-sm font-medium text-white focus:outline-none focus:ring-4"
+            className={classNames(
+              'mb-4 w-full bg-red-500 rounded-lg px-5 py-2.5 text-sm font-medium shadow-md hover:shadow-lg text-white transition-all duration-500 focus:outline-none focus:ring-4',
+              btnActive
+                ? 'hover:shadow-[#16a085]/40'
+                : 'hover:shadow-red-500/40'
+            )}
           >
             ثبت نام
           </button>
