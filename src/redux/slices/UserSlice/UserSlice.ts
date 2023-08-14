@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export interface UserSliceType {
   name: string
   userName: string
-  image: object
+  image: string
   imageColor: string
   bio: string
   number: string
@@ -38,7 +38,7 @@ export const UserSlice = createSlice({
     },
     setImage: (
       state: UserSliceType,
-      action: { payload: { image: object } }
+      action: { payload: { image: string } }
     ) => {
       const image = action.payload
       state.image = image

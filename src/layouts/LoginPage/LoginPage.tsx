@@ -35,12 +35,12 @@ export default function LoginPage({}: LoginPageProps) {
     <div
       style={{
         backgroundImage: `url(${img})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
+        backgroundSize: '600px',
+        backgroundRepeat: 'repeat',
       }}
       className="relative flex h-screen flex-col items-center justify-center overflow-hidden"
     >
-      <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center backdrop-blur-[2.5px]">
+      <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-[#ffffffcd] backdrop-blur-[1px] backdrop-invert">
         <div className="absolute w-full overflow-y-hidden px-6 py-8">
           <LoginLanding
             onClick={loginLandingHandler}

@@ -24,13 +24,13 @@ export default function LoginLanding({ onClick, active }: LoginLandingProps) {
         <div className="flex items-center justify-center gap-6 py-6">
           <button
             onClick={onClick}
-            className="rounded-lg bg-blue-500 px-6 py-3 text-xs font-bold text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 "
+            className="rounded-lg bg-[#16a085] px-6 py-3 text-xs font-bold text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#16a085]/40 "
           >
             ورود
           </button>
           <button
             onClick={onClick}
-            className="rounded-lg bg-blue-500 px-6 py-3 text-xs font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 "
+            className="rounded-lg bg-[#16a085] px-6 py-3 text-xs font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#16a085]/40 "
           >
             ثبت نام
           </button>

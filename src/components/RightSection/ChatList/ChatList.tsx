@@ -80,7 +80,7 @@ export default function ChatList({}: ChatListProps) {
     (state: storeStateTypes) => state.chatList.chatBoxes
   )
   return (
-    <div className="relative mb-4 mt-2 h-[calc(100%_-_40px)] overflow-x-hidden">
+    <div className="relative mb-4 mt-2 h-[calc(100%_-_40px)] cursor-pointer overflow-x-hidden">
       <div className="flex h-screen w-full flex-col overflow-y-auto px-2">
         {chatBoxes.map(item => (
           <>

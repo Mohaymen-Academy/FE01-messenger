@@ -48,7 +48,7 @@ export default function ImageInput({ isActive, image }: ImageInputProps) {
         onClick={confirmCropData}
         className="flex w-full items-center justify-center"
       >
-        <div className="mt-3 flex w-auto items-center justify-center rounded-lg bg-blue-500 p-3 text-white hover:bg-blue-800">
+        <div className="mt-3 flex w-auto cursor-pointer items-center justify-center rounded-lg bg-blue-500 p-3 text-white hover:bg-blue-800">
           <p>Crop Image</p>
         </div>
       </div>

@@ -35,7 +35,7 @@ export default function TextInput({
     if (pattern == null) return
     const inputText = e.target.value
     if (pattern.test(inputText)) {
-      setBorderBottomColor('green')
+      setBorderBottomColor('#16a085')
       setIsValid(true)
     } else {
       setBorderBottomColor('red')
