@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { login } from '@/api/Login'
 
 export interface UserSliceType {
   name: string
@@ -8,6 +9,7 @@ export interface UserSliceType {
   bio: string
   number: string
   theme: string
+  jwt: string
 }
 export const UserSlice = createSlice({
   name: 'user',
@@ -19,6 +21,7 @@ export const UserSlice = createSlice({
     bio: 'سلام دوستان',
     number: '',
     theme: '',
+    jwt: localStorage.getItem('jwt') ?? '',
   },
   reducers: {
     setName: (state: UserSliceType, action: { payload: { name: string } }) => {
@@ -42,6 +45,11 @@ export const UserSlice = createSlice({
     ) => {
       const image = action.payload
       state.image = image
+    },
+    login: (state: UserSliceType, action: { payload: { jwt: string } }) => {
+      console.log('first')
+      const { jwt } = action.payload
+      state.jwt = jwt
     },
   },
 })

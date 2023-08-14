@@ -27,6 +27,7 @@
     "@mui/material": "^5.14.4",
     "@reduxjs/toolkit": "^1.9.5",
     "@tag0/use-text-width": "^1.2.0",
+    "axios": "^1.4.0",
     "classnames": "^2.3.2",
     "dompurify": "^3.0.5",
     "emoji-mart": "^5.5.2",

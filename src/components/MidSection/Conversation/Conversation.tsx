@@ -24,7 +24,7 @@ export default function Conversation({}: ConversationProps) {
         <AutoSizer>
           {({ width, height }) => (
             <List
-              className="no-scrollbar"
+              className="no-scrollbar focus:outline-none"
               width={width}
               height={height}
               rowHeight={cache.rowHeight}
@@ -53,6 +53,7 @@ export default function Conversation({}: ConversationProps) {
                         message={'a'.repeat(index)}
                         mode="sent"
                         time={index.toString()}
+                        self
                       />
                     </div>
                   )}
