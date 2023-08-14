@@ -5,8 +5,8 @@ import LoginLanding from './components/Common/LoginLanding/LoginLanding'
 function App() {
   return (
     <>
-      {/* <MainPage /> */}
-      <LoginPage />
+      <MainPage />
+      {/* <LoginPage /> */}
     </>
   )
 }
