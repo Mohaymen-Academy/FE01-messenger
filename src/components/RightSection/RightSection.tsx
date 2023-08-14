@@ -1,6 +1,9 @@
 import { useState, useContext } from 'react'
 import classNames from 'classnames'
+import { useSelector } from 'react-redux'
 import { Context } from '@/components/RightSection/context/Context'
+import { storeStateTypes } from '@/types/types'
+import { UISlice } from '@/redux/slices/UISlice'
 import ChatsColumn from './ChatsColumn/ChatsColumn'
 import SettingsColumn from './SettingsColumn/SettingsColumn'
 import { RightSectionOpen } from './context/responsiveContext'
@@ -10,14 +13,9 @@ interface RightSectionProps {}
 
 export default function RightSection({}: RightSectionProps) {
   const [settingsActivate, setSettingsActivate] = useState(false)
-  const [profileSettingsActive, setProfileSettingsActive] = useState(false)
-
-  const openProfileSettings = () => {
-    setProfileSettingsActive(true)
-  }
-  const closeProfileSettings = () => {
-    setProfileSettingsActive(false)
-  }
+  const profileSettingsActive = useSelector(
+    (state: storeStateTypes) => state.UI.profileSettings
+  )
 
   const context = useContext(RightSectionOpen)
 
@@ -36,15 +34,12 @@ export default function RightSection({}: RightSectionProps) {
       )}
     >
       <ChatsColumn onClick={navMenuHandler} isActive={!settingsActivate} />
-      <Context.Provider value={openProfileSettings}>
-        <SettingsColumn
-          onClick={closeSettingsHandler}
-          isActive={settingsActivate}
-        />
-      </Context.Provider>
-      <Context.Provider value={closeProfileSettings}>
-        <EditSettingsColumn isActive={profileSettingsActive} />
-      </Context.Provider>
+      <SettingsColumn
+        onClick={closeSettingsHandler}
+        isActive={settingsActivate}
+      />
+
+      <EditSettingsColumn isActive={profileSettingsActive} />
     </div>
   )
 }

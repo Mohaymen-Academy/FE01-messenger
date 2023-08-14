@@ -14,8 +14,8 @@ export default function Login({ active, onClick }: LoginProps) {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      email: '',
-      password: '',
+      email: '' ,
+      password: ''
     },
   })
   const onSubmit: SubmitHandler<FieldValues> = data => {
@@ -38,7 +38,11 @@ export default function Login({ active, onClick }: LoginProps) {
             پیامرسان هرمس
           </h1>
         </div>
-        <form className="space-y-4 md:space-y-6" action="#">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-4 md:space-y-6"
+          action="#"
+        >
           <LoginInput
             formId="email"
             type="email"

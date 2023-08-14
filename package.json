@@ -10,14 +10,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.4",
     "@reduxjs/toolkit": "^1.9.5",
     "@tag0/use-text-width": "^1.2.0",
     "classnames": "^2.3.2",
     "react": "^18.2.0",
+    "react-cropper": "^2.3.3",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.4",
     "react-icons": "^4.10.1",
-    "react-virtualized": "^9.22.5"
+    "react-virtualized": "^9.22.5",
+    "react-redux": "^8.1.2",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.4.8",

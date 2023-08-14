@@ -1,3 +1,5 @@
+import { userInfo } from 'os'
+import { url } from 'inspector'
 import { FiAtSign, FiLogOut } from 'react-icons/fi'
 import {
   BsTelephone,
@@ -7,9 +9,11 @@ import {
 } from 'react-icons/bs'
 import classNames from 'classnames'
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import InfoImage from '@/components/Common/InfoImage'
 import InfoRow from '@/components/Common/InfoRow'
 import img from '@/assets/download.jpeg'
+import { storeStateTypes } from '@/types/types'
 import SettingsHeader from '../SettingsHeader/SettingsHeader'
 
 interface SettingsColumnProps {
@@ -45,25 +49,30 @@ export default function SettingsColumn({
       setDarkModeActive(false)
     }
   }
+  const name = useSelector((state: storeStateTypes) => state.user.name)
+  const userName = useSelector((state: storeStateTypes) => state.user.userName)
+  const bio = useSelector((state: storeStateTypes) => state.user.bio)
+  const image = useSelector((state: storeStateTypes) => state.user.image)
+
   return (
     <div
       style={{ transform: isActive ? '' : 'translateX(100%)' }}
       className="absolute z-10 h-full w-full overflow-x-hidden bg-primary/100 shadow-xl transition-all duration-500 ease-in-out max-sm:w-full"
     >
       <SettingsHeader onClick={onClick} />
-      <InfoImage onlineStatus="آنلاین" infoName="Ahmad" img={img} />
+      <InfoImage onlineStatus={true} infoName={name} img={image} />
       <InfoRow
-        title="mr_Hashemi@"
+        title={userName}
         subTitle="آیدی"
         icon={<FiAtSign className="h-6 w-6 text-gray-600" />}
       />
       <InfoRow
-        title="989332905168+"
+        title="+989332905168"
         subTitle="شماره همراه"
         icon={<BsTelephone className="h-6 w-6 fill-current text-gray-600" />}
       />
       <InfoRow
-        title="Bio"
+        title={bio}
         subTitle="بیوگرافی"
         icon={<BsInfoCircle className="h-6 w-6 fill-current text-gray-600" />}
       />
