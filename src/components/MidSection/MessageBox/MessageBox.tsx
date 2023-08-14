@@ -1,4 +1,4 @@
-import { BsEmojiLaughing, BsSend } from 'react-icons/bs'
+import { BsEmojiLaughing, BsSend, BsSendPlusFill } from 'react-icons/bs'
 import {
   FormEvent,
   FormEventHandler,
@@ -23,6 +23,7 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
 import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin'
 import { TEXT_FORMAT_TRANSFORMERS } from '@lexical/markdown'
+import { IoSend } from 'react-icons/io5'
 import FabButton from '@/components/Common/FabButton/FabButton'
 import IconButton from '@/components/Common/IconButton/IconButton'
 import FloatingTextFormatToolbarPlugin from './FloatingTextFormatToolbarPlugin'
@@ -77,9 +78,9 @@ export default function MessageBox({}: MessageBoxProps) {
   return (
     <div className="relative flex w-full max-w-2xl items-center self-center p-3 text-gray-600">
       <div className="flex items-center self-end pr-6">
-        <FabButton icon={<BsSend className="h-6 w-6 " />} />
+        <FabButton icon={<IoSend className="h-7 w-7" />} />
       </div>
-      <div className="tail-right relative flex h-full w-full rounded-l-lg rounded-t-lg  bg-white p-2">
+      <div className="tail-right relative flex h-full w-full rounded-l-lg rounded-t-lg border-primary bg-primary  p-2">
         {/* <div
           className=" no-scrollbar h-full max-h-28 w-0 grow overflow-y-auto rounded-lg p-1 text-base text-gray-900 placeholder:text-gray-700 focus:outline-none"
           placeholder="پیام..."
@@ -116,10 +117,16 @@ export default function MessageBox({}: MessageBoxProps) {
         </div> */}
         <LexicalComposer initialConfig={initialConfig}>
           <MarkdownShortcutPlugin transformers={TEXT_FORMAT_TRANSFORMERS} />
-          <div className="no-scrollbar h-full max-h-28 w-0 grow overflow-y-auto rounded-lg p-1 text-base text-gray-900 placeholder:text-gray-700 focus:outline-none">
+          <div className="no-scrollbar relative h-full max-h-28 w-0 grow overflow-y-auto rounded-lg p-1 text-base text-gray-900 placeholder:text-gray-700 focus:outline-none">
             <RichTextPlugin
-              contentEditable={<ContentEditable className="h-full w-full" />}
-              placeholder={<div>Enter some text...</div>}
+              contentEditable={
+                <ContentEditable className="h-full w-full p-1 text-primary focus:outline-none" />
+              }
+              placeholder={
+                <div className="pointer-events-none absolute right-2 top-1 text-gray-500">
+                  پیام...
+                </div>
+              }
               ErrorBoundary={LexicalErrorBoundary}
             />
           </div>

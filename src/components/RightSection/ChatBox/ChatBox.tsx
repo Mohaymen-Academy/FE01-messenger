@@ -1,5 +1,6 @@
 import { IoCheckmarkDoneOutline, IoCheckmarkOutline } from 'react-icons/io5'
 import { useDispatch } from 'react-redux'
+import classNames from 'classnames'
 import { ActiveChatSlice } from '@/redux/slices/ActiveChatSlice'
 import { ChatListSlice } from '@/redux/slices/ChatListSlice'
 import { UISlice } from '@/redux/slices/UISlice'
@@ -49,8 +50,11 @@ export default function ChatBox({
   }
   return (
     <div
-      style={{ backgroundColor: active ? '#7e85ed' : 'white' }}
-      className="flex items-center rounded-lg py-[10px] pl-2 text-secondary/100  hover:bg-chatBoxHover"
+      // style={{ backgroundColor: active ? '#7e85ed' : 'white' }}
+      className={classNames(
+        'flex items-center rounded-lg py-[10px] pl-2 text-secondary/100',
+        active ? 'bg-[#7e85ed]' : 'bg-primary hover:bg-chatBoxHover'
+      )}
       onClick={activateChat}
     >
       <div className="flex w-full justify-between">

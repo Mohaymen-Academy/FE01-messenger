@@ -11,7 +11,9 @@ export default function FabButton({ icon, primary }: FabButtonProps) {
     <button
       className={classNames(
         'transition-all ease-in ml-2 flex h-14 w-14 items-center justify-center rounded-full text-xl font-semibold focus:outline-none',
-        primary ? 'bg-blue-500' : 'bg-white hover:bg-blue-500 hover:text-white'
+        primary
+          ? 'bg-blue-500'
+          : 'bg-primary hover:bg-blue-500 hover:text-primary text-secondary'
       )}
     >
       {icon}
