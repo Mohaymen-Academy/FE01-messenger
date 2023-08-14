@@ -1,4 +1,8 @@
 import { IoCheckmarkDoneOutline, IoCheckmarkOutline } from 'react-icons/io5'
+import { useDispatch } from 'react-redux'
+import { ActiveChatSlice } from '@/redux/slices/ActiveChatSlice'
+import { ChatListSlice } from '@/redux/slices/ChatListSlice'
+import { UISlice } from '@/redux/slices/UISlice'
 
 interface ChatBoxProps {
   online: boolean
@@ -9,6 +13,8 @@ interface ChatBoxProps {
   seen: boolean
   seenEnable: boolean
   img?: string
+  id: string
+  active: boolean
 }
 
 export default function ChatBox({
@@ -20,11 +26,38 @@ export default function ChatBox({
   seen,
   seenEnable,
   img,
+  id,
+  active,
 }: ChatBoxProps) {
+  const colors = [
+    'blue',
+    'red',
+    'green',
+    'black',
+    'yellow',
+    'pink',
+    'brown',
+    'gray',
+    'cyan',
+  ]
+  const bgColor = Math.floor(Math.random() * colors.length)
+  const dispatch = useDispatch()
+  const activateChat = () => {
+    dispatch(UISlice.actions.openMidColumn())
+    dispatch(ActiveChatSlice.actions.setActiveChat({ id }))
+    dispatch(ChatListSlice.actions.setActive({ id }))
+  }
   return (
-    <div className="flex items-center rounded-lg py-[10px] pl-2 text-black  hover:bg-gray-200">
+    <div
+      style={{ backgroundColor: active ? '#7e85ed' : 'white' }}
+      className="flex items-center rounded-lg py-[10px] pl-2 text-secondary/100  hover:bg-chatBoxHover"
+      onClick={activateChat}
+    >
       <div className="flex w-full justify-between">
-        <div className="relative ml-2 mr-3 flex h-12 w-12 items-center justify-center rounded-full bg-blue-500 text-xl font-semibold text-white">
+        <div
+          style={{ backgroundColor: `${colors[bgColor]}` }}
+          className="relative ml-2 mr-3 flex h-12 w-12 items-center justify-center rounded-full text-xl font-semibold text-white"
+        >
           <div
             style={{ display: img ? 'none' : 'flex' }}
             className="flex w-full items-center justify-center rounded-full text-center"
@@ -45,7 +78,9 @@ export default function ChatBox({
         </div>
         <div className="min-w-0 flex-1 items-center">
           <div className="mb-1 flex justify-between">
-            <h2 className="text-sm font-semibold text-black">{senderName}</h2>
+            <h2 className="text-sm font-semibold text-primary/100">
+              {senderName}
+            </h2>
             <div
               style={{ display: seenEnable ? 'flex' : 'none' }}
               className="w-full justify-end"
@@ -59,7 +94,7 @@ export default function ChatBox({
                 className="ml-2 h-4 w-4 fill-current"
               />
             </div>
-            <span className="ml-1 text-xs font-medium text-gray-600">
+            <span className="ml-1 text-xs font-medium text-secondary/100">
               {lastMessageTime}
             </span>
           </div>

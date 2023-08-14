@@ -1,14 +1,22 @@
-import SearchColumn from '../Common/SearchColumn/SearchColumn'
+import classNames from 'classnames'
 import DetailsColumn from './DetailsColumn/DetailsColumn'
 
-interface LeftSectionProps {}
+interface LeftSectionProps {
+  active: boolean
+}
 
-export default function LeftSection({}: LeftSectionProps) {
+export default function LeftSection({ active }: LeftSectionProps) {
   return (
-    <div className="relative h-screen w-96 overflow-x-hidden">
+    <div
+      className={classNames(
+        'h-screen top-0 z-40 w-96 bg-primary/100 max-sm:max-w-[400px] absolute',
+        active
+          ? 'left-0 transition-all duration-500 ease-in-out'
+          : 'left-[-384px] transition-all duration-500 ease-in-out'
+      )}
+    >
       <DetailsColumn />
       {/* <SearchColumn mode='message'/> */}
     </div>
   )
 }
-

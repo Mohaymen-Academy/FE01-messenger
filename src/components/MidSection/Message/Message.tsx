@@ -12,15 +12,15 @@ interface MessageProps {
 export default function Message({ self, message, mode, time }: MessageProps) {
   const oneLiner =
     useTextWidth({ text: message, font: '16px "Segoe UI"' }) < 350
-  console.log(useTextWidth({ text: message, font: '16px "Segoe UI"' }))
+  // console.log(useTextWidth({ text: message, font: '16px "Segoe UI"' }))
 
   return (
     <div
       className={classNames(
-        'my-2 max-w-[400px] relative text-black flex flex-row bg-white px-2 rounded-t-lg ',
+        'my-2 max-w-[400px] relative text-primary flex flex-row px-2 rounded-t-lg ',
         self
-          ? 'self-start rounded-l-lg tail-right rtl'
-          : 'self-end rounded-r-lg tail-left ltr',
+          ? 'self-start rounded-l-lg tail-right rtl bg-selfChatBg border-selfChatBg'
+          : 'self-end rounded-r-lg tail-left ltr bg-primary border-primary',
         oneLiner ? 'w-fit' : 'w-full'
       )}
     >
@@ -33,7 +33,7 @@ export default function Message({ self, message, mode, time }: MessageProps) {
       >
         {message}
       </span>
-      <div className="mx-1 flex grow-0 flex-row items-end justify-end gap-1 pb-1 text-xs text-gray-400">
+      <div className="mx-1 flex grow-0 flex-row items-end justify-end gap-1 pb-1 text-xs text-secondary">
         {time}
         <div className={classNames(self ? 'left-2' : 'right-2')}>
           <Checkmark mode={mode} />

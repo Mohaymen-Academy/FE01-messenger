@@ -25,7 +25,7 @@
     width: 0;
     height: 0;
     border: 1em solid transparent;
-    border-right-color: #ffffff;
+    border-right-color: inherit;
     border-left: 0;
     border-bottom: 0;
   }
@@ -39,10 +39,35 @@
     width: 0;
     height: 0;
     border: 1em solid transparent;
-    border-left-color: #ffffff;
+    border-left-color: inherit;
     border-right: 0;
     border-bottom: 0;
   }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 :root {
+  --background-color-50: 170 170 170;
+  --background-color-100: 255 255 255;
+  --background-color-200: 96 167 240;
+  --background-color-300: 51 144 236;
+  --background-color-400: 244 244 245;
+  --background-color-500: 0 0 0;
+  --background-color-600: 239 18 41;
+  --self-chat-bg-color: 178, 235, 242;
+}
+.dark {
+  --background-color-50: 170 170 170;
+  --background-color-100: 15 15 15;
+  --background-color-200: 118 106 200;
+  --background-color-300: 123 113 198;
+  --background-color-400: 131 120 219;
+  --background-color-500: 255 255 255;
+  --background-color-600: 118 105 200;
+  --self-chat-bg-color: 0, 96, 100;
 }
