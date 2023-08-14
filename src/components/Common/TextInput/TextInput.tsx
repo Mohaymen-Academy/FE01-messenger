@@ -11,6 +11,7 @@ interface TextInputProps {
   pattern?: RegExp
   initialValue?: string
   onClick?: () => void
+  onChange?: () => void
 }
 
 export default function TextInput({
@@ -21,6 +22,7 @@ export default function TextInput({
   formId,
   pattern,
   onClick,
+  onChange,
 }: TextInputProps) {
   const [borderBColor, setBorderBottomColor] = useState('rgb(156 163 175)')
   const [isValid, setIsValid] = useState(true)
@@ -47,6 +49,7 @@ export default function TextInput({
       style={{
         marginBottom: formId === 'password' && !isValid ? '50px' : '0',
       }}
+      onChange={onChange}
     >
       <input
         onClick={onClick}

@@ -4,6 +4,7 @@ export interface UISliceType {
   infoColumn: boolean
   midColumn: boolean
   cropperModal: boolean
+  profileSettings: boolean
 }
 
 export const UISlice = createSlice({
@@ -12,6 +13,7 @@ export const UISlice = createSlice({
     infoColumn: false,
     midColumn: false,
     cropperModal: false,
+    profileSettings: false,
   },
   reducers: {
     openInfoColumn: (state: UISliceType) => {
@@ -28,6 +30,12 @@ export const UISlice = createSlice({
     },
     closeCropperModal: (state: UISliceType) => {
       state.cropperModal = false
+    },
+    closeProfileSettings: (state: UISliceType) => {
+      state.profileSettings = false
+    },
+    openProfileSettings: (state: UISliceType) => {
+      state.profileSettings = true
     },
   },
 })

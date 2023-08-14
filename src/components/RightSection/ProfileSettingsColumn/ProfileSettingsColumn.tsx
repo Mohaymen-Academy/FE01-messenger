@@ -23,10 +23,11 @@ interface ProfileSettingsColumnProps {
 export default function ProfileSettingsColumn({
   isActive,
 }: ProfileSettingsColumnProps) {
-  const value = useContext(Context)
   const name = useSelector((state: storeStateTypes) => state.user.name)
   const userName = useSelector((state: storeStateTypes) => state.user.userName)
   const bio = useSelector((state: storeStateTypes) => state.user.bio)
+  const [confirmButtonActive, setConfirmButtonActive] = useState(false)
+
   const {
     register,
     handleSubmit,
@@ -44,6 +45,8 @@ export default function ProfileSettingsColumn({
     dispatch(UserSlice.actions.setName(data.name))
     dispatch(UserSlice.actions.setBio(data.bio))
     dispatch(UserSlice.actions.setUserName(data.userName))
+    dispatch(UISlice.actions.closeProfileSettings())
+    setConfirmButtonActive(false)
   }
   // cropper image
   const defaultSrc = img
@@ -69,21 +72,38 @@ export default function ProfileSettingsColumn({
     dispatch(UISlice.actions.openCropperModal())
   }
 
+  const showConfirmButton = () => {
+    if (!confirmButtonActive) {
+      setConfirmButtonActive(true)
+    }
+  }
+
   const handleClose = () => {
     dispatch(UISlice.actions.closeCropperModal())
+  }
+
+  const closeProfileSettings = () => {
+    dispatch(UserSlice.actions.setName(name))
+    dispatch(UserSlice.actions.setBio(bio))
+    dispatch(UserSlice.actions.setUserName(userName))
+    dispatch(UISlice.actions.closeProfileSettings())
+    setConfirmButtonActive(false)
+    setValue('bio', bio)
+    setValue('name', name)
+    setValue('userName', userName)
   }
 
   return (
     <form
       style={{ transform: isActive ? '' : 'translateX(100%)' }}
       onSubmit={handleSubmit(onSubmit)}
-      className="absolute z-10 h-full w-full overflow-x-hidden bg-primary/100 shadow-xl transition-all duration-500 ease-in-out max-sm:w-full"
+      className="absolute z-10 h-full w-full bg-primary/100 shadow-xl transition-all duration-500 ease-in-out max-sm:w-full"
     >
       {/* header */}
       <div className="relative w-full bg-primary shadow-xl max-sm:w-full">
         <div className="flex w-full items-center justify-between p-3">
           <IconButton
-            onClick={value}
+            onClick={closeProfileSettings}
             icon={
               <IoArrowForward className="h-6 w-6 fill-current text-gray-600" />
             }
@@ -137,6 +157,7 @@ export default function ProfileSettingsColumn({
           register={register}
           errors={errors}
           onClick={() => setValue('name', name)}
+          onChange={showConfirmButton}
         />
         {/* <TextInput
           formId="phoneNumber"
@@ -154,6 +175,7 @@ export default function ProfileSettingsColumn({
             errors={errors}
             initialValue={bio}
             onClick={() => setValue('bio', bio)}
+            onChange={showConfirmButton}
           />
           <p className="pt-1 text-sm text-gray-500">
             شما می‌توانید چند خط درباره خودتان اضافه کنید. هرکس که پروفایل شما
@@ -166,10 +188,14 @@ export default function ProfileSettingsColumn({
           type="text"
           register={register}
           errors={errors}
-          onClick={() => setValue('userName', userName)
-        }
+          onClick={() => setValue('userName', userName)}
+          onChange={showConfirmButton}
         />
-        <button type="submit" className="absolute bottom-0 left-0">
+        <button
+          type="submit"
+          style={{ bottom: confirmButtonActive ? '0' : '-100px' }}
+          className="absolute bottom-0 left-0 transition-all duration-300 ease-in-out"
+        >
           <FabButton
             primary={true}
             icon={<BsCheck2 className="h-8 w-8 fill-current text-white" />}

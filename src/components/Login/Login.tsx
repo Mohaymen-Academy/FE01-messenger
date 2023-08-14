@@ -14,10 +14,8 @@ export default function Login({ active, onClick }: LoginProps) {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: '',
-      userName: '',
-      bio: '',
-      phoneNumber: '',
+      email: '' ,
+      password: ''
     },
   })
   const onSubmit: SubmitHandler<FieldValues> = data => {
