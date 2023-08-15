@@ -1,8 +1,7 @@
 import { BsSearch } from 'react-icons/bs'
 
-interface SearchBarProps {}
 
-export default function SearchBar({}: SearchBarProps) {
+export default function SearchBar() {
   return (
     <div className=" relative flex w-full items-center overflow-hidden pl-2 text-gray-600 focus-within:text-gray-400">
       <span className="absolute left-0 flex items-center pl-4">

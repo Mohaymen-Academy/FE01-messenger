@@ -3,7 +3,7 @@ import classNames from 'classnames'
 interface TabButtonProps {
   text: string
   active: boolean
-  onClick: (e: React.MouseEvent<HTMLDivElement>) => void
+  onClick: () => void
 }
 
 export default function TabButton({ text, active, onClick }: TabButtonProps) {

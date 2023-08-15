@@ -1,5 +1,4 @@
-import { url } from 'inspector'
-import React, { SyntheticEvent, useState } from 'react'
+import React, { useState } from 'react'
 import { Alert, Snackbar } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import LoginLanding from '@/components/Common/LoginLanding/LoginLanding'
@@ -9,8 +8,7 @@ import img from '@/assets/login-wp.jpg'
 import { storeStateTypes } from '@/types/types'
 import { UISlice } from '@/redux/slices/UISlice'
 
-interface LoginPageProps {}
-export default function LoginPage({}: LoginPageProps) {
+export default function LoginPage() {
   const [loginLandingActive, setLoginLandingActive] = useState(true)
   const [loginActive, setLoginActive] = useState(false)
   const [signUpActive, setSignUpActive] = useState(false)

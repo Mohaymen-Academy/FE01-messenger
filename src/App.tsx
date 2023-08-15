@@ -7,18 +7,14 @@ import { userSelectors } from './redux/slices/UserSlice'
 function App() {
   const isLoggedIn = useSelector(userSelectors.isLoggedIn)
   return (
-    <>
-      {/* <MainPage /> */}
-      {/* <LoginPage /> */}
-      <BrowserRouter>
-        <Routes>
-          <Route index path="login/" element={<LoginPage />} />
-          <Route path="/" element={<MainPage />} />
-        </Routes>
-        {!isLoggedIn && <Navigate replace to={'/login/'} />}
-        {isLoggedIn && <Navigate replace to={'/'} />}
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route index path="login/" element={<LoginPage />} />
+        <Route path="/" element={<MainPage />} />
+      </Routes>
+      {!isLoggedIn && <Navigate replace to={'/login/'} />}
+      {isLoggedIn && <Navigate replace to={'/'} />}
+    </BrowserRouter>
   )
 }
 

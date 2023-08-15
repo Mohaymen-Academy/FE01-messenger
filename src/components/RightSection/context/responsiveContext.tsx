@@ -18,7 +18,6 @@ function RightSectionProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(true)
   const toggleIsOpen = () => {
     setIsOpen(!isOpen)
-    console.log('test')
   }
   return (
     <RightSectionOpen.Provider value={{ isOpen, toggleOpen: toggleIsOpen }}>

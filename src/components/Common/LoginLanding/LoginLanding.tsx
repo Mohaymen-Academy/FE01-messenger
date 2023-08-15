@@ -1,7 +1,9 @@
+import React from 'react'
 import logo from '@/assets/hermes.png'
 
 interface LoginLandingProps {
-  onClick: (e) => void
+  // eslint-disable-next-line no-unused-vars
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
   active: boolean
 }
 

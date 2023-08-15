@@ -1,10 +1,8 @@
 import { BiPencil } from 'react-icons/bi'
 import { IoArrowForward } from 'react-icons/io5'
-import { useContext } from 'react'
 import { useDispatch } from 'react-redux'
 import IconButton from '@/components/Common/IconButton'
 import { UISlice } from '@/redux/slices/UISlice'
-import { Context } from '../context/Context'
 
 interface SettingsHeaderProps {
   onClick: () => void
