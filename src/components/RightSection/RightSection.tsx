@@ -1,17 +1,12 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import classNames from 'classnames'
 import { useSelector } from 'react-redux'
-import { Context } from '@/components/RightSection/context/Context'
 import { storeStateTypes } from '@/types/types'
-import { UISlice } from '@/redux/slices/UISlice'
 import ChatsColumn from './ChatsColumn/ChatsColumn'
 import SettingsColumn from './SettingsColumn/SettingsColumn'
-import { RightSectionOpen } from './context/responsiveContext'
 import EditSettingsColumn from './ProfileSettingsColumn'
 
-interface RightSectionProps {}
-
-export default function RightSection({}: RightSectionProps) {
+export default function RightSection() {
   const [settingsActivate, setSettingsActivate] = useState(false)
   const profileSettingsActive = useSelector(
     (state: storeStateTypes) => state.UI.profileSettings
@@ -19,8 +14,6 @@ export default function RightSection({}: RightSectionProps) {
   const shouldClose = useSelector(
     (state: storeStateTypes) => state.UI.midColumn
   )
-
-  const context = useContext(RightSectionOpen)
 
   const navMenuHandler = () => {
     setSettingsActivate(true)

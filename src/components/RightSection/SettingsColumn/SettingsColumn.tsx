@@ -1,5 +1,3 @@
-import { userInfo } from 'os'
-import { url } from 'inspector'
 import { FiAtSign, FiLogOut } from 'react-icons/fi'
 import {
   BsTelephone,
@@ -12,7 +10,6 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import InfoImage from '@/components/Common/InfoImage'
 import InfoRow from '@/components/Common/InfoRow'
-import img from '@/assets/download.jpeg'
 import { storeStateTypes } from '@/types/types'
 import SettingsHeader from '../SettingsHeader/SettingsHeader'
 

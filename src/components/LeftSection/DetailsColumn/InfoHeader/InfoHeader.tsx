@@ -5,9 +5,8 @@ import { useDispatch } from 'react-redux'
 import IconButton from '@/components/Common/IconButton/IconButton'
 import { UISlice } from '@/redux/slices/UISlice'
 
-interface InfoHeaderProps {}
 
-export default function InfoHeader({}: InfoHeaderProps) {
+export default function InfoHeader() {
   const dispatch = useDispatch()
   const closeInfoColumn = () => {
     dispatch(UISlice.actions.closeInfoColumn())

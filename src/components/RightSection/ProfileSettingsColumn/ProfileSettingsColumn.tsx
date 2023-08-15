@@ -1,20 +1,15 @@
 import { IoArrowForward } from 'react-icons/io5'
-import React, { useContext, useRef, useState } from 'react'
+import { useState } from 'react'
 import { BsCheck2 } from 'react-icons/bs'
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import Box from '@mui/material/Box'
-import Modal from '@mui/material/Modal'
-import { Menu, MenuItem } from '@mui/material'
 import IconButton from '@/components/Common/IconButton'
 import TextInput from '@/components/Common/TextInput/TextInput'
-import img from '@/assets/download.jpeg'
-import camera from '@/assets/camera-add.svg'
 import FabButton from '@/components/Common/FabButton/FabButton'
 import { UserSlice } from '@/redux/slices/UserSlice'
 import { storeStateTypes } from '@/types/types'
 import { UISlice } from '@/redux/slices/UISlice'
-import ImageInput from '../ImageInput/ImageInput'
+import ProfileSettingsPhoto from '../ProfileSettingsPhoto/ProfileSettingsPhoto'
 
 interface ProfileSettingsColumnProps {
   isActive: boolean
@@ -33,7 +28,6 @@ export default function ProfileSettingsColumn({
     handleSubmit,
     formState: { errors },
     setValue,
-    getValues,
   } = useForm<FieldValues>({
     defaultValues: {
       name,
@@ -43,37 +37,11 @@ export default function ProfileSettingsColumn({
   })
   const dispatch = useDispatch()
   const onSubmit: SubmitHandler<FieldValues> = data => {
-    dispatch(UserSlice.actions.setName(data.name))
-    dispatch(UserSlice.actions.setBio(data.bio))
-    dispatch(UserSlice.actions.setUserName(data.userName))
+    dispatch(UserSlice.actions.setName(data.name as string))
+    dispatch(UserSlice.actions.setBio(data.bio as string))
+    dispatch(UserSlice.actions.setUserName(data.userName as string))
     dispatch(UISlice.actions.closeProfileSettings())
     setConfirmButtonActive(false)
-  }
-  // cropper image
-  const defaultSrc = img
-  const [imageCropperActive, setImageCropperActive] = useState(false)
-  const [image, setImage] = useState(defaultSrc)
-  const openModal = useSelector(
-    (state: storeStateTypes) => state.UI.cropperModal
-  )
-  const [openImageModal, setOpenImageModal] = useState(false)
-
-  const profileImage = useSelector((state: storeStateTypes) => state.user.image)
-  const cropImage = e => {
-    e.stopPropagation()
-    let files
-    if (e.dataTransfer) {
-      files = e.dataTransfer.files
-    } else if (e.target) {
-      files = e.target.files
-    }
-    const reader = new FileReader()
-    reader.onload = () => {
-      setImage(reader.result as any)
-    }
-    reader.readAsDataURL(files[0])
-    setImageCropperActive(true)
-    dispatch(UISlice.actions.openCropperModal())
   }
 
   const showConfirmButton = () => {
@@ -91,38 +59,6 @@ export default function ProfileSettingsColumn({
     setValue('bio', bio)
     setValue('name', name)
     setValue('userName', userName)
-  }
-
-  // profile image menu
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-  const profileImageMenu = Boolean(anchorEl)
-  const handleOpenProfileMenu = (event: React.MouseEvent<HTMLImageElement>) => {
-    event.preventDefault()
-    event.stopPropagation()
-    setAnchorEl(event.currentTarget)
-  }
-  const handleCloseProfileMenu = e => {
-    e.stopPropagation()
-    setAnchorEl(null)
-  }
-
-  const handleDeleteProfileImage = e => {
-    e.preventDefault()
-    e.stopPropagation()
-    dispatch(UserSlice.actions.deleteImage())
-    handleCloseProfileMenu()
-  }
-
-  // show Image Modal
-  const showProfileModal = () => {
-    setOpenImageModal(true)
-  }
-  const closeProfileModal = () => {
-    setOpenImageModal(false)
-  }
-
-  const handleClose = () => {
-    dispatch(UISlice.actions.closeCropperModal())
   }
 
   return (
@@ -143,82 +79,7 @@ export default function ProfileSettingsColumn({
         </div>
       </div>
       {/* change photo */}
-      <div className="relative mb-2 mt-4 flex w-full justify-center">
-        <label
-          style={{ backgroundColor: profileImage ? 'white' : 'black' }}
-          role="button"
-          className="h-32 w-32 content-center overflow-hidden rounded-full p-1 text-center focus:outline-none"
-        >
-          <div onClick={showProfileModal}>
-            <img
-              style={{ display: profileImage ? '' : 'none' }}
-              className="h-full w-full content-center rounded-full border-2 border-gray-200 object-cover group-hover:blur-none"
-              src={profileImage}
-            />
-            <div className="absolute right-32 top-[86px] transition-all duration-500 ease-in-out">
-              <img
-                id="basic-button"
-                aria-controls={profileImageMenu ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={profileImageMenu ? 'true' : undefined}
-                onClick={handleOpenProfileMenu}
-                className="z-10 h-12 w-12 content-center rounded-full border-2 border-white bg-blue-400 object-cover transition-all duration-500 ease-in-out "
-                src={camera}
-              />
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={profileImageMenu}
-                onClose={handleCloseProfileMenu}
-                MenuListProps={{
-                  'aria-labelledby': 'basic-button',
-                }}
-              >
-                <MenuItem
-                  className="bg-gray-200"
-                  onClick={handleDeleteProfileImage}
-                >
-                  حذف
-                </MenuItem>
-                <MenuItem onClick={e => e.stopPropagation()}>
-                  <label>
-                    {' '}
-                    انتخاب عکس جدید
-                    <input
-                      className="hidden h-full w-full bg-red-500"
-                      onChange={cropImage}
-                      type="file"
-                      accept="image/png , image/jpeg"
-                    />
-                  </label>
-                </MenuItem>
-              </Menu>
-            </div>
-          </div>
-        </label>
-
-        <Modal
-          open={openModal}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box className="mt-32 flex items-center justify-center">
-            <ImageInput isActive={imageCropperActive} image={image} />
-          </Box>
-        </Modal>
-        <Modal
-          style={{ display: openImageModal ? '' : 'none' }}
-          open={openImageModal}
-          onClose={closeProfileModal}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box className="mt-32 flex items-center justify-center">
-            <img src={profileImage} />
-          </Box>
-        </Modal>
-      </div>
+      <ProfileSettingsPhoto />
       {/* inputs */}
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -233,13 +94,7 @@ export default function ProfileSettingsColumn({
           onClick={() => setValue('name', name)}
           onChange={showConfirmButton}
         />
-        {/* <TextInput
-          formId="phoneNumber"
-          palceHolder="شماره همراه"
-          type="tel"
-          register={register}
-          errors={errors}
-        /> */}
+
         <div>
           <TextInput
             formId="bio"

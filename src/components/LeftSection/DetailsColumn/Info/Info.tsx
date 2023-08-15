@@ -1,15 +1,13 @@
 import { FiAtSign } from 'react-icons/fi'
 import { BsInfoCircle, BsTelephone } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
-import img from '@/assets/download.jpeg'
 import { storeStateTypes } from '@/types/types'
 import InfoHeader from '../InfoHeader'
 import InfoImage from '../../../Common/InfoImage'
 import InfoRow from '../../../Common/InfoRow'
 
-interface InfoProps {}
 
-export default function Info({}: InfoProps) {
+export default function Info() {
   const activeId = useSelector((state: storeStateTypes) => state.activeChat.id)
   const activeChat = useSelector((state: storeStateTypes) =>
     state.chatList.chatBoxes.find(compo => compo.id === activeId)

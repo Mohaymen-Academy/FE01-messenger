@@ -1,6 +1,5 @@
-import React, { useState, useRef } from 'react'
+import { useRef } from 'react'
 import Cropper, { ReactCropperElement } from 'react-cropper'
-import 'cropperjs/dist/cropper.css'
 import { useDispatch } from 'react-redux'
 import { UserSlice } from '@/redux/slices/UserSlice'
 import { UISlice } from '@/redux/slices/UISlice'
@@ -41,7 +40,7 @@ export default function ImageInput({ isActive, image }: ImageInputProps) {
           minCropBoxWidth={10}
           background={false}
           responsive={true}
-          checkOrientation={false} // https://github.com/fengyuanchen/cropperjs/issues/671
+          checkOrientation={false}
         />
       </div>
       <div
