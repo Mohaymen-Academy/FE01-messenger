@@ -43,6 +43,9 @@ module.exports = {
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
   },
   settings: {
+    react: {
+      version: 'detect',
+    },
     'import/resolver': {
       typescript: {},
     },

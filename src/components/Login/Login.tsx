@@ -1,7 +1,7 @@
 import { BiArrowBack } from 'react-icons/bi'
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-import login from '@/api/Login'
+import login from '@/api/user'
 import { UserSlice } from '@/redux/slices/UserSlice'
 import LoginInput from '../Common/TextInput/TextInput'
 
@@ -28,7 +28,7 @@ export default function Login({ active, onClick }: LoginProps) {
     login(data)
       .then(res => {
         console.log(res)
-        dispatch(UserSlice.actions.login({ jwt: res }))
+        dispatch(UserSlice.actions.login({ token: res }))
       })
       .catch(console.log)
   }

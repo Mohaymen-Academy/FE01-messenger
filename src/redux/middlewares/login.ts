@@ -1,9 +1,9 @@
-import { Middleware } from '@reduxjs/toolkit'
+// import { AnyAction, Middleware } from '@reduxjs/toolkit'
 
-const loginMiddleware: Middleware =
-  store => next => (action: { type: string }) => {
-    const result = next(action) as element
-    if (action.type == 'login') localStorage.setItem('jwt', action.jwt)
-    return result
-  }
-export default loginMiddleware
+// const loginMiddleware: Middleware
+// () => next => (action: { type: string }) => {
+//   const result = next(action) as AnyAction
+//   if (action.type == 'login') localStorage.setItem('token', action.token)
+//   return result
+// }
+// export default loginMiddleware
