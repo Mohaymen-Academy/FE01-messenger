@@ -4,7 +4,6 @@ import UserSlice from './slices/UserSlice/UserSlice'
 import { ChatListSlice } from './slices/ChatListSlice'
 import { ActiveChatSlice } from './slices/ActiveChatSlice'
 import { UISlice } from './slices/UISlice'
-import loginMiddleware from './middlewares/login'
 
 export default configureStore({
   reducer: {

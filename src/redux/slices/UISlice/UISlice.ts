@@ -1,10 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+type SnackType = null | {
+  text: string
+  severity: 'error' | 'warning' | 'info' | 'success'
+}
 export interface UISliceType {
   infoColumn: boolean
   midColumn: boolean
   cropperModal: boolean
   profileSettings: boolean
+  snack: SnackType
 }
 
 export const UISlice = createSlice({
@@ -14,6 +19,7 @@ export const UISlice = createSlice({
     midColumn: false,
     cropperModal: false,
     profileSettings: false,
+    snack: null,
   },
   reducers: {
     openInfoColumn: (state: UISliceType) => {
@@ -39,6 +45,15 @@ export const UISlice = createSlice({
     },
     openProfileSettings: (state: UISliceType) => {
       state.profileSettings = true
+    },
+    openSnack: (
+      state: UISliceType,
+      action: { type: string; payload: SnackType }
+    ) => {
+      state.snack = action.payload
+    },
+    closeSnack: (state: UISliceType) => {
+      state.snack = null
     },
   },
 })

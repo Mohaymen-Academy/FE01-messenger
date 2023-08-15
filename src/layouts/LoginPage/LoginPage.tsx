@@ -1,19 +1,24 @@
 import { url } from 'inspector'
-import { useState } from 'react'
+import React, { SyntheticEvent, useState } from 'react'
+import { Alert, Snackbar } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
 import LoginLanding from '@/components/Common/LoginLanding/LoginLanding'
 import Login from '@/components/Login'
 import SignUp from '@/components/SignUp/SignUp'
 import img from '@/assets/login-wp.jpg'
+import { storeStateTypes } from '@/types/types'
+import { UISlice } from '@/redux/slices/UISlice'
 
 interface LoginPageProps {}
-
 export default function LoginPage({}: LoginPageProps) {
   const [loginLandingActive, setLoginLandingActive] = useState(true)
   const [loginActive, setLoginActive] = useState(false)
   const [signUpActive, setSignUpActive] = useState(false)
+  const snack = useSelector((state: storeStateTypes) => state.UI.snack)
+  const dispatch = useDispatch()
 
-  const loginLandingHandler = e => {
-    const title = e.target.innerText
+  const loginLandingHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const title = e.currentTarget.innerText
     if (title === 'ورود') {
       setLoginActive(true)
       setSignUpActive(false)
@@ -50,6 +55,16 @@ export default function LoginPage({}: LoginPageProps) {
           <SignUp onClick={backtoLoginLandingPage} active={signUpActive} />
         </div>
       </div>
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        open={!!snack}
+        autoHideDuration={3000}
+        onClose={() => dispatch(UISlice.actions.closeSnack())}
+      >
+        <Alert variant="filled" severity={snack?.severity}>
+          {snack?.text}
+        </Alert>
+      </Snackbar>
     </div>
   )
 }

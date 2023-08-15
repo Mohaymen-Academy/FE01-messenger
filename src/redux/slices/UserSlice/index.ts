@@ -1,5 +1,6 @@
 import { UserSlice, UserSliceType } from './UserSlice'
+import userSelectors from './UserSelectors'
 
-export { UserSlice }
+export { UserSlice, userSelectors }
 
 export type { UserSliceType }
