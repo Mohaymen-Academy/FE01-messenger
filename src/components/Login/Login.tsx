@@ -3,6 +3,7 @@ import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import login from '@/api/user'
 import { UserSlice } from '@/redux/slices/UserSlice'
+import { loginService } from '@/services/userService'
 import LoginInput from '../Common/TextInput/TextInput'
 
 interface LoginProps {
@@ -23,14 +24,7 @@ export default function Login({ active, onClick }: LoginProps) {
     },
   })
   const onSubmit: SubmitHandler<FieldValues> = data => {
-    console.log(data)
-
-    login(data)
-      .then(res => {
-        console.log(res)
-        dispatch(UserSlice.actions.login({ token: res }))
-      })
-      .catch(console.log)
+    loginService(data.email, data.password)
   }
   return (
     <div
