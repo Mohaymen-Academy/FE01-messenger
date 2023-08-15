@@ -2,6 +2,7 @@ import { BiArrowBack } from 'react-icons/bi'
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import { useRef, useState } from 'react'
 import classNames from 'classnames'
+import { registerService } from '@/services/userService'
 import LoginInput from '../Common/TextInput/TextInput'
 
 interface SignUpProps {
@@ -18,15 +19,19 @@ export default function SignUp({ active, onClick }: SignUpProps) {
     defaultValues: {
       email: '',
       password: '',
-      passwordCheck: '',
+      checkpassword: '',
     },
   })
   const [passwordCheckValidate, setPasswordCheckValidate] = useState(true)
   const onSubmit: SubmitHandler<FieldValues> = data => {
-    if (data.password !== data.passwordCheck) {
+    console.log('first')
+    if (data.password != data.checkpassword) {
+      console.log(data.password)
+      console.log(data.checkpassword)
       setPasswordCheckValidate(false)
     } else {
-      setPasswordCheckValidate(true)
+      console.log('sadf')
+      registerService(data.email, data.password)
     }
   }
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
@@ -97,7 +102,7 @@ export default function SignUp({ active, onClick }: SignUpProps) {
           />
           <LoginInput
             formId="checkpassword"
-            type="password"
+            type="checkpassword"
             palceHolder="تایید رمز عبور"
             register={register}
             errors={errors}
