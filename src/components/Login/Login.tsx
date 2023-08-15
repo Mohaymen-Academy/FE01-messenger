@@ -1,5 +1,8 @@
 import { BiArrowBack } from 'react-icons/bi'
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import login from '@/api/Login'
+import { UserSlice } from '@/redux/slices/UserSlice'
 import LoginInput from '../Common/TextInput/TextInput'
 
 interface LoginProps {
@@ -8,6 +11,7 @@ interface LoginProps {
 }
 
 export default function Login({ active, onClick }: LoginProps) {
+  const dispatch = useDispatch()
   const {
     register,
     handleSubmit,
@@ -19,7 +23,14 @@ export default function Login({ active, onClick }: LoginProps) {
     },
   })
   const onSubmit: SubmitHandler<FieldValues> = data => {
-    console.log(1)
+    console.log(data)
+
+    login(data)
+      .then(res => {
+        console.log(res)
+        dispatch(UserSlice.actions.login({ jwt: res }))
+      })
+      .catch(console.log)
   }
   return (
     <div
