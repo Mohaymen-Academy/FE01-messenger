@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 
 interface InfoRowProps {
-  title: string
+  title?: string
   subTitle: string
   icon: ReactElement
 }

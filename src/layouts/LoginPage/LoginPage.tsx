@@ -1,18 +1,15 @@
-import { url } from 'inspector'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import LoginLanding from '@/components/Common/LoginLanding/LoginLanding'
 import Login from '@/components/Login'
 import SignUp from '@/components/SignUp/SignUp'
 import img from '@/assets/login-wp.jpg'
 
-interface LoginPageProps {}
-
-export default function LoginPage({}: LoginPageProps) {
+export default function LoginPage() {
   const [loginLandingActive, setLoginLandingActive] = useState(true)
   const [loginActive, setLoginActive] = useState(false)
   const [signUpActive, setSignUpActive] = useState(false)
 
-  const loginLandingHandler = e => {
+  const loginLandingHandler = (e: React.MouseEvent<HTMLElement>) => {
     const title = e.target.innerText
     if (title === 'ورود') {
       setLoginActive(true)

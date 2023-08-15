@@ -1,9 +1,7 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import TabButton from '@/components/Common/TabButton'
 
-interface MediaNavProps {}
-
-export default function MediaNav({}: MediaNavProps) {
+export default function MediaNav() {
   const [activate, setActivation] = useState(new Array(5))
 
   const changeIndexActivate = (index: number) => {
@@ -13,7 +11,6 @@ export default function MediaNav({}: MediaNavProps) {
   }
 
   const changeActive = (e: React.MouseEvent<HTMLDivElement>) => {
-    // @ts-ignore
     const title = e.target.innerText
     if (title === 'رسانه') {
       changeIndexActivate(0)

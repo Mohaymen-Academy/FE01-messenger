@@ -14,7 +14,6 @@ export const ActiveChatSlice = createSlice({
       action: { payload: { id: string } }
     ) => {
       const { id } = action.payload
-      console.log(id)
       state.id = id
     },
   },

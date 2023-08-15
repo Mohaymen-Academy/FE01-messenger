@@ -1,7 +1,7 @@
 import logo from '@/assets/hermes.png'
 
 interface LoginLandingProps {
-  onClick: (e) => void
+  onClick: () => void
   active: boolean
 }
 

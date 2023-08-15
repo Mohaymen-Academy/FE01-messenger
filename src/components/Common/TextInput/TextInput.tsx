@@ -1,6 +1,5 @@
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form'
-import { useMemo, useState } from 'react'
-import classNames from 'classnames'
+import React, { useMemo, useState } from 'react'
 
 interface TextInputProps {
   palceHolder: string
@@ -27,7 +26,6 @@ export default function TextInput({
   onClick,
   onChange,
   maxLength,
-  inputSize,
 }: TextInputProps) {
   const [borderBColor, setBorderBottomColor] = useState('rgb(156 163 175)')
   const [isValid, setIsValid] = useState(true)
@@ -36,9 +34,9 @@ export default function TextInput({
     return { register: 'no Register' }
   }, [register])
 
-  const textValidation = e => {
+  const textValidation = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (pattern == null) return
-    const inputText = e.target.value
+    const inputText = e.currentTarget.value
     if (pattern.test(inputText)) {
       setBorderBottomColor('#16a085')
       setIsValid(true)
@@ -68,15 +66,6 @@ export default function TextInput({
         onChange={textValidation}
         maxLength={maxLength}
       />
-      {/* <div
-        className={classNames(
-          maxLength != null
-            ? 'absolute top-3 w-6 text-center left-0 rounded-full text-gray-800'
-            : 'hidden'
-        )}
-      >
-        {maxLength - inputSize}
-      </div> */}
       <label className="pointer-events-none absolute -top-1.5 left-0 flex h-full w-full select-none text-[11px] font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2  after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] peer-placeholder-shown:text-gray-500 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-500 peer-focus:after:scale-x-100 peer-focus:after:border-gray-500 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-gray-500">
         {palceHolder}
       </label>

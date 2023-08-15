@@ -23,32 +23,25 @@ export const UserSlice = createSlice({
     token: localStorage.getItem('token') ?? '',
   },
   reducers: {
-    setName: (state: UserSliceType, action: { payload: { name: string } }) => {
-      const { name } = action.payload
-      state.name = name
+    setName: (state: UserSliceType, action: { payload: string }) => {
+      state.name = action.payload
     },
-    setUserName: (
-      state: UserSliceType,
-      action: { payload: { userName: string } }
-    ) => {
-      const { userName } = action.payload
-      state.userName = userName
+    setUserName: (state: UserSliceType, action: { payload: string }) => {
+      state.userName = action.payload
     },
-    setBio: (state: UserSliceType, action: { payload: { bio: string } }) => {
-      const { bio } = action.payload
-      state.bio = bio
+    setBio: (state: UserSliceType, action: { payload: string }) => {
+      state.bio = action.payload
     },
-    setImage: (
-      state: UserSliceType,
-      action: { payload: { image: string } }
-    ) => {
-      const { image } = action.payload
-      state.image = image
+    setImage: (state: UserSliceType, action: { payload: string }) => {
+      state.image = action.payload
     },
     login: (state: UserSliceType, action: { payload: { token: string } }) => {
       const { token } = action.payload
       localStorage.setItem('token', token)
       state.token = token
+    },
+    deleteImage: (state: UserSliceType) => {
+      state.image = ''
     },
   },
 })

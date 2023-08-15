@@ -1,4 +1,3 @@
-import SearchBar from '@/components/Common/SearchBar/SearchBar'
 import SearchHeader from '../SearchHeader/SearchHeader'
 import SearchList from '../SearchList/SearchList'
 

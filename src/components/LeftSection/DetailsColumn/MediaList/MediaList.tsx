@@ -1,8 +1,6 @@
 import MediaNav from '../MediaNav'
 
-interface MediaListProps {}
-
-export default function MediaList({}: MediaListProps) {
+export default function MediaList() {
   return (
     <div className="mt-2 h-[calc(50vh_-_60px)]">
       <MediaNav />
