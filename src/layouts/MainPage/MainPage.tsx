@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import wallpaper from '@/assets/login-wp.jpg'
 import { RightSectionProvider } from '@/components/RightSection/context/responsiveContext'
 import { storeStateTypes } from '@/types/types'
+import Snack from '@/components/Common/Snack/Snack'
 import LeftSection from '../../components/LeftSection/LeftSection'
 import MidSection from '../../components/MidSection'
 import RightSection from '../../components/RightSection/RightSection'
@@ -26,6 +27,7 @@ export default function MainPage({}: MainPageProps) {
       </RightSectionProvider>
       <MidSection active={true} />
       <LeftSection active={activeDetails} />
+      <Snack />
     </div>
   )
 }

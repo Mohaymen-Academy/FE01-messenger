@@ -5,15 +5,13 @@ import LoginLanding from '@/components/Common/LoginLanding/LoginLanding'
 import Login from '@/components/Login'
 import SignUp from '@/components/SignUp/SignUp'
 import img from '@/assets/login-wp.jpg'
-import { storeStateTypes } from '@/types/types'
-import { UISlice } from '@/redux/slices/UISlice'
+import Snack from '@/components/Common/Snack/Snack'
+import InitiateProfile from '@/components/InitiateProfile/InitiateProfile'
 
 export default function LoginPage() {
   const [loginLandingActive, setLoginLandingActive] = useState(true)
   const [loginActive, setLoginActive] = useState(false)
   const [signUpActive, setSignUpActive] = useState(false)
-  const snack = useSelector((state: storeStateTypes) => state.UI.snack)
-  const dispatch = useDispatch()
 
   const loginLandingHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     const title = e.currentTarget.innerText
@@ -49,20 +47,12 @@ export default function LoginPage() {
             onClick={loginLandingHandler}
             active={loginLandingActive}
           />
+          <InitiateProfile active={}/>
           <Login onClick={backtoLoginLandingPage} active={loginActive} />
           <SignUp onClick={backtoLoginLandingPage} active={signUpActive} />
         </div>
       </div>
-      <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        open={!!snack}
-        autoHideDuration={3000}
-        onClose={() => dispatch(UISlice.actions.closeSnack())}
-      >
-        <Alert variant="filled" severity={snack?.severity}>
-          {snack?.text}
-        </Alert>
-      </Snackbar>
+      <Snack />
     </div>
   )
 }
