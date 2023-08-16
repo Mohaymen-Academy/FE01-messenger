@@ -14,6 +14,8 @@ export function loginService(email: string, password: string) {
             severity: 'success',
           })
         )
+        store.dispatch(UISlice.actions.initiateProfileHandler(true))
+        store.dispatch(UISlice.actions.loginHandler(false))
       } else {
         store.dispatch(
           UISlice.actions.openSnack({ text: 'Login failed', severity: 'error' })
@@ -40,6 +42,9 @@ export function registerService(email: string, password: string) {
             severity: 'success',
           })
         )
+        store.dispatch(UISlice.actions.initiateProfileHandler(true))
+        store.dispatch(UISlice.actions.signUpHandler(false))
+        console.log(1)
       } else {
         store.dispatch(
           UISlice.actions.openSnack({

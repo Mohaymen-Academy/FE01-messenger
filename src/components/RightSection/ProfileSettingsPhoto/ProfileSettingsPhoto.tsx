@@ -1,5 +1,3 @@
-import Box from '@mui/material/Box'
-import Modal from '@mui/material/Modal'
 import { Menu, MenuItem } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useState } from 'react'
@@ -8,6 +6,7 @@ import img from '@/assets/download.jpeg'
 import { UISlice } from '@/redux/slices/UISlice'
 import { UserSlice } from '@/redux/slices/UserSlice'
 import camera from '@/assets/camera-add.svg'
+import ModalContainer from '@/components/Common/ModalContainer/ModalContainer'
 import ImageInput from '../ImageInput'
 
 export default function ProfileSettingsPhoto() {
@@ -124,28 +123,16 @@ export default function ProfileSettingsPhoto() {
           </div>
         </div>
       </label>
-
-      <Modal
-        open={openModal}
+      <ModalContainer
+        child={<ImageInput isActive={imageCropperActive} image={image} />}
+        isOpen={openModal}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box className="mt-32 flex items-center justify-center">
-          <ImageInput isActive={imageCropperActive} image={image} />
-        </Box>
-      </Modal>
-      <Modal
-        style={{ display: openImageModal ? '' : 'none' }}
-        open={openImageModal}
+      />
+      <ModalContainer
+        child={<img src={profileImage} />}
+        isOpen={openImageModal}
         onClose={closeProfileModal}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box className="mt-32 flex items-center justify-center">
-          <img src={profileImage} />
-        </Box>
-      </Modal>
+      />
     </div>
   )
 }

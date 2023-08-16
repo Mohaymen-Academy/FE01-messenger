@@ -10,6 +10,12 @@ export interface UISliceType {
   cropperModal: boolean
   profileSettings: boolean
   snack: SnackType
+  initiateProfile: boolean
+  initialProfileImageCropper: boolean
+  createChannel: boolean
+  createGroup: boolean
+  signUp: boolean
+  login: boolean
 }
 
 export const UISlice = createSlice({
@@ -20,6 +26,12 @@ export const UISlice = createSlice({
     cropperModal: false,
     profileSettings: false,
     snack: null,
+    initiateProfile: false,
+    initialProfileImageCropper: false,
+    createChannel: false,
+    createGroup: false,
+    signUp: false,
+    login: false,
   },
   reducers: {
     openInfoColumn: (state: UISliceType) => {
@@ -54,6 +66,35 @@ export const UISlice = createSlice({
     },
     closeSnack: (state: UISliceType) => {
       state.snack = null
+    },
+    initiateProfileHandler: (
+      state: UISliceType,
+      action: { payload: boolean }
+    ) => {
+      state.initiateProfile = action.payload
+      // console.log(state.initiateProfile)
+    },
+    initialProfileImageCropperHandler: (
+      state: UISliceType,
+      action: { payload: boolean }
+    ) => {
+      state.initialProfileImageCropper = action.payload
+    },
+
+    createChannelHandler: (
+      state: UISliceType,
+      action: { payload: boolean }
+    ) => {
+      state.createChannel = action.payload
+    },
+    createGroupHandler: (state: UISliceType, action: { payload: boolean }) => {
+      state.createGroup = action.payload
+    },
+    signUpHandler: (state: UISliceType, action: { payload: boolean }) => {
+      state.signUp = action.payload
+    },
+    loginHandler: (state: UISliceType, action: { payload: boolean }) => {
+      state.login = action.payload
     },
   },
 })

@@ -4,6 +4,7 @@ import FabButton from '@/components/Common/FabButton'
 import ChatList from '../ChatList'
 import ChatNav from '../ChatNav'
 import RightHeader from '../RightHeader'
+import NewChatCreator from '../NewChatCreator/NewChatCreator'
 
 interface ChatsColumnProps {
   onClick: () => void
@@ -22,12 +23,7 @@ export default function ChatsColumn({ onClick, isActive }: ChatsColumnProps) {
         <RightHeader onClick={onClick} />
         <ChatNav />
         <ChatList />
-        <div className="sticky bottom-3 left-5 z-40 mb-6 ml-4 flex flex-row justify-end">
-          <FabButton
-            primary={true}
-            icon={<FaPen className="h-5 w-5 fill-current text-white" />}
-          />
-        </div>
+        <NewChatCreator />
       </div>
     </div>
   )
