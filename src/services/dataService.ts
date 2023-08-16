@@ -1,4 +1,4 @@
-import { chatListData, initiateProfile } from '@/api/data'
+import { chatListData, initiateProfile, usernameValidation } from '@/api/data'
 
 export function ChatListDataService(profileId: string) {
   chatListData({ profileId })
@@ -58,5 +58,22 @@ export function initiateProfileService(
       //       severity: 'error',
       //     })
       //   )
+    })
+}
+export function usernameValidationService(username: string) {
+  usernameValidation({ username })
+    .then(res => {
+      if (res.status === 200) {
+        return true
+      }
+      return false
+    })
+    .catch(err => {
+      // store.dispatch(
+      //   UISlice.actions.openSnack({
+      //     text: `Login failed:${err}`,
+      //     severity: 'error',
+      //   })
+      // )
     })
 }

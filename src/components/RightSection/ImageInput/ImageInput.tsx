@@ -1,5 +1,6 @@
 import { useRef } from 'react'
-import Cropper, { ReactCropperElement } from 'react-cropper'
+import 'cropperjs/dist/cropper.css'
+import { Cropper, ReactCropperElement } from 'react-cropper'
 import { useDispatch } from 'react-redux'
 import { UserSlice } from '@/redux/slices/UserSlice'
 import { UISlice } from '@/redux/slices/UISlice'
@@ -7,9 +8,10 @@ import { UISlice } from '@/redux/slices/UISlice'
 interface ImageInputProps {
   isActive: boolean
   image: string
+  mode?: 'initiate' | 'editor'
 }
 
-export default function ImageInput({ isActive, image }: ImageInputProps) {
+export default function ImageInput({ isActive, image, mode }: ImageInputProps) {
   const cropperRef = useRef<ReactCropperElement>(null)
 
   const dispatch = useDispatch()
@@ -21,28 +23,30 @@ export default function ImageInput({ isActive, image }: ImageInputProps) {
           cropperRef.current?.cropper.getCroppedCanvas().toDataURL()
         )
       )
+      if (mode === 'initiate') {
+        dispatch(UISlice.actions.closeInitialProfileImageCropper())
+        console.log(1)
+      }
       dispatch(UISlice.actions.closeCropperModal())
     }
   }
 
   return (
     <div style={{ display: isActive ? '' : 'none' }}>
-      <div style={{ width: '100%' }}>
-        <Cropper
-          style={{ height: 400, width: '100%' }}
-          initialAspectRatio={1}
-          preview=".img-preview"
-          src={image}
-          ref={cropperRef}
-          viewMode={1}
-          guides={true}
-          minCropBoxHeight={10}
-          minCropBoxWidth={10}
-          background={false}
-          responsive={true}
-          checkOrientation={false}
-        />
-      </div>
+      <Cropper
+        style={{ height: 400, width: '100%' }}
+        initialAspectRatio={1}
+        preview=".img-preview"
+        src={image}
+        ref={cropperRef}
+        viewMode={1}
+        guides={true}
+        minCropBoxHeight={10}
+        minCropBoxWidth={10}
+        background={false}
+        responsive={true}
+        checkOrientation={false}
+      />
       <div
         onClick={confirmCropData}
         className="flex w-full items-center justify-center"

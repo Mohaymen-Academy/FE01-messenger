@@ -5,18 +5,41 @@ import React from 'react'
 import { MdGroup } from 'react-icons/md'
 import { HiSpeakerphone } from 'react-icons/hi'
 import { Box, Paper } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
 import FabButton from '@/components/Common/FabButton'
+import Modal from '@/components/MidSection/MessageBox/FloatingTextFormatToolbarPlugin/utils/commentPlugin/ui/Modal'
+import NewChat from '@/components/Common/NewChat/NewChat'
+import { UISlice } from '@/redux/slices/UISlice'
+import { storeStateTypes } from '@/types/types'
+import ModalContainer from '@/components/Common/ModalContainer/ModalContainer'
 
 interface NewChatCreatorProps {}
 
 export default function NewChatCreator({}: NewChatCreatorProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+
   const open = Boolean(anchorEl)
+  const dispatch = useDispatch()
+  const channelModalActive = useSelector(
+    (state: storeStateTypes) => state.UI.createChannel
+  )
+  const groupModalActive = useSelector(
+    (state: storeStateTypes) => state.UI.createGroup
+  )
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation()
     setAnchorEl(event.currentTarget)
   }
   const handleClose = () => {
     setAnchorEl(null)
+  }
+
+  const createChannel = () => {
+    dispatch(UISlice.actions.createChannelHandler(true))
+  }
+
+  const createGroup = () => {
+    dispatch(UISlice.actions.createGroupHandler(true))
   }
 
   return (
@@ -38,7 +61,6 @@ export default function NewChatCreator({}: NewChatCreatorProps) {
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
-        // className="bg-blue-500"
         slotProps={{
           paper: {
             style: {
@@ -50,17 +72,39 @@ export default function NewChatCreator({}: NewChatCreatorProps) {
           },
         }}
       >
-        <MenuItem onClick={handleClose}>
-          <div className="flex items-center justify-center gap-2">
+        <MenuItem>
+          <div
+            onClick={createGroup}
+            className="flex items-center justify-center gap-2"
+          >
             <MdGroup className="h-6 w-6" />
             <p>ساخت گروه</p>
+            <ModalContainer
+              isOpen={groupModalActive}
+              onClose={e => {
+                e.stopPropagation()
+                dispatch(UISlice.actions.createGroupHandler(false))
+              }}
+              child={<NewChat type="group" />}
+            />
           </div>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <div className="flex items-center justify-center gap-2">
+        <MenuItem>
+          <div
+            onClick={createChannel}
+            className="flex items-center justify-center gap-2"
+          >
             <HiSpeakerphone className="h-6 w-6" />
             <p>ساخت کانال</p>
           </div>
+          <ModalContainer
+            isOpen={channelModalActive}
+            onClose={e => {
+              e.stopPropagation()
+              dispatch(UISlice.actions.createChannelHandler(false))
+            }}
+            child={<NewChat type="channel" />}
+          />
         </MenuItem>
       </Menu>
     </div>

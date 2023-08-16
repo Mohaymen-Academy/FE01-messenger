@@ -2,8 +2,10 @@ import { BiArrowBack } from 'react-icons/bi'
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import { useRef, useState } from 'react'
 import classNames from 'classnames'
+import { useDispatch } from 'react-redux'
 import { registerService } from '@/services/userService'
-import LoginInput from '../Common/TextInput/TextInput'
+import { UISlice } from '@/redux/slices/UISlice'
+import TextInput from '../Common/TextInput/TextInput'
 
 interface SignUpProps {
   active: boolean
@@ -23,6 +25,7 @@ export default function SignUp({ active, onClick }: SignUpProps) {
     },
   })
   const [passwordCheckValidate, setPasswordCheckValidate] = useState(true)
+  const dispatch = useDispatch()
   const onSubmit: SubmitHandler<FieldValues> = data => {
     console.log('first')
     if (data.password != data.checkpassword) {
@@ -82,7 +85,7 @@ export default function SignUp({ active, onClick }: SignUpProps) {
           >
             نام کاربری یا رمز عبور اشتباه است.
           </div>
-          <LoginInput
+          <TextInput
             formId="email"
             palceHolder="ایمیل"
             type="email"
@@ -91,7 +94,7 @@ export default function SignUp({ active, onClick }: SignUpProps) {
             required
             pattern={emailRegExp}
           />
-          <LoginInput
+          <TextInput
             formId="password"
             type="password"
             palceHolder="رمز عبور"
@@ -100,7 +103,7 @@ export default function SignUp({ active, onClick }: SignUpProps) {
             pattern={passwordRegex}
             required
           />
-          <LoginInput
+          <TextInput
             formId="checkpassword"
             type="checkpassword"
             palceHolder="تایید رمز عبور"

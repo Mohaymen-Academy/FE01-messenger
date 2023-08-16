@@ -30,7 +30,8 @@ export default function TextInput({
   const [borderBColor, setBorderBottomColor] = useState('rgb(156 163 175)')
   const [isValid, setIsValid] = useState(true)
   const registerValidator = useMemo(() => {
-    if (register && formId) return register(formId, { required, pattern })
+    if (register && formId)
+      return register(formId, { required, pattern, onChange })
     return { register: 'no Register' }
   }, [register])
 
