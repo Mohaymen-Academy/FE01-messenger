@@ -15,7 +15,7 @@ function App() {
     //   {!isLoggedIn && <Navigate replace to={'/login/'} />}
     //   {isLoggedIn && <Navigate replace to={'/'} />}
     // </BrowserRouter>
-    <LoginPage />
+    <MainPage />
   )
 }
 

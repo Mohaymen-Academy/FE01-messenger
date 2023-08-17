@@ -8,16 +8,23 @@ interface MessageProps {
   message: string
   mode: 'loading' | 'sent' | 'seen'
   time: string
+  header?: { title: string; text: string; mode: 'forward' | 'reply' }
 }
 
-export default function Message({ self, message, mode, time }: MessageProps) {
+export default function Message({
+  self,
+  message,
+  mode,
+  time,
+  header,
+}: MessageProps) {
   const [width, setWidth] = useState(0)
   const ref = useRef<HTMLDivElement>(null)
   useLayoutEffect(() => {
     if (ref.current?.getBoundingClientRect().width)
       setWidth(
-        ref.current?.getBoundingClientRect().width > 350
-          ? 350
+        ref.current?.getBoundingClientRect().width > 340
+          ? 340
           : ref.current.getBoundingClientRect().width - 70
       )
   }, [])
@@ -29,32 +36,56 @@ export default function Message({ self, message, mode, time }: MessageProps) {
     <div
       ref={ref}
       className={classNames(
-        'my-1 flex w-full w-full flex-row rounded-t-lg text-primary',
+        'my-1 flex w-full flex-col rounded-t-lg text-primary',
         self ? 'justify-start' : 'justify-end'
       )}
     >
       <div
         className={classNames(
-          'relative text-primary max-w-[400px] flex flex-row px-2 rounded-t-lg ',
+          'relative text-primary max-w-[400px] flex flex-col px-2 rounded-t-lg ',
           self
             ? 'rounded-l-lg tail-right rtl bg-selfChatBg border-selfChatBg'
             : 'rounded-r-lg tail-left ltr bg-primary border-primary',
           oneLiner ? 'w-fit' : 'w-full'
         )}
       >
-        <span
+        {header && (
+          <div className="ml-1 mt-2 border-l-2 border-replyBorder pl-2 pr-1 text-sm">
+            <span
+              dir="auto"
+              className="relative line-clamp-1 rounded-l-md font-bold"
+            >
+              {header.mode === 'forward' ? 'Forwarded from: ' : ''}
+              {header.title}
+            </span>
+            <span dir="auto" className="relative line-clamp-2 rounded-l-md">
+              {header.text}
+            </span>
+          </div>
+        )}
+        <div
           className={classNames(
-            'max-w-full py-1',
-            oneLiner ? 'w-fit whitespace-nowrap' : 'break-words w-0 grow'
+            'relative text-primary max-w-[400px] flex flex-row rounded-t-lg py-1',
+            self
+              ? 'rounded-l-lg tail-right rtl bg-selfChatBg border-selfChatBg'
+              : 'rounded-r-lg tail-left ltr bg-primary border-primary',
+            oneLiner ? 'w-fit' : 'w-full'
           )}
-          dir="auto"
         >
-          {message}
-        </span>
-        <div className="mx-1 flex grow-0 flex-row items-end justify-end gap-1 pb-1 text-xs text-secondary">
-          {time}
-          <div className={classNames(self ? 'left-2' : 'right-2')}>
-            <Checkmark mode={mode} />
+          <span
+            className={classNames(
+              'max-w-full',
+              oneLiner ? 'w-fit whitespace-nowrap' : 'break-words w-0 grow'
+            )}
+            dir="auto"
+          >
+            {message}
+          </span>
+          <div className="mx-1 flex grow-0 flex-row items-end justify-end gap-1 pb-1 text-xs text-secondary">
+            {time}
+            <div className={classNames(self ? 'left-2' : 'right-2')}>
+              <Checkmark mode={mode} />
+            </div>
           </div>
         </div>
       </div>
