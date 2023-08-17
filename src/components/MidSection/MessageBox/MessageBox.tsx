@@ -1,25 +1,13 @@
-import { BsEmojiLaughing, BsSend, BsSendPlusFill } from 'react-icons/bs'
-import {
-  FormEvent,
-  FormEventHandler,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react'
+import { BsEmojiLaughing } from 'react-icons/bs'
+import { useCallback, useState } from 'react'
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
-import { $getRoot, $getSelection } from 'lexical'
 
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
-import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin'
-import { HeadingNode, QuoteNode } from '@lexical/rich-text'
 
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
 import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin'
 import { TEXT_FORMAT_TRANSFORMERS } from '@lexical/markdown'
@@ -27,11 +15,6 @@ import { IoSend } from 'react-icons/io5'
 import FabButton from '@/components/Common/FabButton/FabButton'
 import IconButton from '@/components/Common/IconButton/IconButton'
 import FloatingTextFormatToolbarPlugin from './FloatingTextFormatToolbarPlugin'
-import setCaretPosition, {
-  getCaretCharacterOffsetWithin,
-  processText,
-  purifyChar,
-} from './utils'
 import SpoilerPlugin from './FloatingTextFormatToolbarPlugin/utils/spoilerPlugin/SpoilerPlugin'
 import SpoilerNode from './FloatingTextFormatToolbarPlugin/utils/spoilerPlugin/SpoilerNode'
 
@@ -40,10 +23,8 @@ const theme = {
   editorWrapper: 'w-full h-full',
 }
 
-interface MessageBoxProps {}
-
-export default function MessageBox({}: MessageBoxProps) {
-  // TODO cleanup this component
+export default function MessageBox() {
+  // TODO use SLATE
   const [pickerOpen, setPickerOpen] = useState(false)
 
   const initialConfig = {
@@ -55,25 +36,21 @@ export default function MessageBox({}: MessageBoxProps) {
     nodes: [SpoilerNode],
   }
 
-  const [text, setText] = useState({
-    message: '',
-    processedMessage: '',
-    caret: 0,
-  })
+  // const [text, setText] = useState({
+  //   message: '',
+  //   processedMessage: '',
+  //   caret: 0,
+  // })
 
-  const ref = useRef<HTMLDivElement>(null)
+  // const ref = useRef<HTMLDivElement>(null)
 
   const toggleEmojiPicker = useCallback(() => {
     setPickerOpen(!pickerOpen)
   }, [pickerOpen])
 
-  const addEmoji = useCallback((emoji: { native: string }) => {
-    setText(text => ({ ...text, message: text.message + emoji.native }))
-  }, [])
-
-  useLayoutEffect(() => {
-    setCaretPosition(ref, text.caret)
-  })
+  // const addEmoji = useCallback((emoji: { native: string }) => {
+  //   setText(text => ({ ...text, message: text.message + emoji.native }))
+  // }, [])
 
   return (
     <div className="relative flex w-full max-w-2xl items-center self-center p-3 text-gray-600">
@@ -152,7 +129,7 @@ export default function MessageBox({}: MessageBoxProps) {
           <div className="z-20 flex w-0 grow items-center justify-center text-right">
             <Picker
               data={data}
-              onEmojiSelect={addEmoji}
+              // onEmojiSelect={addEmoji}
               previewPosition="none"
               onClickOutside={toggleEmojiPicker}
             />

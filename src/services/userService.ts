@@ -7,7 +7,7 @@ export function loginService(email: string, password: string) {
   login({ email, password })
     .then(res => {
       if (res.status === 200) {
-        store.dispatch(UserSlice.actions.login({ token: res.data.token }))
+        store.dispatch(UserSlice.actions.login({ token: res?.data.token }))
         store.dispatch(
           UISlice.actions.openSnack({
             text: 'Login success',
@@ -35,7 +35,7 @@ export function registerService(email: string, password: string) {
   register({ email, password })
     .then(res => {
       if (res.status === 200) {
-        store.dispatch(UserSlice.actions.login({ token: res.data.token }))
+        store.dispatch(UserSlice.actions.login({ token: res?.data.token }))
         store.dispatch(
           UISlice.actions.openSnack({
             text: 'Register success',

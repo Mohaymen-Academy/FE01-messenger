@@ -5,13 +5,18 @@ export interface chatBoxType {
   id: string
   name: string
   image: string
-  phoneNumber: string
+  phoneNumber?: string
   bio: string
   userName: string
   active: boolean
   messagesList: string[]
   online: boolean
   bgImageColor: string
+  unReadMessage: number
+  seen: boolean
+  lastMessageTime: string
+  textMessage: string
+  seenEnable: boolean
 }
 
 export interface ChatListSliceType {
@@ -35,6 +40,8 @@ export const ChatListSlice = createSlice({
         bio: 'سلام دوستان',
         active: false,
         bgImageColor: 'blue',
+        image: '',
+        messagesList: [],
       },
       {
         name: 'Ahmad',
@@ -50,6 +57,8 @@ export const ChatListSlice = createSlice({
         bio: 'سلام دوستان',
         active: false,
         bgImageColor: 'red',
+        image: '',
+        messagesList: [],
       },
       {
         name: 'Atefe',
@@ -65,6 +74,8 @@ export const ChatListSlice = createSlice({
         bio: 'سلام دوستان',
         active: false,
         bgImageColor: 'blue',
+        image: '',
+        messagesList: [],
       },
       {
         name: 'Mohammad',
@@ -80,6 +91,8 @@ export const ChatListSlice = createSlice({
         bio: 'سلام دوستان',
         active: false,
         bgImageColor: 'blue',
+        image: '',
+        messagesList: [],
       },
       {
         name: 'Ali',
@@ -95,6 +108,8 @@ export const ChatListSlice = createSlice({
         bio: 'سلام دوستان',
         active: false,
         bgImageColor: 'blue',
+        image: '',
+        messagesList: [],
       },
     ],
   },

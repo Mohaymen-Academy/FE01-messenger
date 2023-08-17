@@ -1,13 +1,18 @@
-import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form'
+import {
+  FieldErrors,
+  FieldValues,
+  Path,
+  UseFormRegister,
+} from 'react-hook-form'
 import React, { useMemo, useState } from 'react'
 
-interface TextInputProps {
+interface TextInputProps<T extends FieldValues> {
   palceHolder: string
   errors?: FieldErrors
-  register?: UseFormRegister<FieldValues>
+  register?: UseFormRegister<T>
   type?: 'password' | 'email' | 'checkpassword' | 'text' | 'tel'
   required?: boolean
-  formId?: string
+  formId?: Path<T>
   pattern?: RegExp
   initialValue?: string
   onClick?: () => void
@@ -16,7 +21,7 @@ interface TextInputProps {
   inputSize?: number
 }
 
-export default function TextInput({
+export default function TextInput<T extends FieldValues>({
   palceHolder,
   type,
   register,
@@ -26,7 +31,7 @@ export default function TextInput({
   onClick,
   onChange,
   maxLength,
-}: TextInputProps) {
+}: TextInputProps<T>) {
   const [borderBColor, setBorderBottomColor] = useState('rgb(156 163 175)')
   const [isValid, setIsValid] = useState(true)
   const registerValidator = useMemo(() => {

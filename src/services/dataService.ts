@@ -1,4 +1,6 @@
 import { chatListData, initiateProfile, usernameValidation } from '@/api/data'
+import { UISlice } from '@/redux/slices/UISlice'
+import store from '@/redux/store'
 
 export function ChatListDataService(profileId: string) {
   chatListData({ profileId })
@@ -18,12 +20,12 @@ export function ChatListDataService(profileId: string) {
       }
     })
     .catch(err => {
-      //   store.dispatch(
-      //     UISlice.actions.openSnack({
-      //       text: `Login failed:${err}`,
-      //       severity: 'error',
-      //     })
-      //   )
+      store.dispatch(
+        UISlice.actions.openSnack({
+          text: `Login failed:${err}`,
+          severity: 'error',
+        })
+      )
     })
 }
 export function initiateProfileService(
@@ -52,12 +54,12 @@ export function initiateProfileService(
       }
     })
     .catch(err => {
-      //   store.dispatch(
-      //     UISlice.actions.openSnack({
-      //       text: `Login failed:${err}`,
-      //       severity: 'error',
-      //     })
-      //   )
+      store.dispatch(
+        UISlice.actions.openSnack({
+          text: `Login failed:${err}`,
+          severity: 'error',
+        })
+      )
     })
 }
 export function usernameValidationService(username: string) {
@@ -69,11 +71,11 @@ export function usernameValidationService(username: string) {
       return false
     })
     .catch(err => {
-      // store.dispatch(
-      //   UISlice.actions.openSnack({
-      //     text: `Login failed:${err}`,
-      //     severity: 'error',
-      //   })
-      // )
+      store.dispatch(
+        UISlice.actions.openSnack({
+          text: `Login failed:${err}`,
+          severity: 'error',
+        })
+      )
     })
 }

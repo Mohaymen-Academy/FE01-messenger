@@ -5,14 +5,14 @@ import axiosInstance from './axiosInstance'
 export const login = (data: {
   email: string
   password: string
-}): AxiosPromise =>
+}): AxiosPromise<{ token: string }> =>
   axiosInstance.post(`${apiUrl}/user/login`, {
     ...data,
   })
 export const register = (data: {
   email: string
   password: string
-}): AxiosPromise =>
+}): AxiosPromise<{ token: string }> =>
   axiosInstance.post(`${apiUrl}/user/signup`, {
     ...data,
   })

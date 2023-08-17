@@ -1,16 +1,15 @@
-import React,{ useState } from 'react'
+import React, { useState } from 'react'
 import TabButton from '@/components/Common/TabButton'
 
-
 export default function ChatNav() {
-  const [activate, setActivation] = useState(new Array(5))
+  const [activate, setActivation] = useState<boolean[]>(new Array(5))
   const changeIndexActivate = (index: number) => {
     const s = new Array(5).fill(false)
     s[index] = true
     setActivation(s)
   }
   const changeActive = (e: React.MouseEvent<HTMLDivElement>) => {
-    const title = e.target.innerText
+    const title = e.currentTarget.innerText
     if (title === 'تمامی گفتگوها') {
       changeIndexActivate(0)
     } else if (title === 'شخصی') {

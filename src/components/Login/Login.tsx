@@ -1,8 +1,5 @@
 import { BiArrowBack } from 'react-icons/bi'
-import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
-import login from '@/api/user'
-import { UserSlice } from '@/redux/slices/UserSlice'
+import { useForm, SubmitHandler } from 'react-hook-form'
 import { loginService } from '@/services/userService'
 import LoginInput from '../Common/TextInput/TextInput'
 
@@ -10,20 +7,23 @@ interface LoginProps {
   active: boolean
   onClick: () => void
 }
+export interface loginFormData {
+  password: string
+  email: string
+}
 
 export default function Login({ active, onClick }: LoginProps) {
-  const dispatch = useDispatch()
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FieldValues>({
+  } = useForm<loginFormData>({
     defaultValues: {
       email: '',
       password: '',
     },
   })
-  const onSubmit: SubmitHandler<FieldValues> = data => {
+  const onSubmit: SubmitHandler<loginFormData> = data => {
     loginService(data.email, data.password)
   }
   return (

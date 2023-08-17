@@ -1,17 +1,13 @@
 import List from 'react-virtualized/dist/commonjs/List'
 import { AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized'
 import { BsArrowDown } from 'react-icons/bs'
-import { BiArrowToBottom } from 'react-icons/bi'
 import { useState } from 'react'
 import FabButton from '@/components/Common/FabButton/FabButton'
 import Message from '../Message/Message'
-import SystemMessage from '../SystemMessage/SystemMessage'
-
-interface ConversationProps {}
 
 const messageCount = 1000
 
-export default function Conversation({}: ConversationProps) {
+export default function Conversation() {
   const [scrollToIndex, setScrollToIndex] = useState(messageCount)
   console.log(scrollToIndex)
   const cache = new CellMeasurerCache({
@@ -43,9 +39,8 @@ export default function Conversation({}: ConversationProps) {
                   parent={parent}
                   rowIndex={index}
                 >
-                  {({ registerChild }) => (
+                  {() => (
                     <div
-                      ref={registerChild}
                       className="rtl relative m-auto flex w-full flex-col px-3 py-1"
                       style={style}
                     >

@@ -91,12 +91,15 @@ export function getCaretCharacterOffsetWithin(element: HTMLDivElement) {
       preCaretRange.setEnd(range.endContainer, range.endOffset)
       caretOffset = preCaretRange.toString().length
     }
-  } else if ((sel = doc.getSelection()) && sel.type != 'Control') {
-    const textRange = sel.createRange()
-    const preCaretTextRange = doc.body.createTextRange()
-    preCaretTextRange.moveToElementText(element)
-    preCaretTextRange.setEndPoint('EndToEnd', textRange)
-    caretOffset = preCaretTextRange.text.length
+  } else {
+    sel = doc.getSelection()!
+    if (sel.type != 'Control') {
+      // const textRange = sel.createRange()
+      // const preCaretTextRange = doc.body.createTextRange()
+      // preCaretTextRange.moveToElementText(element)
+      // preCaretTextRange.setEndPoint('EndToEnd', textRange)
+      // caretOffset = preCaretTextRange.text.length
+    }
   }
   return caretOffset
 }

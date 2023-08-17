@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import TabButton from '@/components/Common/TabButton'
 
 export default function MediaNav() {
-  const [activate, setActivation] = useState(new Array(5))
+  const [activate, setActivation] = useState<boolean[]>(new Array(5))
 
   const changeIndexActivate = (index: number) => {
     const s = new Array(5).fill(false)
@@ -11,7 +11,7 @@ export default function MediaNav() {
   }
 
   const changeActive = (e: React.MouseEvent<HTMLDivElement>) => {
-    const title = e.target.innerText
+    const title = e.currentTarget.innerText
     if (title === 'رسانه') {
       changeIndexActivate(0)
     } else if (title === 'فایل ها') {

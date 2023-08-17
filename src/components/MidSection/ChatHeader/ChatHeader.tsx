@@ -1,19 +1,11 @@
-import {
-  BsArrowRight,
-  BsBack,
-  BsSearch,
-  BsThreeDotsVertical,
-} from 'react-icons/bs'
+import { BsArrowRight, BsSearch, BsThreeDotsVertical } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
-import { CgArrowRight } from 'react-icons/cg'
 import IconButton from '@/components/Common/IconButton/IconButton'
 import mrHashemi from '@/assets/download.jpeg'
 import { UISlice } from '@/redux/slices/UISlice'
 import { storeStateTypes } from '@/types/types'
 
-interface ChatHeaderProps {}
-
-export default function ChatHeader({}: ChatHeaderProps) {
+export default function ChatHeader() {
   const dispatch = useDispatch()
   const openInfoColumn = () => {
     dispatch(UISlice.actions.openInfoColumn())

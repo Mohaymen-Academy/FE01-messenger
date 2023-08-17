@@ -2,10 +2,7 @@ import { useSelector } from 'react-redux'
 import { storeStateTypes } from '@/types/types'
 import ChatBox from '../ChatBox'
 
-
 export default function ChatList() {
-  
-
   const chatBoxes = useSelector(
     (state: storeStateTypes) => state.chatList.chatBoxes
   )
@@ -22,7 +19,7 @@ export default function ChatList() {
               online={item.online}
               textMessage={item.textMessage}
               seenEnable={item.seenEnable}
-              img={item.img}
+              img={item.image}
               id={item.id}
               active={item.active}
             />
