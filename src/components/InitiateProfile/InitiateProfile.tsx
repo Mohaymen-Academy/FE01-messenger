@@ -1,6 +1,5 @@
 import classNames from 'classnames'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
-import { Box, Modal } from '@mui/material'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import camera from '@/assets/camera-add.svg'
@@ -124,6 +123,13 @@ export default function InitiateProfile({ active }: InitiateProfileProps) {
             required
           />
           <TextInput
+            formId="lastName"
+            palceHolder="نام خانوادگی"
+            type="text"
+            register={register}
+            errors={errors}
+          />
+          <TextInput
             formId="userName"
             palceHolder=" نام کاربری"
             type="text"
@@ -139,13 +145,6 @@ export default function InitiateProfile({ active }: InitiateProfileProps) {
           >
             این نام کاربری قبلا استفاده شده است
           </p>
-          <TextInput
-            formId="lastName"
-            palceHolder="نام خانوادگی"
-            type="text"
-            register={register}
-            errors={errors}
-          />
           <TextInput
             formId="bio"
             palceHolder="بیوگرافی"

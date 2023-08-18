@@ -17,7 +17,6 @@ export default function RightSection() {
   )
 
   const navMenuHandler = () => {
-    myProfileService()
     setSettingsActivate(true)
   }
   const closeSettingsHandler = () => {

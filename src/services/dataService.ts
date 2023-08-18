@@ -51,7 +51,6 @@ export function initiateProfileService(
             severity: 'success',
           })
         )
-        store.dispatch(UISlice.actions.initialProfileCreatedHandler())
       } else {
         store.dispatch(
           UISlice.actions.openSnack({
@@ -80,12 +79,7 @@ export function usernameValidationService(username: string) {
       }
     })
     .catch(err => {
-      store.dispatch(
-        UISlice.actions.openSnack({
-          text: `Login failed:${err}`,
-          severity: 'error',
-        })
-      )
+      store.dispatch(UISlice.actions.userNameHandler(false))
     })
 }
 export function myProfileService() {
@@ -93,9 +87,9 @@ export function myProfileService() {
     .then(res => {
       if (res.status === 200) {
         console.log(res.data)
-        console.log(res.data.username)
         store.dispatch(UserSlice.actions.setUserName(res.data.username))
-        store.dispatch(UserSlice.actions.setName(res.data.fullName))
+        store.dispatch(UserSlice.actions.setFirstName(res.data.firstName))
+        store.dispatch(UserSlice.actions.setLastName(res.data.lastName))
         store.dispatch(UserSlice.actions.setBio(res.data.bio))
       } else {
         store.dispatch(

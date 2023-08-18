@@ -12,6 +12,7 @@ import InfoImage from '@/components/Common/InfoImage'
 import InfoRow from '@/components/Common/InfoRow'
 import { storeStateTypes } from '@/types/types'
 import { UserSlice } from '@/redux/slices/UserSlice'
+import { myProfileService } from '@/services/dataService'
 import SettingsHeader from '../SettingsHeader/SettingsHeader'
 
 interface SettingsColumnProps {
@@ -25,7 +26,7 @@ export default function SettingsColumn({
 }: SettingsColumnProps) {
   const [darkmodeActive, setDarkModeActive] = useState(true)
   const dispatch = useDispatch()
-
+  myProfileService()
   useEffect(() => {
     const darkMode = localStorage.getItem('theme')
     if (darkMode === 'true') {
@@ -52,7 +53,10 @@ export default function SettingsColumn({
   const signOutHandler = () => {
     dispatch(UserSlice.actions.deleteToken())
   }
-  const name = useSelector((state: storeStateTypes) => state.user.name)
+  const firstName = useSelector(
+    (state: storeStateTypes) => state.user.firstName
+  )
+  const lastName = useSelector((state: storeStateTypes) => state.user.lastName)
   const userName = useSelector((state: storeStateTypes) => state.user.userName)
   const bio = useSelector((state: storeStateTypes) => state.user.bio)
   const image = useSelector((state: storeStateTypes) => state.user.image)
@@ -63,7 +67,11 @@ export default function SettingsColumn({
       className="absolute z-10 h-full w-full overflow-x-hidden bg-primary/100 shadow-xl transition-all duration-500 ease-in-out max-sm:w-full"
     >
       <SettingsHeader onClick={onClick} />
-      <InfoImage onlineStatus={true} infoName={name} img={image} />
+      <InfoImage
+        onlineStatus={true}
+        infoName={`${firstName} ${lastName}`}
+        img={image}
+      />
       <InfoRow
         title={userName}
         subTitle="آیدی"

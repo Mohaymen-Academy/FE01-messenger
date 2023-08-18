@@ -11,7 +11,7 @@ interface TextInputProps {
   pattern?: RegExp
   initialValue?: string
   onClick?: () => void
-  onChange?: () => void
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   maxLength?: number
   inputSize?: number
 }

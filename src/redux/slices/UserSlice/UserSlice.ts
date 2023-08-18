@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export interface UserSliceType {
-  name: string
+  firstName: string
+  lastName: string
   userName: string
   image: string
   imageColor: string
@@ -13,18 +14,22 @@ export interface UserSliceType {
 export const UserSlice = createSlice({
   name: 'user',
   initialState: {
-    name: 'Hossein',
-    userName: 'Hossein_Asd',
+    firstName: '',
+    lastName: '',
+    userName: '',
     image: '',
     imageColor: '',
-    bio: 'سلام دوستان',
+    bio: '',
     number: '',
     theme: '',
     token: localStorage.getItem('token') ?? '',
   },
   reducers: {
-    setName: (state: UserSliceType, action: { payload: string }) => {
-      state.name = action.payload
+    setFirstName: (state: UserSliceType, action: { payload: string }) => {
+      state.firstName = action.payload
+    },
+    setLastName: (state: UserSliceType, action: { payload: string }) => {
+      state.lastName = action.payload
     },
     setUserName: (state: UserSliceType, action: { payload: string }) => {
       state.userName = action.payload
