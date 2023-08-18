@@ -32,10 +32,6 @@ export default function InitiateProfile({ active }: InitiateProfileProps) {
       image: '',
     },
   })
-  const onSubmit: SubmitHandler<FieldValues> = data => {
-    const { userName, firstName, lastName, bio } = data
-    initiateProfileService(userName, firstName, lastName, bio)
-  }
 
   const userNameValidation = useSelector(
     (state: storeStateTypes) => state.UI.userNameValid
@@ -43,6 +39,12 @@ export default function InitiateProfile({ active }: InitiateProfileProps) {
   const [image, setImage] = useState('')
   const dispatch = useDispatch()
   const img = useSelector((state: storeStateTypes) => state.user.image)
+  const onSubmit: SubmitHandler<FieldValues> = data => {
+    const { userName, firstName, lastName, bio } = data
+    if (userNameValidation) {
+      initiateProfileService(userName, firstName, lastName, bio)
+    }
+  }
   let openModal = useSelector(
     (state: storeStateTypes) => state.UI.initialProfileImageCropper
   )
@@ -65,7 +67,7 @@ export default function InitiateProfile({ active }: InitiateProfileProps) {
     dispatch(UISlice.actions.initialProfileImageCropperHandler(true))
     dispatch(UISlice.actions.initiateProfileHandler(true))
   }
-  const uniqueUserNameHandler = e => {
+  const uniqueUserNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const myInput = e.target.value
     usernameValidationService(myInput)
   }

@@ -32,34 +32,36 @@ export function initiateProfileService(
   username: string,
   firstName: string,
   lastName: string,
-  bio: string
+  bio: string,
+  picture: null
 ) {
-  initiateProfile({ username, firstName, lastName, bio })
+  initiateProfile({ username, firstName, lastName, bio, picture })
     .then(res => {
       if (res.status === 200) {
-        // store.dispatch(UserSlice.actions.login({ token: res.data.token }))
-        // store.dispatch(
-        //   UISlice.actions.openSnack({
-        //     text: 'Register success',
-        //     severity: 'success',
-        //   })
-        // )
+        store.dispatch(UISlice.actions.initialProfileCreatedHandler())
+        store.dispatch(
+          UISlice.actions.openSnack({
+            text: 'Register success',
+            severity: 'success',
+          })
+        )
+        store.dispatch(UISlice.actions.initialProfileCreatedHandler())
       } else {
-        // store.dispatch(
-        //   UISlice.actions.openSnack({
-        //     text: 'Register failed',
-        //     severity: 'error',
-        //   })
-        // )
+        store.dispatch(
+          UISlice.actions.openSnack({
+            text: 'Register failed',
+            severity: 'error',
+          })
+        )
       }
     })
     .catch(err => {
-      //   store.dispatch(
-      //     UISlice.actions.openSnack({
-      //       text: `Login failed:${err}`,
-      //       severity: 'error',
-      //     })
-      //   )
+      store.dispatch(
+        UISlice.actions.openSnack({
+          text: `Login failed:${err}`,
+          severity: 'error',
+        })
+      )
     })
 }
 export function usernameValidationService(username: string) {

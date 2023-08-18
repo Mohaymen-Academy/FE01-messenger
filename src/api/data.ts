@@ -10,10 +10,13 @@ export const initiateProfile = (data: {
   firstName: string
   lastName: string
   bio: string
+  picture: null
 }): AxiosPromise =>
   axiosInstance.post(`${apiUrl}/profile`, {
     ...data,
   })
 
 export const usernameValidation = (data: { username: string }): AxiosPromise =>
-  axiosInstance.get(`${apiUrl}/profile/username`, {params: {search: data.username}})
+  axiosInstance.get(`${apiUrl}/profile/username`, {
+    params: { search: data.username },
+  })

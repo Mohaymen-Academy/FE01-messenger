@@ -17,6 +17,7 @@ export interface UISliceType {
   signUp: boolean
   login: boolean
   userNameValid: boolean
+  isInitialProfileCreated: boolean
 }
 
 export const UISlice = createSlice({
@@ -33,7 +34,8 @@ export const UISlice = createSlice({
     createGroup: false,
     signUp: false,
     login: false,
-    userNameValid: false,
+    userNameValid: true,
+    isInitialProfileCreated: false,
   },
   reducers: {
     openInfoColumn: (state: UISliceType) => {
@@ -73,7 +75,11 @@ export const UISlice = createSlice({
       state: UISliceType,
       action: { payload: boolean }
     ) => {
-      state.initiateProfile = action.payload
+      if (state.isInitialProfileCreated && action.payload) {
+        state.initiateProfile = false
+      } else {
+        state.initiateProfile = action.payload
+      }
       // console.log(state.initiateProfile)
     },
     initialProfileImageCropperHandler: (
@@ -100,6 +106,9 @@ export const UISlice = createSlice({
     },
     userNameHandler: (state: UISliceType, action: { payload: boolean }) => {
       state.userNameValid = action.payload
+    },
+    initialProfileCreatedHandler: (state: UISliceType) => {
+      state.isInitialProfileCreated = true
     },
   },
 })

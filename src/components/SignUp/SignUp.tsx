@@ -25,9 +25,7 @@ export default function SignUp({ active, onClick }: SignUpProps) {
     },
   })
   const [passwordCheckValidate, setPasswordCheckValidate] = useState(true)
-  const dispatch = useDispatch()
   const onSubmit: SubmitHandler<FieldValues> = data => {
-    console.log('first')
     if (data.password != data.checkpassword) {
       console.log(data.password)
       console.log(data.checkpassword)
