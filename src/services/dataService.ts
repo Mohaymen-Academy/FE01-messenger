@@ -1,5 +1,11 @@
-import { chatListData, initiateProfile, usernameValidation } from '@/api/data'
+import {
+  chatListData,
+  initiateProfile,
+  myProfile,
+  usernameValidation,
+} from '@/api/data'
 import { UISlice } from '@/redux/slices/UISlice'
+import { UserSlice } from '@/redux/slices/UserSlice'
 import store from '@/redux/store'
 
 export function ChatListDataService(profileId: string) {
@@ -71,6 +77,33 @@ export function usernameValidationService(username: string) {
         store.dispatch(UISlice.actions.userNameHandler(true))
       } else {
         store.dispatch(UISlice.actions.userNameHandler(false))
+      }
+    })
+    .catch(err => {
+      store.dispatch(
+        UISlice.actions.openSnack({
+          text: `Login failed:${err}`,
+          severity: 'error',
+        })
+      )
+    })
+}
+export function myProfileService() {
+  myProfile()
+    .then(res => {
+      if (res.status === 200) {
+        console.log(res.data)
+        console.log(res.data.username)
+        store.dispatch(UserSlice.actions.setUserName(res.data.username))
+        store.dispatch(UserSlice.actions.setName(res.data.fullName))
+        store.dispatch(UserSlice.actions.setBio(res.data.bio))
+      } else {
+        store.dispatch(
+          UISlice.actions.openSnack({
+            text: 'Register failed',
+            severity: 'error',
+          })
+        )
       }
     })
     .catch(err => {

@@ -7,10 +7,11 @@ import {
 } from 'react-icons/bs'
 import classNames from 'classnames'
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import InfoImage from '@/components/Common/InfoImage'
 import InfoRow from '@/components/Common/InfoRow'
 import { storeStateTypes } from '@/types/types'
+import { UserSlice } from '@/redux/slices/UserSlice'
 import SettingsHeader from '../SettingsHeader/SettingsHeader'
 
 interface SettingsColumnProps {
@@ -23,6 +24,7 @@ export default function SettingsColumn({
   onClick,
 }: SettingsColumnProps) {
   const [darkmodeActive, setDarkModeActive] = useState(true)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const darkMode = localStorage.getItem('theme')
@@ -45,6 +47,10 @@ export default function SettingsColumn({
       localStorage.setItem('theme', 'false')
       setDarkModeActive(false)
     }
+  }
+
+  const signOutHandler = () => {
+    dispatch(UserSlice.actions.deleteToken())
   }
   const name = useSelector((state: storeStateTypes) => state.user.name)
   const userName = useSelector((state: storeStateTypes) => state.user.userName)
@@ -96,7 +102,10 @@ export default function SettingsColumn({
         </div>
       </div>
 
-      <button className="mr-3 mt-2 flex w-[355px] justify-start gap-2 rounded-lg py-2 pr-1 text-red-500 transition-all duration-300 ease-in-out hover:bg-logout hover:text-white">
+      <button
+        onClick={signOutHandler}
+        className="mr-3 mt-2 flex w-[355px] justify-start gap-2 rounded-lg py-2 pr-1 text-red-500 transition-all duration-300 ease-in-out hover:bg-logout hover:text-white"
+      >
         <div className="fill-current">
           <FiLogOut className="h-7 w-7" />
         </div>

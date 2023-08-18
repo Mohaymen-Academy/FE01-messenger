@@ -2,6 +2,7 @@ import { useState } from 'react'
 import classNames from 'classnames'
 import { useSelector } from 'react-redux'
 import { storeStateTypes } from '@/types/types'
+import { myProfileService } from '@/services/dataService'
 import ChatsColumn from './ChatsColumn/ChatsColumn'
 import SettingsColumn from './SettingsColumn/SettingsColumn'
 import EditSettingsColumn from './ProfileSettingsColumn'
@@ -16,6 +17,7 @@ export default function RightSection() {
   )
 
   const navMenuHandler = () => {
+    myProfileService()
     setSettingsActivate(true)
   }
   const closeSettingsHandler = () => {

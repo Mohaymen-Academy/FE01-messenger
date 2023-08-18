@@ -44,7 +44,6 @@ export function registerService(email: string, password: string) {
         )
         store.dispatch(UISlice.actions.initiateProfileHandler(true))
         store.dispatch(UISlice.actions.signUpHandler(false))
-        console.log(1)
       } else {
         store.dispatch(
           UISlice.actions.openSnack({

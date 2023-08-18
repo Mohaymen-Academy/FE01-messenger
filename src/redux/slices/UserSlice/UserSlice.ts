@@ -43,6 +43,9 @@ export const UserSlice = createSlice({
     deleteImage: (state: UserSliceType) => {
       state.image = ''
     },
+    deleteToken: (state: UserSliceType) => {
+      state.token = ''
+    },
   },
 })
 
