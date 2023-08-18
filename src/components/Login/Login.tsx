@@ -12,7 +12,6 @@ interface LoginProps {
 }
 
 export default function Login({ active, onClick }: LoginProps) {
-  const dispatch = useDispatch()
   const {
     register,
     handleSubmit,

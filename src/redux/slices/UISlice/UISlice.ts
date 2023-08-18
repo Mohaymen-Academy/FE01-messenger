@@ -16,6 +16,7 @@ export interface UISliceType {
   createGroup: boolean
   signUp: boolean
   login: boolean
+  userNameValid: boolean
 }
 
 export const UISlice = createSlice({
@@ -32,6 +33,7 @@ export const UISlice = createSlice({
     createGroup: false,
     signUp: false,
     login: false,
+    userNameValid: false,
   },
   reducers: {
     openInfoColumn: (state: UISliceType) => {
@@ -95,6 +97,9 @@ export const UISlice = createSlice({
     },
     loginHandler: (state: UISliceType, action: { payload: boolean }) => {
       state.login = action.payload
+    },
+    userNameHandler: (state: UISliceType, action: { payload: boolean }) => {
+      state.userNameValid = action.payload
     },
   },
 })

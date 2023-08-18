@@ -1,4 +1,6 @@
 import { chatListData, initiateProfile, usernameValidation } from '@/api/data'
+import { UISlice } from '@/redux/slices/UISlice'
+import store from '@/redux/store'
 
 export function ChatListDataService(profileId: string) {
   chatListData({ profileId })
@@ -64,16 +66,17 @@ export function usernameValidationService(username: string) {
   usernameValidation({ username })
     .then(res => {
       if (res.status === 200) {
-        return true
+        store.dispatch(UISlice.actions.userNameHandler(true))
+      } else {
+        store.dispatch(UISlice.actions.userNameHandler(false))
       }
-      return false
     })
     .catch(err => {
-      // store.dispatch(
-      //   UISlice.actions.openSnack({
-      //     text: `Login failed:${err}`,
-      //     severity: 'error',
-      //   })
-      // )
+      store.dispatch(
+        UISlice.actions.openSnack({
+          text: `Login failed:${err}`,
+          severity: 'error',
+        })
+      )
     })
 }
