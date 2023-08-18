@@ -1,8 +1,15 @@
 import { BsSearch } from 'react-icons/bs'
 
-export default function SearchBar() {
+interface SearchColumnProps {
+  onClick?: () => void
+}
+
+export default function SearchBar({ onClick }: SearchColumnProps) {
   return (
-    <div className=" relative flex w-full items-center overflow-hidden pl-2 text-gray-600 focus-within:text-gray-400">
+    <div
+      onClick={onClick}
+      className=" relative flex w-full items-center overflow-hidden pl-2 text-gray-600 focus-within:text-gray-400"
+    >
       <span className="absolute left-0 flex items-center pl-4">
         <button className="p-1">
           <BsSearch className="h-5 w-5 fill-current" />

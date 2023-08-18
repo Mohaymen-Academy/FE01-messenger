@@ -18,6 +18,8 @@ export interface UISliceType {
   login: boolean
   userNameValid: boolean
   isInitialProfileCreated: boolean
+  contactSearchBar: boolean
+  chatColumnActive: boolean
 }
 
 export const UISlice = createSlice({
@@ -36,6 +38,8 @@ export const UISlice = createSlice({
     login: false,
     userNameValid: true,
     isInitialProfileCreated: false,
+    contactSearchBar: false,
+    chatColumnActive: true,
   },
   reducers: {
     openInfoColumn: (state: UISliceType) => {
@@ -109,6 +113,17 @@ export const UISlice = createSlice({
     },
     initialProfileCreatedHandler: (state: UISliceType) => {
       state.isInitialProfileCreated = true
+    },
+    contactSearchbarHandler: (
+      state: UISliceType,
+      action: { payload: boolean }
+    ) => {
+      state.contactSearchBar = action.payload
+    },chatColumnHandler: (
+      state: UISliceType,
+      action: { payload: boolean }
+    ) => {
+      state.chatColumnActive = action.payload
     },
   },
 })

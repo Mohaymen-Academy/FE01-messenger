@@ -86,7 +86,7 @@ export function myProfileService() {
   myProfile()
     .then(res => {
       if (res.status === 200) {
-        console.log(res.data)
+        // console.log(res.data)
         store.dispatch(UserSlice.actions.setUserName(res.data.username))
         store.dispatch(UserSlice.actions.setFirstName(res.data.firstName))
         store.dispatch(UserSlice.actions.setLastName(res.data.lastName))
