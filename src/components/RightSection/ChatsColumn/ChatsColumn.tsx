@@ -39,7 +39,7 @@ export default function ChatsColumn({ onClick, isActive }: ChatsColumnProps) {
         </div>
         <div
           className={classNames(
-            'transition-all duration-500',
+            'transition-all duration-500 h-[calc(100vh_-_65px)]',
             contactSearchBar ? '' : 'hidden'
           )}
         >

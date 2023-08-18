@@ -2,9 +2,10 @@ import { BsSearch } from 'react-icons/bs'
 
 interface SearchColumnProps {
   onClick?: () => void
+  onChange?: () => void
 }
 
-export default function SearchBar({ onClick }: SearchColumnProps) {
+export default function SearchBar({ onClick, onChange }: SearchColumnProps) {
   return (
     <div
       onClick={onClick}
@@ -16,6 +17,7 @@ export default function SearchBar({ onClick }: SearchColumnProps) {
         </button>
       </span>
       <input
+        onChange={onChange}
         className="w-full rounded-lg border border-transparent bg-gray-200 py-2 pr-3 text-sm text-white focus:border-blue-500 focus:bg-white focus:text-gray-900 focus:outline-none"
         placeholder="جستجو..."
       />

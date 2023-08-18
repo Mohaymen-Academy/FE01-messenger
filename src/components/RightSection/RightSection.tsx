@@ -48,7 +48,6 @@ export default function RightSection() {
       />
 
       <EditSettingsColumn isActive={profileSettingsActive} />
-      {/* <SearchColumn mode="contact" isActive={SearchColumnActive} /> */}
     </div>
   )
 }
