@@ -65,7 +65,7 @@ export default function InitiateProfile({ active }: InitiateProfileProps) {
       reader.readAsDataURL(files[0])
     }
     dispatch(UISlice.actions.initialProfileImageCropperHandler(true))
-    dispatch(UISlice.actions.initiateProfileHandler(true))
+    // dispatch(UISlice.actions.initiateProfileHandler(true))
   }
   const uniqueUserNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const myInput = e.target.value

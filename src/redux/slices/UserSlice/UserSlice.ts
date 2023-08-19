@@ -10,6 +10,7 @@ export interface UserSliceType {
   number: string
   theme: string
   token: string
+  isInitialProfileCreated: boolean
 }
 export const UserSlice = createSlice({
   name: 'user',
@@ -23,6 +24,7 @@ export const UserSlice = createSlice({
     number: '',
     theme: '',
     token: localStorage.getItem('token') ?? '',
+    isInitialProfileCreated: false,
   },
   reducers: {
     setFirstName: (state: UserSliceType, action: { payload: string }) => {
@@ -50,6 +52,12 @@ export const UserSlice = createSlice({
     },
     deleteToken: (state: UserSliceType) => {
       state.token = ''
+    },
+    initialProfileCreatedHandler: (
+      state: UserSliceType,
+      action: { payload: boolean }
+    ) => {
+      state.isInitialProfileCreated = action.payload
     },
   },
 })

@@ -19,7 +19,6 @@ export interface UISliceType {
   userNameValid: boolean
   contactSearchBar: boolean
   chatColumnActive: boolean
-  isInitialProfileCreated: string
 }
 
 export const UISlice = createSlice({
@@ -37,8 +36,6 @@ export const UISlice = createSlice({
     signUp: false,
     login: false,
     userNameValid: true,
-    isInitialProfileCreated:
-      localStorage.getItem('isInitialProfileCreated') ?? '',
     contactSearchBar: false,
     chatColumnActive: true,
   },
@@ -76,19 +73,19 @@ export const UISlice = createSlice({
     closeSnack: (state: UISliceType) => {
       state.snack = null
     },
-    initiateProfileHandler: (
-      state: UISliceType,
-      action: { payload: boolean }
-    ) => {
-      const isInitialProfileCreated = localStorage.getItem(
-        'isInitialProfileCreated'
-      )
-      if (isInitialProfileCreated === 'true' && action.payload) {
-        state.initiateProfile = false
-      } else {
-        state.initiateProfile = action.payload
-      }
-    },
+    // initiateProfileHandler: (
+    //   state: UISliceType,
+    //   action: { payload: boolean }
+    // ) => {
+    //   // const isInitialProfileCreated = localStorage.getItem(
+    //   //   'isInitialProfileCreated'
+    //   // )
+    //   if (isInitialProfileCreated === 'true' && action.payload) {
+    //     state.initiateProfile = false
+    //   } else {
+    //     state.initiateProfile = action.payload
+    //   }
+    // },
     initialProfileImageCropperHandler: (
       state: UISliceType,
       action: { payload: boolean }
@@ -123,10 +120,7 @@ export const UISlice = createSlice({
     chatColumnHandler: (state: UISliceType, action: { payload: boolean }) => {
       state.chatColumnActive = action.payload
     },
-    isInitialProfileCreatedHandler: (state: UISliceType) => {
-      state.isInitialProfileCreated =
-        localStorage.getItem('isInitialProfileCreated') ?? ''
-    },
+    
   },
 })
 

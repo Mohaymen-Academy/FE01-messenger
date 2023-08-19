@@ -48,7 +48,7 @@ export default function SettingsColumn({
 
   const signOutHandler = () => {
     dispatch(UserSlice.actions.deleteToken())
-    dispatch(UISlice.actions.initiateProfileHandler(false))
+    // dispatch(UISlice.actions.initiateProfileHandler(false))
   }
   const firstName = useSelector(
     (state: storeStateTypes) => state.user.firstName

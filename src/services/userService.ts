@@ -9,12 +9,17 @@ export function loginService(email: string, password: string) {
       if (res.status === 200) {
         store.dispatch(UserSlice.actions.login({ token: res.data.token }))
         store.dispatch(
+          UserSlice.actions.initialProfileCreatedHandler(
+            res.data.hasInitialProfile
+          )
+        )
+        store.dispatch(
           UISlice.actions.openSnack({
             text: 'Login success',
             severity: 'success',
           })
         )
-        store.dispatch(UISlice.actions.initiateProfileHandler(true))
+        // store.dispatch(UISlice.actions.initiateProfileHandler(true))
         store.dispatch(UISlice.actions.loginHandler(false))
         store.dispatch(UISlice.actions.chatColumnHandler(true))
       } else {
@@ -38,12 +43,17 @@ export function registerService(email: string, password: string) {
       if (res.status === 200) {
         store.dispatch(UserSlice.actions.login({ token: res.data.token }))
         store.dispatch(
+          UserSlice.actions.initialProfileCreatedHandler(
+            res.data.hasInitialProfile
+          )
+        )
+        store.dispatch(
           UISlice.actions.openSnack({
             text: 'Register success',
             severity: 'success',
           })
         )
-        store.dispatch(UISlice.actions.initiateProfileHandler(true))
+        // store.dispatch(UISlice.actions.initiateProfileHandler(true))
         store.dispatch(UISlice.actions.signUpHandler(false))
       } else {
         store.dispatch(

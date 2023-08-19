@@ -45,7 +45,7 @@ export function initiateProfileService(
   initiateProfile({ username, firstName, lastName, bio, picture })
     .then(res => {
       if (res.status === 200) {
-        localStorage.setItem('isInitialProfileCreated', 'true')
+        // localStorage.setItem('isInitialProfileCreated', 'true')
         store.dispatch(
           UISlice.actions.openSnack({
             text: 'Register success',
