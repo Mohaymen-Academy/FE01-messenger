@@ -16,6 +16,7 @@ export function loginService(email: string, password: string) {
         )
         store.dispatch(UISlice.actions.initiateProfileHandler(true))
         store.dispatch(UISlice.actions.loginHandler(false))
+        store.dispatch(UISlice.actions.chatColumnHandler(true))
       } else {
         store.dispatch(
           UISlice.actions.openSnack({ text: 'Login failed', severity: 'error' })

@@ -6,16 +6,17 @@ import { ChatListSlice } from '@/redux/slices/ChatListSlice'
 import { UISlice } from '@/redux/slices/UISlice'
 
 interface ChatBoxProps {
-  online: boolean
-  lastMessageTime: string
+  online?: boolean
+  lastMessageTime?: string
   senderName: string
-  textMessage: string
-  unReadMessage: number
-  seen: boolean
-  seenEnable: boolean
+  textMessage?: string
+  unReadMessage?: number
+  seen?: boolean
+  seenEnable?: boolean
   img?: string
   id: string
-  active: boolean
+  active?: boolean
+  type?: string
 }
 
 export default function ChatBox({

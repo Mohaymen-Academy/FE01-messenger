@@ -1,7 +1,5 @@
-import { FaPen } from 'react-icons/fa'
 import classNames from 'classnames'
 import { useSelector } from 'react-redux'
-import FabButton from '@/components/Common/FabButton'
 import { storeStateTypes } from '@/types/types'
 import SearchList from '@/components/Common/SearchList'
 import ChatList from '../ChatList'

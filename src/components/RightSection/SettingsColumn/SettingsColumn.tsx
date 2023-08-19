@@ -1,10 +1,5 @@
 import { FiAtSign, FiLogOut } from 'react-icons/fi'
-import {
-  BsTelephone,
-  BsInfoCircle,
-  BsFillMoonStarsFill,
-  BsSun,
-} from 'react-icons/bs'
+import { BsInfoCircle, BsFillMoonStarsFill, BsSun } from 'react-icons/bs'
 import classNames from 'classnames'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,6 +8,7 @@ import InfoRow from '@/components/Common/InfoRow'
 import { storeStateTypes } from '@/types/types'
 import { UserSlice } from '@/redux/slices/UserSlice'
 import { myProfileService } from '@/services/dataService'
+import { UISlice } from '@/redux/slices/UISlice'
 import SettingsHeader from '../SettingsHeader/SettingsHeader'
 
 interface SettingsColumnProps {
@@ -52,6 +48,7 @@ export default function SettingsColumn({
 
   const signOutHandler = () => {
     dispatch(UserSlice.actions.deleteToken())
+    dispatch(UISlice.actions.initiateProfileHandler(false))
   }
   const firstName = useSelector(
     (state: storeStateTypes) => state.user.firstName
@@ -74,20 +71,16 @@ export default function SettingsColumn({
       />
       <InfoRow
         title={userName}
-        subTitle="آیدی"
+        subTitle="نام کاربری"
         icon={<FiAtSign className="h-6 w-6 text-gray-600" />}
       />
-      <InfoRow
-        title="+989332905168"
-        subTitle="شماره همراه"
-        icon={<BsTelephone className="h-6 w-6 fill-current text-gray-600" />}
-      />
+
       <InfoRow
         title={bio}
         subTitle="بیوگرافی"
         icon={<BsInfoCircle className="h-6 w-6 fill-current text-gray-600" />}
       />
-      <div className="mr-4 mt-[70px] flex w-[355px] items-center justify-start gap-2 rounded-lg pr-1  transition-all duration-300 ease-in-out">
+      <div className="mr-4 mt-[95px] flex w-[355px] items-center justify-start gap-2 rounded-lg pr-1  transition-all duration-300 ease-in-out">
         <div
           onClick={darkModeHandler}
           className="fill-current transition-all duration-1000 ease-in-out"

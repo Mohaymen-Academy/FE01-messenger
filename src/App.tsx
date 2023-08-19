@@ -10,6 +10,7 @@ function App() {
   const isInitiateProfileCreated = useSelector(
     (state: storeStateTypes) => state.UI.isInitialProfileCreated
   )
+
   return (
     <BrowserRouter>
       <Routes>
@@ -17,7 +18,9 @@ function App() {
         <Route path="/" element={<MainPage />} />
       </Routes>
       {!isLoggedIn && <Navigate replace to={'/login/'} />}
-      {isLoggedIn && isInitiateProfileCreated && <Navigate replace to={'/'} />}
+      {isLoggedIn && isInitiateProfileCreated === 'true' && (
+        <Navigate replace to={'/'} />
+      )}
     </BrowserRouter>
   )
 }

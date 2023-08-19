@@ -1,13 +1,13 @@
 import { contactSearch, messageSearch } from '@/api/search'
-import { UISlice } from '@/redux/slices/UISlice'
-import { UserSlice } from '@/redux/slices/UserSlice'
+import { SearchSlice } from '@/redux/slices/SearchSlice'
 import store from '@/redux/store'
 
 export function contactSearchService(username: string) {
   contactSearch({ username })
     .then(res => {
       if (res.status === 200) {
-        //   store.dispatch(UISlice.actions.userNameHandler(true))
+        store.dispatch(SearchSlice.actions.setResult(res.data))
+        console.log(1)
       } else {
         //   store.dispatch(UISlice.actions.userNameHandler(false))
       }

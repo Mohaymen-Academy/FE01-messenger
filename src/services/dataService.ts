@@ -1,3 +1,4 @@
+import { redirect, useNavigate } from 'react-router-dom'
 import {
   chatListData,
   initiateProfile,
@@ -44,13 +45,14 @@ export function initiateProfileService(
   initiateProfile({ username, firstName, lastName, bio, picture })
     .then(res => {
       if (res.status === 200) {
-        store.dispatch(UISlice.actions.initialProfileCreatedHandler())
+        localStorage.setItem('isInitialProfileCreated', 'true')
         store.dispatch(
           UISlice.actions.openSnack({
             text: 'Register success',
             severity: 'success',
           })
         )
+        store.dispatch(UISlice.actions.isInitialProfileCreatedHandler())
       } else {
         store.dispatch(
           UISlice.actions.openSnack({
@@ -86,7 +88,6 @@ export function myProfileService() {
   myProfile()
     .then(res => {
       if (res.status === 200) {
-        // console.log(res.data)
         store.dispatch(UserSlice.actions.setUserName(res.data.username))
         store.dispatch(UserSlice.actions.setFirstName(res.data.firstName))
         store.dispatch(UserSlice.actions.setLastName(res.data.lastName))

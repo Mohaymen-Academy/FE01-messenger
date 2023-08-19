@@ -17,9 +17,9 @@ export interface UISliceType {
   signUp: boolean
   login: boolean
   userNameValid: boolean
-  isInitialProfileCreated: boolean
   contactSearchBar: boolean
   chatColumnActive: boolean
+  isInitialProfileCreated: string
 }
 
 export const UISlice = createSlice({
@@ -37,7 +37,8 @@ export const UISlice = createSlice({
     signUp: false,
     login: false,
     userNameValid: true,
-    isInitialProfileCreated: false,
+    isInitialProfileCreated:
+      localStorage.getItem('isInitialProfileCreated') ?? '',
     contactSearchBar: false,
     chatColumnActive: true,
   },
@@ -79,12 +80,14 @@ export const UISlice = createSlice({
       state: UISliceType,
       action: { payload: boolean }
     ) => {
-      if (state.isInitialProfileCreated && action.payload) {
+      const isInitialProfileCreated = localStorage.getItem(
+        'isInitialProfileCreated'
+      )
+      if (isInitialProfileCreated === 'true' && action.payload) {
         state.initiateProfile = false
       } else {
         state.initiateProfile = action.payload
       }
-      // console.log(state.initiateProfile)
     },
     initialProfileImageCropperHandler: (
       state: UISliceType,
@@ -111,19 +114,18 @@ export const UISlice = createSlice({
     userNameHandler: (state: UISliceType, action: { payload: boolean }) => {
       state.userNameValid = action.payload
     },
-    initialProfileCreatedHandler: (state: UISliceType) => {
-      state.isInitialProfileCreated = true
-    },
     contactSearchbarHandler: (
       state: UISliceType,
       action: { payload: boolean }
     ) => {
       state.contactSearchBar = action.payload
-    },chatColumnHandler: (
-      state: UISliceType,
-      action: { payload: boolean }
-    ) => {
+    },
+    chatColumnHandler: (state: UISliceType, action: { payload: boolean }) => {
       state.chatColumnActive = action.payload
+    },
+    isInitialProfileCreatedHandler: (state: UISliceType) => {
+      state.isInitialProfileCreated =
+        localStorage.getItem('isInitialProfileCreated') ?? ''
     },
   },
 })

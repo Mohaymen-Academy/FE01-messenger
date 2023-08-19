@@ -1,8 +1,5 @@
 import { BiArrowBack } from 'react-icons/bi'
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
-import login from '@/api/user'
-import { UserSlice } from '@/redux/slices/UserSlice'
 import { loginService } from '@/services/userService'
 import LoginInput from '../Common/TextInput/TextInput'
 
