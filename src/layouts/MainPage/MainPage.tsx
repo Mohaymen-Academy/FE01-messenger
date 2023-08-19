@@ -15,6 +15,10 @@ export default function MainPage({}: MainPageProps) {
   const activeDetails = useSelector(
     (state: storeStateTypes) => state.UI.infoColumn
   )
+  const activeChat = useSelector(
+    (state: storeStateTypes) => state.UI.chatColumnActive
+  )
+  console.log(activeChat)
 
   return (
     <div

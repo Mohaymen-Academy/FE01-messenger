@@ -1,4 +1,4 @@
-import { redirect, useNavigate } from 'react-router-dom'
+import { Router, redirect, useNavigate } from 'react-router-dom'
 import {
   chatListData,
   initiateProfile,
@@ -8,22 +8,25 @@ import {
 import { UISlice } from '@/redux/slices/UISlice'
 import { UserSlice } from '@/redux/slices/UserSlice'
 import store from '@/redux/store'
+import { ChatListSlice } from '@/redux/slices/ChatListSlice'
 
-export function ChatListDataService(profileId: string) {
+export function ChatListDataService(profileId: number) {
+  // const data1 = [
+  //   {
+  //     chatId: 2,
+  //     name: 'ali',
+  //     type: 'text',
+  //     bio: 'hello',
+  //     description: 'skmsm',
+  //     photo: '',
+  //   },
+  // ]
+  // store.dispatch(ChatListSlice.actions.setChatBox(data1))
+
   chatListData({ profileId })
     .then(res => {
       if (res.status === 200) {
-        // store.dispatch(UserSlice.actions.login({ token: res.data.token }))
-        // store.dispatch(
-        //   UISlice.actions.openSnack({
-        //     text: 'Login success',
-        //     severity: 'success',
-        //   })
-        // )
-      } else {
-        // store.dispatch(
-        //   UISlice.actions.openSnack({ text: 'Login failed', severity: 'error' })
-        // )
+        store.dispatch(ChatListSlice.actions.setChatBox(res.data.chat))
       }
     })
     .catch(err => {
@@ -45,14 +48,14 @@ export function initiateProfileService(
   initiateProfile({ username, firstName, lastName, bio, picture })
     .then(res => {
       if (res.status === 200) {
-        // localStorage.setItem('isInitialProfileCreated', 'true')
         store.dispatch(
           UISlice.actions.openSnack({
             text: 'Register success',
             severity: 'success',
           })
         )
-        store.dispatch(UISlice.actions.isInitialProfileCreatedHandler())
+        store.dispatch(UISlice.actions.initialProfileCreatedHandler(true))
+        store.dispatch(UISlice.actions.chatColumnHandler(true))
       } else {
         store.dispatch(
           UISlice.actions.openSnack({

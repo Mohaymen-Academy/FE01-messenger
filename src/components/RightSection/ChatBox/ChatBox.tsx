@@ -14,7 +14,7 @@ interface ChatBoxProps {
   seen?: boolean
   seenEnable?: boolean
   img?: string
-  id: string
+  id: number
   active?: boolean
   type?: string
 }
@@ -42,7 +42,7 @@ export default function ChatBox({
     'gray',
     'cyan',
   ]
-  const bgColor = Math.floor(Math.random() * colors.length)
+  const bgColor = id % colors.length
   const dispatch = useDispatch()
   const activateChat = () => {
     dispatch(UISlice.actions.openMidColumn())
@@ -67,7 +67,7 @@ export default function ChatBox({
             style={{ display: img ? 'none' : 'flex' }}
             className="flex w-full items-center justify-center rounded-full text-center"
           >
-            {senderName.charAt(0)}
+            {senderName?.charAt(0)}
           </div>
           <img
             style={{ display: img ? 'flex' : 'none' }}

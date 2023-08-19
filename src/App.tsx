@@ -8,7 +8,7 @@ import { storeStateTypes } from './types/types'
 function App() {
   const isLoggedIn = useSelector(userSelectors.isLoggedIn)
   const isInitiateProfileCreated = useSelector(
-    (state: storeStateTypes) => state.user.isInitialProfileCreated
+    (state: storeStateTypes) => state.UI.isInitialProfileCreated
   )
 
   return (
@@ -18,9 +18,7 @@ function App() {
         <Route path="/" element={<MainPage />} />
       </Routes>
       {!isLoggedIn && <Navigate replace to={'/login/'} />}
-      {isLoggedIn && isInitiateProfileCreated === true && (
-        <Navigate replace to={'/'} />
-      )}
+      {isLoggedIn && isInitiateProfileCreated && <Navigate replace to={'/'} />}
     </BrowserRouter>
   )
 }

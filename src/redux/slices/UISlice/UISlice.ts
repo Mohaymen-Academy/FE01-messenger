@@ -19,6 +19,7 @@ export interface UISliceType {
   userNameValid: boolean
   contactSearchBar: boolean
   chatColumnActive: boolean
+  isInitialProfileCreated: boolean
 }
 
 export const UISlice = createSlice({
@@ -38,6 +39,7 @@ export const UISlice = createSlice({
     userNameValid: true,
     contactSearchBar: false,
     chatColumnActive: true,
+    isInitialProfileCreated: false,
   },
   reducers: {
     openInfoColumn: (state: UISliceType) => {
@@ -73,19 +75,22 @@ export const UISlice = createSlice({
     closeSnack: (state: UISliceType) => {
       state.snack = null
     },
-    // initiateProfileHandler: (
-    //   state: UISliceType,
-    //   action: { payload: boolean }
-    // ) => {
-    //   // const isInitialProfileCreated = localStorage.getItem(
-    //   //   'isInitialProfileCreated'
-    //   // )
-    //   if (isInitialProfileCreated === 'true' && action.payload) {
-    //     state.initiateProfile = false
-    //   } else {
-    //     state.initiateProfile = action.payload
-    //   }
-    // },
+    initiateProfileHandler: (
+      state: UISliceType,
+      action: { payload: boolean }
+    ) => {
+      if (state.isInitialProfileCreated === true && action.payload) {
+        state.initiateProfile = false
+      } else {
+        state.initiateProfile = action.payload
+      }
+    },
+    initialProfileCreatedHandler: (
+      state: UISliceType,
+      action: { payload: boolean }
+    ) => {
+      state.isInitialProfileCreated = action.payload
+    },
     initialProfileImageCropperHandler: (
       state: UISliceType,
       action: { payload: boolean }
@@ -120,7 +125,6 @@ export const UISlice = createSlice({
     chatColumnHandler: (state: UISliceType, action: { payload: boolean }) => {
       state.chatColumnActive = action.payload
     },
-    
   },
 })
 

@@ -2,8 +2,10 @@ import { AxiosPromise } from 'axios'
 import { apiUrl } from '@/utils/constants'
 import axiosInstance from './axiosInstance'
 
-export const chatListData = (data: { profileId: string }): AxiosPromise =>
-  axiosInstance.get(`${apiUrl}/chat/get`)
+export const chatListData = (data: { profileId: number }): AxiosPromise =>
+  axiosInstance.get<{
+    chat: []
+  }>(`${apiUrl}/chat/${data.profileId}`)
 
 export const initiateProfile = (data: {
   username: string

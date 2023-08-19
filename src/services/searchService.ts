@@ -6,8 +6,9 @@ export function contactSearchService(username: string) {
   contactSearch({ username })
     .then(res => {
       if (res.status === 200) {
-        store.dispatch(SearchSlice.actions.setResult(res.data))
         console.log(1)
+
+        store.dispatch(SearchSlice.actions.setResult(res.data))
       } else {
         //   store.dispatch(UISlice.actions.userNameHandler(false))
       }

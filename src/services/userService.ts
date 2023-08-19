@@ -9,9 +9,7 @@ export function loginService(email: string, password: string) {
       if (res.status === 200) {
         store.dispatch(UserSlice.actions.login({ token: res.data.token }))
         store.dispatch(
-          UserSlice.actions.initialProfileCreatedHandler(
-            res.data.hasInitialProfile
-          )
+          UISlice.actions.initialProfileCreatedHandler(res.data.hasProfile)
         )
         store.dispatch(
           UISlice.actions.openSnack({
@@ -19,7 +17,6 @@ export function loginService(email: string, password: string) {
             severity: 'success',
           })
         )
-        // store.dispatch(UISlice.actions.initiateProfileHandler(true))
         store.dispatch(UISlice.actions.loginHandler(false))
         store.dispatch(UISlice.actions.chatColumnHandler(true))
       } else {
@@ -41,11 +38,10 @@ export function registerService(email: string, password: string) {
   register({ email, password })
     .then(res => {
       if (res.status === 200) {
+        console.log(res.data.hasProfile)
         store.dispatch(UserSlice.actions.login({ token: res.data.token }))
         store.dispatch(
-          UserSlice.actions.initialProfileCreatedHandler(
-            res.data.hasInitialProfile
-          )
+          UISlice.actions.initiateProfileHandler(true)
         )
         store.dispatch(
           UISlice.actions.openSnack({

@@ -13,10 +13,11 @@ export default function SearchList() {
         جستجو...
       </p>
       <div className="flex flex-col">
+        {/* {result.length} */}
         {result.map(box => (
           <ChatBox
             key={box.id}
-            senderName={box.name}
+            senderName={box.username}
             id={box.id}
             type={box.type}
             img={box.image}

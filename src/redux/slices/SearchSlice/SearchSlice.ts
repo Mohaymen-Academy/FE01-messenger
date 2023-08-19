@@ -17,12 +17,13 @@ export const SearchSlice = createSlice({
     chatBoxes: [],
   },
   reducers: {
-    setResult: (
-      state: SearchSliceType,
-      action: { payload: { data: chatBoxType[] } }
-    ) => {
-      console.log(123)  
+    setResult: (state: SearchSliceType, action: { payload: chatBoxType[] }) => {
+      console.log(action.payload)
       state.chatBoxes = action.payload
+      console.log(state.chatBoxes.concat(action.payload))
+      // action.payload.map(item => state.chatBoxes.concat(item))
+      // console.log(state.chatBoxes.length)
+      // state.chatBoxes.map(item => console.log(item))
     },
   },
 })
