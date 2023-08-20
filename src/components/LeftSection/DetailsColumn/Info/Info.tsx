@@ -11,22 +11,19 @@ export default function Info() {
   const activeChat = useSelector((state: storeStateTypes) =>
     state.chatList.chatBoxes.find(compo => compo.id === activeId)
   )
+  const activeSearch = useSelector((state: storeStateTypes) =>
+    state.search.chatBoxes.find(compo => compo.id === activeId)
+  )
+  const active = activeChat ?? activeSearch
   return (
     <div className="right-0 flex w-96 flex-col border-gray-300 bg-primary/100 pb-4 max-sm:w-full xl:block">
-      <InfoImage
-        onlineStatus={activeChat?.online}
-        infoName={activeChat?.name}
-      />
+      <InfoImage onlineStatus={active?.online} infoName={active?.name} />
       <InfoRow
-        title={activeChat?.userName}
-        subTitle="آیدی"
+        title={active?.username}
+        subTitle="نام کاربری"
         icon={<FiAtSign className="h-6 w-6 text-gray-600" />}
       />
-      <InfoRow
-        title={activeChat?.phoneNumber}
-        subTitle="شماره همراه"
-        icon={<BsTelephone className="h-6 w-6 fill-current text-gray-600" />}
-      />
+
       <InfoRow
         title={activeChat?.bio}
         subTitle="بیوگرافی"

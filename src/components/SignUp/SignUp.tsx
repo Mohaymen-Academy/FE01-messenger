@@ -123,7 +123,7 @@ export default function SignUp({ active, onClick }: SignUpProps) {
                 <a className="mr-1 font-medium hover:underline" href="#">
                   شرایط و قوانین{' '}
                 </a>
-                پیامرسان حامی را می پذیرم
+                پیامرسان هرمس را می پذیرم
               </label>
             </div>
           </div>
