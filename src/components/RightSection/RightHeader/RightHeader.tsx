@@ -19,7 +19,7 @@ export default function RightHeader({ onClick }: RightHeaderProps) {
     contactSearchService(myInput)
   }
   return (
-    <div className="flex w-full items-center justify-between bg-primary/100 px-3 py-2  text-white dark:text-white">
+    <div className="flex w-full items-center justify-between bg-primary px-3 py-2  text-white dark:text-white">
       <NavMenu onClick={onClick} />
       <SearchBar
         onClick={showSearchBarColumn}

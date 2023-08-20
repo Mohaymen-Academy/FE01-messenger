@@ -1,6 +1,7 @@
 import { Menu, MenuItem } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useState } from 'react'
+import classNames from 'classnames'
 import { storeStateTypes } from '@/types/types'
 import img from '@/assets/download.jpeg'
 import { UISlice } from '@/redux/slices/UISlice'
@@ -70,16 +71,18 @@ export default function ProfileSettingsPhoto() {
     dispatch(UISlice.actions.closeCropperModal())
   }
   return (
-    <div className="relative mb-2 mt-4 flex w-full justify-center">
+    <div className="relative mb-2 mt-4 flex w-full justify-center ">
       <label
-        style={{ backgroundColor: profileImage ? 'white' : 'black' }}
         role="button"
-        className="h-32 w-32 content-center overflow-hidden rounded-full p-1 text-center focus:outline-none"
+        className={classNames(
+          'h-32 w-32 content-center overflow-hidden rounded-full  text-center focus:outline-none ',
+          profileImage ? '' : 'bg-black dark:bg-gray-700'
+        )}
       >
         <div onClick={showProfileModal}>
           <img
             style={{ display: profileImage ? '' : 'none' }}
-            className="h-full w-full content-center rounded-full border-2 border-gray-200 object-cover group-hover:blur-none"
+            className="h-full w-full content-center rounded-full  bg-black  object-cover group-hover:blur-none "
             src={profileImage}
           />
           <div className="absolute right-32 top-[86px] transition-all duration-500 ease-in-out">
@@ -89,7 +92,7 @@ export default function ProfileSettingsPhoto() {
               aria-haspopup="true"
               aria-expanded={profileImageMenu ? 'true' : undefined}
               onClick={handleOpenProfileMenu}
-              className="z-10 h-12 w-12 content-center rounded-full border-2 border-white bg-blue-400 object-cover transition-all duration-500 ease-in-out "
+              className="z-10 h-12 w-12 content-center rounded-full border-2 border-white bg-gray-400 object-cover transition-all duration-500 ease-in-out dark:bg-gray-700 "
               src={camera}
             />
             <Menu
@@ -99,6 +102,14 @@ export default function ProfileSettingsPhoto() {
               onClose={handleCloseProfileMenu}
               MenuListProps={{
                 'aria-labelledby': 'basic-button',
+              }}
+              slotProps={{
+                paper: {
+                  style: {
+                    backgroundColor: 'rgb(var(--background-color-100))',
+                    color: 'rgb(var(--background-color-500))',
+                  },
+                },
               }}
             >
               <MenuItem

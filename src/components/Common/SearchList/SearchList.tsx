@@ -10,7 +10,7 @@ export default function SearchList() {
   //
 
   return (
-    <div className="h-full border-t-2 border-t-gray-200">
+    <div className="h-full">
       <p className={classNames('pt-4 text-center', result ? 'hidden' : '')}>
         جستجو...
       </p>
