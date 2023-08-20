@@ -24,7 +24,7 @@ export default function ImageInput({ isActive, image, mode }: ImageInputProps) {
         )
       )
       if (mode === 'initiate') {
-        dispatch(UISlice.actions.closeInitialProfileImageCropper())
+        dispatch(UISlice.actions.initialProfileImageCropperHandler(false))
         console.log(1)
       }
       dispatch(UISlice.actions.closeCropperModal())
