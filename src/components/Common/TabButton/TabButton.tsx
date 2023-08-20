@@ -11,7 +11,7 @@ export default function TabButton({ text, active, onClick }: TabButtonProps) {
     <>
       <div
         onClick={onClick}
-        className="mt-1 w-full rounded-t-lg bg-primary/100 px-1 hover:bg-gray-400"
+        className="mt-1 w-full rounded-t-lg bg-primary px-1 hover:bg-tabButton"
       >
         <div
           className={classNames(
