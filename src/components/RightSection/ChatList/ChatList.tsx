@@ -4,13 +4,11 @@ import { ChatListDataService } from '@/services/dataService'
 import ChatBox from '../ChatBox'
 
 export default function ChatList() {
-  const profileId = useSelector(
-    (state: storeStateTypes) => state.user.profileId
-  )
-  // ChatListDataService(9)
+  ChatListDataService()
   const chatBoxes = useSelector(
     (state: storeStateTypes) => state.chatList.chatBoxes
   )
+  console.log(typeof chatBoxes)
 
   // console.log(chatBoxes)
   return (
@@ -21,7 +19,7 @@ export default function ChatList() {
             <ChatBox
               // unReadMessage={item.unReadMessage}
               // seen={item.seen}
-              senderName={item.name}
+              senderName={item.username}
               // lastMessageTime={item.lastMessageTime}
               // online={item.online}
               // textMessage={item.textMessage}
@@ -29,7 +27,7 @@ export default function ChatList() {
               img={item.photo}
               id={item.chatId}
               type={item.type}
-              // active={item.active}
+              active={item.active}
             />
           </>
         ))}

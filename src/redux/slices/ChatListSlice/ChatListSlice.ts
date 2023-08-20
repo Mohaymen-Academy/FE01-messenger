@@ -13,8 +13,9 @@ export interface chatBoxType {
   // online: boolean
   // bgImageColor: string
   // profileId: string
-  chatId: number
   name: string
+  chatId: number
+  username: string
   type: string
   bio: string
   description: string
@@ -28,14 +29,15 @@ export const ChatListSlice = createSlice({
   name: 'chatList',
   initialState: {
     chatBoxes: [
-      {
-        chatId: 12,
-        name: 'Ali',
-        type: 'text',
-        bio: 'hello',
-        description: 'hello',
-        photo: '',
-      },
+      // {
+      //   name: 'Ali',
+      //   chatId: 12,
+      //   username: 'Ali',
+      //   type: 'text',
+      //   bio: 'hello',
+      //   description: 'hello',
+      //   photo: '',
+      // },
     ],
     // chatBoxes: [
     //   {
@@ -138,6 +140,7 @@ export const ChatListSlice = createSlice({
       state: ChatListSliceType,
       action: { payload: chatBoxType[] }
     ) => {
+      console.log(`******* ${action.payload}`)
       state.chatBoxes = action.payload
     },
   },

@@ -49,7 +49,7 @@ export default function SettingsColumn({
   const signOutHandler = () => {
     dispatch(UserSlice.actions.deleteToken())
     localStorage.setItem('token', '')
-    // dispatch(UserSlice.actions.initialProfileCreatedHandler(false))
+    dispatch(UISlice.actions.initialProfileCreatedHandler(false))
   }
   const firstName = useSelector(
     (state: storeStateTypes) => state.user.firstName

@@ -6,7 +6,9 @@ import ChatBox from '@/components/RightSection/ChatBox/ChatBox'
 export default function SearchList() {
   // results
   const result = useSelector((state: storeStateTypes) => state.search.chatBoxes)
+
   //
+
   return (
     <div className="h-full border-t-2 border-t-gray-200">
       <p className={classNames('pt-4 text-center', result ? 'hidden' : '')}>
@@ -21,6 +23,7 @@ export default function SearchList() {
             id={box.id}
             type={box.type}
             img={box.image}
+            active={box.active}
           />
         ))}
       </div>

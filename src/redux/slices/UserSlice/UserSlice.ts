@@ -10,7 +10,6 @@ export interface UserSliceType {
   number: string
   theme: string
   token: string
-  profileId: string
 }
 
 export const UserSlice = createSlice({
@@ -25,7 +24,6 @@ export const UserSlice = createSlice({
     number: '',
     theme: '',
     token: localStorage.getItem('token') ?? '',
-    profileId: '',
   },
   reducers: {
     setFirstName: (state: UserSliceType, action: { payload: string }) => {

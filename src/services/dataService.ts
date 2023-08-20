@@ -10,23 +10,11 @@ import { UserSlice } from '@/redux/slices/UserSlice'
 import store from '@/redux/store'
 import { ChatListSlice } from '@/redux/slices/ChatListSlice'
 
-export function ChatListDataService(profileId: number) {
-  // const data1 = [
-  //   {
-  //     chatId: 2,
-  //     name: 'ali',
-  //     type: 'text',
-  //     bio: 'hello',
-  //     description: 'skmsm',
-  //     photo: '',
-  //   },
-  // ]
-  // store.dispatch(ChatListSlice.actions.setChatBox(data1))
-
-  chatListData({ profileId })
+export function ChatListDataService() {
+  chatListData()
     .then(res => {
       if (res.status === 200) {
-        store.dispatch(ChatListSlice.actions.setChatBox(res.data.chat))
+        store.dispatch(ChatListSlice.actions.setChatBox(res.data))
       }
     })
     .catch(err => {

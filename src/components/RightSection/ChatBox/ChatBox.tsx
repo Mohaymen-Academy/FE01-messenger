@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { ActiveChatSlice } from '@/redux/slices/ActiveChatSlice'
 import { ChatListSlice } from '@/redux/slices/ChatListSlice'
 import { UISlice } from '@/redux/slices/UISlice'
+import { SearchSlice } from '@/redux/slices/SearchSlice'
 
 interface ChatBoxProps {
   online?: boolean
@@ -16,7 +17,8 @@ interface ChatBoxProps {
   img?: string
   id: number
   active?: boolean
-  type?: string
+  type: string
+  onClick?: () => void
 }
 
 export default function ChatBox({
@@ -29,6 +31,7 @@ export default function ChatBox({
   seenEnable,
   img,
   id,
+  type,
   active,
 }: ChatBoxProps) {
   const colors = [
@@ -45,9 +48,11 @@ export default function ChatBox({
   const bgColor = id % colors.length
   const dispatch = useDispatch()
   const activateChat = () => {
+    console.log('open chat box')
     dispatch(UISlice.actions.openMidColumn())
-    dispatch(ActiveChatSlice.actions.setActiveChat({ id }))
+    dispatch(ActiveChatSlice.actions.setActiveChat({ id, type }))
     dispatch(ChatListSlice.actions.setActive({ id }))
+    dispatch(SearchSlice.actions.setActive({ id }))
   }
   return (
     <div
