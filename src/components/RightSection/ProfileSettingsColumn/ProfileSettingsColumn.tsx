@@ -1,14 +1,18 @@
 import { IoArrowForward } from 'react-icons/io5'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { BsCheck2 } from 'react-icons/bs'
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
+import classNames from 'classnames'
 import IconButton from '@/components/Common/IconButton'
 import TextInput from '@/components/Common/TextInput/TextInput'
 import FabButton from '@/components/Common/FabButton/FabButton'
-import { UserSlice } from '@/redux/slices/UserSlice'
 import { storeStateTypes } from '@/types/types'
 import { UISlice } from '@/redux/slices/UISlice'
+import {
+  initiateProfileService,
+  usernameValidationService,
+} from '@/services/dataService'
 import ProfileSettingsPhoto from '../ProfileSettingsPhoto/ProfileSettingsPhoto'
 
 interface ProfileSettingsColumnProps {
@@ -18,10 +22,16 @@ interface ProfileSettingsColumnProps {
 export default function ProfileSettingsColumn({
   isActive,
 }: ProfileSettingsColumnProps) {
-  const name = useSelector((state: storeStateTypes) => state.user.name)
+  const firstName = useSelector(
+    (state: storeStateTypes) => state.user.firstName
+  )
+  const lastName = useSelector((state: storeStateTypes) => state.user.lastName)
   const userName = useSelector((state: storeStateTypes) => state.user.userName)
   const bio = useSelector((state: storeStateTypes) => state.user.bio)
   const [confirmButtonActive, setConfirmButtonActive] = useState(false)
+  const userNameValidation = useSelector(
+    (state: storeStateTypes) => state.UI.userNameValid
+  )
 
   const {
     register,
@@ -30,16 +40,20 @@ export default function ProfileSettingsColumn({
     setValue,
   } = useForm<FieldValues>({
     defaultValues: {
-      name,
+      firstName,
+      lastName,
       bio,
       userName,
     },
   })
   const dispatch = useDispatch()
   const onSubmit: SubmitHandler<FieldValues> = data => {
-    dispatch(UserSlice.actions.setName(data.name as string))
-    dispatch(UserSlice.actions.setBio(data.bio as string))
-    dispatch(UserSlice.actions.setUserName(data.userName as string))
+    const { userName, firstName, lastName, bio } = data
+    if (userNameValidation) {
+      console.log(12222)
+      const picture = null
+      initiateProfileService(userName, firstName, lastName, bio, picture)
+    }
     dispatch(UISlice.actions.closeProfileSettings())
     setConfirmButtonActive(false)
   }
@@ -50,14 +64,20 @@ export default function ProfileSettingsColumn({
     }
   }
 
+  const changeUserNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const myInput = e.target.value
+    if (myInput !== userName) {
+      usernameValidationService(myInput)
+      showConfirmButton()
+    }
+  }
+
   const closeProfileSettings = () => {
-    dispatch(UserSlice.actions.setName(name))
-    dispatch(UserSlice.actions.setBio(bio))
-    dispatch(UserSlice.actions.setUserName(userName))
     dispatch(UISlice.actions.closeProfileSettings())
     setConfirmButtonActive(false)
     setValue('bio', bio)
-    setValue('name', name)
+    setValue('firstName', firstName)
+    setValue('lastName', lastName)
     setValue('userName', userName)
   }
 
@@ -86,15 +106,23 @@ export default function ProfileSettingsColumn({
         className="flex flex-col items-center justify-center gap-5 px-5 py-10"
       >
         <TextInput
-          formId="name"
-          palceHolder="نام کاربری"
+          formId="firstName"
+          palceHolder="نام"
           type="text"
           register={register}
           errors={errors}
-          onClick={() => setValue('name', name)}
+          onClick={() => setValue('firstName', firstName)}
           onChange={showConfirmButton}
         />
-
+        <TextInput
+          formId="lastName"
+          palceHolder=" نام خانوادگی"
+          type="text"
+          register={register}
+          errors={errors}
+          onClick={() => setValue('lastName', lastName)}
+          onChange={showConfirmButton}
+        />
         <div>
           <TextInput
             formId="bio"
@@ -114,13 +142,20 @@ export default function ProfileSettingsColumn({
         </div>
         <TextInput
           formId="userName"
-          palceHolder="آیدی"
+          palceHolder="نام کاربری"
           type="text"
           register={register}
           errors={errors}
           onClick={() => setValue('userName', userName)}
-          onChange={showConfirmButton}
+          onChange={changeUserNameHandler}
         />
+        <p
+          className={classNames(
+            !userNameValidation ? 'mt-[-10px] text-sm text-red-400' : 'hidden'
+          )}
+        >
+          این نام کاربری قبلا استفاده شده است
+        </p>
         <button
           type="submit"
           style={{ bottom: confirmButtonActive ? '0' : '-100px' }}

@@ -4,18 +4,21 @@ import classNames from 'classnames'
 import { ActiveChatSlice } from '@/redux/slices/ActiveChatSlice'
 import { ChatListSlice } from '@/redux/slices/ChatListSlice'
 import { UISlice } from '@/redux/slices/UISlice'
+import { SearchSlice } from '@/redux/slices/SearchSlice'
 
 interface ChatBoxProps {
-  online: boolean
-  lastMessageTime: string
+  online?: boolean
+  lastMessageTime?: string
   senderName: string
-  textMessage: string
-  unReadMessage: number
-  seen: boolean
-  seenEnable: boolean
+  textMessage?: string
+  unReadMessage?: number
+  seen?: boolean
+  seenEnable?: boolean
   img?: string
-  id: string
-  active: boolean
+  id: number
+  active?: boolean
+  type: string
+  onClick?: () => void
 }
 
 export default function ChatBox({
@@ -28,6 +31,7 @@ export default function ChatBox({
   seenEnable,
   img,
   id,
+  type,
   active,
 }: ChatBoxProps) {
   const colors = [
@@ -41,12 +45,14 @@ export default function ChatBox({
     'gray',
     'cyan',
   ]
-  const bgColor = Math.floor(Math.random() * colors.length)
+  const bgColor = id % colors.length
   const dispatch = useDispatch()
   const activateChat = () => {
+    console.log('open chat box')
     dispatch(UISlice.actions.openMidColumn())
-    dispatch(ActiveChatSlice.actions.setActiveChat({ id }))
+    dispatch(ActiveChatSlice.actions.setActiveChat({ id, type }))
     dispatch(ChatListSlice.actions.setActive({ id }))
+    dispatch(SearchSlice.actions.setActive({ id }))
   }
   return (
     <div
@@ -66,7 +72,7 @@ export default function ChatBox({
             style={{ display: img ? 'none' : 'flex' }}
             className="flex w-full items-center justify-center rounded-full text-center"
           >
-            {senderName.charAt(0)}
+            {senderName?.charAt(0)}
           </div>
           <img
             style={{ display: img ? 'flex' : 'none' }}
