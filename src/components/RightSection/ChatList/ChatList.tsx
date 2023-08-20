@@ -17,17 +17,17 @@ export default function ChatList() {
         {chatBoxes.map(item => (
           <>
             <ChatBox
-              // unReadMessage={item.unReadMessage}
-              // seen={item.seen}
-              senderName={item.username}
-              // lastMessageTime={item.lastMessageTime}
-              // online={item.online}
-              // textMessage={item.textMessage}
-              // seenEnable={item.seenEnable}
-              img={item.photo}
-              id={item.chatId}
-              type={item.type}
+              unReadMessage={item.unReadMessage}
+              seen={item.seen}
+              senderName={item.name}
+              lastMessageTime={item.lastMessageTime}
+              online={item.online}
+              textMessage={item.textMessage}
+              seenEnable={item.seenEnable}
+              img={item.image}
+              id={item.id}
               active={item.active}
+              type="piaz"
             />
           </>
         ))}

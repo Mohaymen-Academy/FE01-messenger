@@ -20,6 +20,7 @@ import {
   FORMAT_TEXT_COMMAND,
   LexicalEditor,
   SELECTION_CHANGE_COMMAND,
+  ElementNode,
 } from 'lexical'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -34,11 +35,10 @@ import {
   BsTypeStrikethrough,
   BsTypeUnderline,
 } from 'react-icons/bs'
-import { BiHide, BiSolidComment } from 'react-icons/bi'
+import { BiHide } from 'react-icons/bi'
 import getDOMRangeRect from './utils/getDOMRangeRect'
 import getSelectedNode from './utils/getSelectedNode'
 import setFloatingElemPosition from './utils/setFloatingElemPosition'
-import { INSERT_INLINE_COMMAND } from './utils/commentPlugin'
 import { TOGGLE_SPOILER } from './utils/spoilerPlugin/SpoilerPlugin'
 
 function TextFormatFloatingToolbar({
@@ -95,7 +95,7 @@ function TextFormatFloatingToolbar({
       }
     }
   }
-  function mouseUpListener(e: MouseEvent) {
+  function mouseUpListener() {
     if (popupCharStylesEditorRef?.current) {
       if (popupCharStylesEditorRef.current.style.pointerEvents !== 'auto') {
         popupCharStylesEditorRef.current.style.pointerEvents = 'auto'
@@ -113,6 +113,7 @@ function TextFormatFloatingToolbar({
         document.removeEventListener('mouseup', mouseUpListener)
       }
     }
+    return () => true
   }, [popupCharStylesEditorRef])
 
   const updateTextFormatFloatingToolbar = useCallback(() => {
@@ -302,7 +303,7 @@ function TextFormatFloatingToolbar({
 function useFloatingTextFormatToolbar(
   editor: LexicalEditor,
   anchorElem: HTMLElement
-): JSX.Element | null {
+): React.JSX.Element | null {
   const [isText, setIsText] = useState(false)
   const [isLink, setIsLink] = useState(false)
   const [isBold, setIsBold] = useState(false)
@@ -349,17 +350,15 @@ function useFloatingTextFormatToolbar(
       setIsCode(selection.hasFormat('code'))
 
       // Update links
-      const parent = node.getParent()
+      const parent: ElementNode | null = node.getParent()
       if ($isLinkNode(parent) || $isLinkNode(node)) {
         setIsLink(true)
       } else {
         setIsLink(false)
       }
 
-      if (
-        !$isCodeHighlightNode(selection.anchor.getNode()) &&
-        selection.getTextContent() !== ''
-      ) {
+      const sel = selection.anchor.getNode() as ElementNode
+      if (!$isCodeHighlightNode(sel) && selection.getTextContent() !== '') {
         setIsText($isTextNode(node))
       } else {
         setIsText(false)
@@ -419,7 +418,7 @@ export default function FloatingTextFormatToolbarPlugin({
   anchorElem = document.body,
 }: {
   anchorElem?: HTMLElement
-}): JSX.Element | null {
+}): React.JSX.Element | null {
   const [editor] = useLexicalComposerContext()
   return useFloatingTextFormatToolbar(editor, anchorElem)
 }

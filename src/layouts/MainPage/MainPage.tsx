@@ -1,5 +1,3 @@
-import { stat } from 'fs'
-import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import wallpaper from '@/assets/login-wp.jpg'
 import { RightSectionProvider } from '@/components/RightSection/context/responsiveContext'
@@ -9,9 +7,7 @@ import LeftSection from '../../components/LeftSection/LeftSection'
 import MidSection from '../../components/MidSection'
 import RightSection from '../../components/RightSection/RightSection'
 
-interface MainPageProps {}
-
-export default function MainPage({}: MainPageProps) {
+export default function MainPage() {
   const activeDetails = useSelector(
     (state: storeStateTypes) => state.UI.infoColumn
   )

@@ -1,10 +1,8 @@
 import { BiArrowBack } from 'react-icons/bi'
-import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
+import { useForm, SubmitHandler } from 'react-hook-form'
 import { useRef, useState } from 'react'
 import classNames from 'classnames'
-import { useDispatch } from 'react-redux'
 import { registerService } from '@/services/userService'
-import { UISlice } from '@/redux/slices/UISlice'
 import TextInput from '../Common/TextInput/TextInput'
 
 interface SignUpProps {
@@ -12,12 +10,17 @@ interface SignUpProps {
   onClick: () => void
 }
 
+export interface signUpFormData {
+  password: string
+  email: string
+  checkpassword: string
+}
 export default function SignUp({ active, onClick }: SignUpProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FieldValues>({
+  } = useForm<signUpFormData>({
     defaultValues: {
       email: '',
       password: '',
@@ -25,25 +28,22 @@ export default function SignUp({ active, onClick }: SignUpProps) {
     },
   })
   const [passwordCheckValidate, setPasswordCheckValidate] = useState(true)
-  const onSubmit: SubmitHandler<FieldValues> = data => {
+  const onSubmit: SubmitHandler<signUpFormData> = data => {
     if (data.password != data.checkpassword) {
-      console.log(data.password)
-      console.log(data.checkpassword)
       setPasswordCheckValidate(false)
     } else {
-      console.log('sadf')
       registerService(data.email, data.password)
     }
   }
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
   const emailRegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-  const btnRef = useRef(null)
-  const checkBoxRef = useRef(null)
+  const btnRef = useRef<HTMLButtonElement>(null)
+  const checkBoxRef = useRef<HTMLInputElement>(null)
 
   const [btnActive, setBtnActive] = useState(false)
   const checkBoxChangeHandler = () => {
-    if (btnRef.current != null && checkBoxRef.current != null) {
+    if (btnRef.current && checkBoxRef.current) {
       btnRef.current.disabled = !checkBoxRef.current.checked
       if (btnRef.current.disabled) {
         btnRef.current.style.backgroundColor = 'red'
@@ -83,7 +83,7 @@ export default function SignUp({ active, onClick }: SignUpProps) {
           >
             نام کاربری یا رمز عبور اشتباه است.
           </div>
-          <TextInput
+          <TextInput<signUpFormData>
             formId="email"
             palceHolder="ایمیل"
             type="email"

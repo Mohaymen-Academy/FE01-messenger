@@ -1,17 +1,12 @@
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import {
   COMMAND_PRIORITY_EDITOR,
-  DecoratorNode,
-  ElementNode,
   LexicalCommand,
   LexicalEditor,
   TextNode,
 } from 'lexical'
 import { useEffect } from 'react'
-import ReactSpoiler from 'react-spoiler'
-import SpoilerNode, { $createSpoilerNode } from './SpoilerNode'
-import { INSERT_INLINE_COMMAND } from '../commentPlugin/index'
-import getSelectedNode from '../getSelectedNode'
+import SpoilerNode from './SpoilerNode'
 
 function spoilerTransform(node: TextNode) {
   const textContent = node.getTextContent()

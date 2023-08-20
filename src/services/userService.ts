@@ -7,7 +7,7 @@ export function loginService(email: string, password: string) {
   login({ email, password })
     .then(res => {
       if (res.status === 200) {
-        store.dispatch(UserSlice.actions.login({ token: res.data.token }))
+        store.dispatch(UserSlice.actions.login({ token: res?.data.token }))
         store.dispatch(
           UISlice.actions.initialProfileCreatedHandler(res.data.hasProfile)
         )
@@ -38,11 +38,8 @@ export function registerService(email: string, password: string) {
   register({ email, password })
     .then(res => {
       if (res.status === 200) {
-        console.log(res.data.hasProfile)
-        store.dispatch(UserSlice.actions.login({ token: res.data.token }))
-        store.dispatch(
-          UISlice.actions.initiateProfileHandler(true)
-        )
+        store.dispatch(UserSlice.actions.login({ token: res?.data.token }))
+        store.dispatch(UISlice.actions.initiateProfileHandler(true))
         store.dispatch(
           UISlice.actions.openSnack({
             text: 'Register success',

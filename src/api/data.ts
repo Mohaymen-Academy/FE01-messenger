@@ -21,5 +21,9 @@ export const usernameValidation = (data: { username: string }): AxiosPromise =>
     params: { search: data.username },
   })
 
-export const myProfile = (): AxiosPromise =>
-  axiosInstance.get(`${apiUrl}/profile/me`)
+export const myProfile = (): AxiosPromise<{
+  username: string
+  firstName: string
+  lastName: string
+  bio: string
+}> => axiosInstance.get(`${apiUrl}/profile/me`)

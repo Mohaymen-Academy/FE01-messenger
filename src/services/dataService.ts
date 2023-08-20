@@ -1,4 +1,3 @@
-import { Router, redirect, useNavigate } from 'react-router-dom'
 import {
   chatListData,
   initiateProfile,
@@ -18,12 +17,12 @@ export function ChatListDataService() {
       }
     })
     .catch(err => {
-      //   store.dispatch(
-      //     UISlice.actions.openSnack({
-      //       text: `Login failed:${err}`,
-      //       severity: 'error',
-      //     })
-      //   )
+      store.dispatch(
+        UISlice.actions.openSnack({
+          text: `Login failed:${err}`,
+          severity: 'error',
+        })
+      )
     })
 }
 export function initiateProfileService(
@@ -78,7 +77,7 @@ export function usernameValidationService(username: string) {
 export function myProfileService() {
   myProfile()
     .then(res => {
-      if (res.status === 200) {
+      if (res?.status === 200) {
         store.dispatch(UserSlice.actions.setUserName(res.data.username))
         store.dispatch(UserSlice.actions.setFirstName(res.data.firstName))
         store.dispatch(UserSlice.actions.setLastName(res.data.lastName))

@@ -1,25 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { v4 as uuid } from 'uuid'
 
 export interface chatBoxType {
-  // id: string
-  // name: string
-  // image: string
-  // phoneNumber: string
-  // bio: string
-  // userName: string
-  // active: boolean
-  // messagesList: string[]
-  // online: boolean
-  // bgImageColor: string
-  // profileId: string
+  id: number
   name: string
-  chatId: number
-  username: string
-  type: string
+  image: string
+  phoneNumber?: string
   bio: string
-  description: string
-  photo: string
+  userName: string
+  active: boolean
+  messagesList: string[]
+  online: boolean
+  bgImageColor: string
+  unReadMessage: number
+  seen: boolean
+  lastMessageTime: string
+  textMessage: string
+  seenEnable: boolean
 }
 
 export interface ChatListSliceType {
@@ -29,15 +25,91 @@ export const ChatListSlice = createSlice({
   name: 'chatList',
   initialState: {
     chatBoxes: [
-      // {
-      //   name: 'Ali',
-      //   chatId: 12,
-      //   username: 'Ali',
-      //   type: 'text',
-      //   bio: 'hello',
-      //   description: 'hello',
-      //   photo: '',
-      // },
+      {
+        name: 'Ahmad',
+        unReadMessage: 3,
+        seen: true,
+        userName: 'Mr.Hashemi',
+        lastMessageTime: '12:00',
+        online: true,
+        textMessage: 'سلام',
+        seenEnable: true,
+        id: 2,
+        phoneNumber: '+989332905168',
+        bio: 'سلام دوستان',
+        active: false,
+        bgImageColor: 'blue',
+        image: '',
+        messagesList: [],
+      },
+      {
+        name: 'Ahmad',
+        unReadMessage: 1,
+        seen: false,
+        textMessage: 'سلام آقای هاشمی؟',
+        userName: 'Mr.Hashemi',
+        lastMessageTime: '12:00',
+        online: false,
+        seenEnable: true,
+        id: 1,
+        phoneNumber: '+989332905168',
+        bio: 'سلام دوستان',
+        active: false,
+        bgImageColor: 'red',
+        image: '',
+        messagesList: [],
+      },
+      {
+        name: 'Atefe',
+        unReadMessage: 1,
+        seen: false,
+        textMessage: 'سلام آقای هاشمی؟',
+        userName: 'Atefe',
+        lastMessageTime: '12:00',
+        online: false,
+        seenEnable: true,
+        id: 0,
+        phoneNumber: '+989332905168',
+        bio: 'سلام دوستان',
+        active: false,
+        bgImageColor: 'blue',
+        image: '',
+        messagesList: [],
+      },
+      {
+        name: 'Mohammad',
+        unReadMessage: 1,
+        seen: false,
+        textMessage: 'سلام آقای هاشمی؟',
+        userName: 'Mohammad123',
+        lastMessageTime: '12:00',
+        online: true,
+        seenEnable: false,
+        id: 12,
+        phoneNumber: '+989332905168',
+        bio: 'سلام دوستان',
+        active: false,
+        bgImageColor: 'blue',
+        image: '',
+        messagesList: [],
+      },
+      {
+        name: 'Ali',
+        unReadMessage: 1,
+        seen: false,
+        textMessage: 'سلام آقای هاشمی؟',
+        userName: 'Ali_110',
+        lastMessageTime: '12:00',
+        online: false,
+        seenEnable: false,
+        id: 0,
+        phoneNumber: '+989332905168',
+        bio: 'سلام دوستان',
+        active: false,
+        bgImageColor: 'blue',
+        image: '',
+        messagesList: [],
+      },
     ],
     // chatBoxes: [
     //   {
@@ -133,14 +205,13 @@ export const ChatListSlice = createSlice({
       const { id } = action.payload
       state.chatBoxes = state.chatBoxes.map(box => ({
         ...box,
-        active: box.chatId === id,
+        active: box.id === id,
       }))
     },
     setChatBox: (
       state: ChatListSliceType,
       action: { payload: chatBoxType[] }
     ) => {
-      console.log(`******* ${action.payload}`)
       state.chatBoxes = action.payload
     },
   },
