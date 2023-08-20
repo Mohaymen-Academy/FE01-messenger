@@ -1,11 +1,15 @@
 import Info from './Info'
-import MediaList from './MediaList/MediaList'
+import InfoHeader from './InfoHeader'
+import MediaList from './MediaList'
 
 export default function DetailsColumn() {
   return (
-    <div className="absolute overflow-y-auto bg-primary/100 max-sm:w-full">
-      <Info />
-      <MediaList />
+    <div className="absolute flex h-full flex-col bg-primary/100 max-sm:w-full">
+      <InfoHeader />
+      <div className="overflow-y-auto">
+        <Info />
+        <MediaList />
+      </div>
     </div>
   )
 }

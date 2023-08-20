@@ -21,6 +21,10 @@ export const usernameValidation = (data: { username: string }): AxiosPromise =>
     params: { search: data.username },
   })
 
+export const getMessages = (data: { chatId: string }) =>
+  axiosInstance.get<{ id: string; chat: [] }>(
+    `${apiUrl}/message/${data.chatId}`
+  )
 export const myProfile = (): AxiosPromise<{
   username: string
   firstName: string

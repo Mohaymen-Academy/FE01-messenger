@@ -1,5 +1,7 @@
+import axios from 'axios'
 import {
   chatListData,
+  getMessages,
   initiateProfile,
   myProfile,
   usernameValidation,
@@ -7,6 +9,10 @@ import {
 import { UISlice } from '@/redux/slices/UISlice'
 import { UserSlice } from '@/redux/slices/UserSlice'
 import store from '@/redux/store'
+import { apiUrl } from '@/utils/constants'
+import { MessageSlice } from '@/redux/slices/MessageSlice'
+import axiosInstance from '@/api/axiosInstance'
+import { ActiveChatSlice } from '@/redux/slices/ActiveChatSlice'
 import { ChatListSlice } from '@/redux/slices/ChatListSlice'
 
 export function ChatListDataService() {
@@ -24,6 +30,42 @@ export function ChatListDataService() {
         })
       )
     })
+}
+export function getMessagesService(chatId: string, type: string) {
+  if (type === 'chat') {
+    store.dispatch(ActiveChatSlice.actions.setActiveChat({ id: chatId }))
+    // get chat messages
+    getMessages({ chatId })
+      .then(res => {
+        if (res.status === 200) {
+          store.dispatch(
+            MessageSlice.actions.setData({
+              id: res.data.id,
+              messages: res.data.chat,
+            })
+          )
+          // store.dispatch(UserSlice.actions.login({ token: res.data.token }))
+          // store.dispatch(
+          //   UISlice.actions.openSnack({
+          //     text: 'Login success',
+          //     severity: 'success',
+          //   })
+          // )
+        } else {
+          // store.dispatch(
+          //   UISlice.actions.openSnack({ text: 'Login failed', severity: 'error' })
+          // )
+        }
+      })
+      .catch(err => {
+        store.dispatch(
+          UISlice.actions.openSnack({
+            text: `fetching messages failed:${err}`,
+            severity: 'error',
+          })
+        )
+      })
+  }
 }
 export function initiateProfileService(
   username: string,
