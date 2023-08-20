@@ -1,14 +1,21 @@
 import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
 import { storeStateTypes } from '@/types/types'
 import { ChatListDataService } from '@/services/dataService'
 import ChatBox from '../ChatBox'
 
 export default function ChatList() {
-  ChatListDataService()
   const chatBoxes = useSelector(
     (state: storeStateTypes) => state.chatList.chatBoxes
   )
-  console.log(typeof chatBoxes)
+  useEffect(() => {
+    const interval = setInterval(() => ChatListDataService(), 3000)
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
+  // ChatListDataService()
+  // console.log(typeof chatBoxes)
 
   // console.log(chatBoxes)
   return (

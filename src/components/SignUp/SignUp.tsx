@@ -119,7 +119,7 @@ export default function SignUp({ active, onClick }: SignUpProps) {
               />
             </div>
             <div className="ml-3 text-sm">
-              <label className="font-light text-gray-500 dark:text-gray-300">
+              <label className="font-light text-gray-500">
                 <a className="mr-1 font-medium hover:underline" href="#">
                   شرایط و قوانین{' '}
                 </a>
