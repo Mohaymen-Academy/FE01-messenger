@@ -6,7 +6,6 @@ import InfoHeader from '../InfoHeader'
 import InfoImage from '../../../Common/InfoImage'
 import InfoRow from '../../../Common/InfoRow'
 
-
 export default function Info() {
   const activeId = useSelector((state: storeStateTypes) => state.activeChat.id)
   const activeChat = useSelector((state: storeStateTypes) =>
@@ -14,7 +13,6 @@ export default function Info() {
   )
   return (
     <div className="right-0 flex w-96 flex-col border-gray-300 bg-primary/100 pb-4 max-sm:w-full xl:block">
-      <InfoHeader />
       <InfoImage
         onlineStatus={activeChat?.online}
         infoName={activeChat?.name}

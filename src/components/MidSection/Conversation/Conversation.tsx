@@ -2,13 +2,15 @@ import List from 'react-virtualized/dist/commonjs/List'
 import { AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized'
 import { BsArrowDown } from 'react-icons/bs'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import FabButton from '@/components/Common/FabButton/FabButton'
+import MessageSelectors from '@/redux/slices/MessageSlice/MessageSelectors'
 import Message from '../Message/Message'
 
-const messageCount = 1000
-
 export default function Conversation() {
-  const [scrollToIndex, setScrollToIndex] = useState(messageCount)
+  const messages = useSelector(MessageSelectors.chatMessages)
+  const [scrollToIndex, setScrollToIndex] = useState(messages.length - 1)
+
   console.log(scrollToIndex)
   const cache = new CellMeasurerCache({
     defaultHeight: 50,
@@ -24,7 +26,7 @@ export default function Conversation() {
               width={width}
               height={height}
               rowHeight={cache.rowHeight}
-              rowCount={1000}
+              rowCount={messages.length}
               // onRowsRendered={data => console.log(data)}
               scrollToIndex={scrollToIndex}
               scrollToRow={scrollToIndex}
@@ -45,7 +47,7 @@ export default function Conversation() {
                       style={style}
                     >
                       <Message
-                        message={'a'.repeat(index)}
+                        message={messages[index].text}
                         mode="sent"
                         time={index.toString()}
                         self
@@ -68,12 +70,12 @@ export default function Conversation() {
         /> */}
       </div>
       {/* TODO move functionality to fab button instead of div */}
-      {scrollToIndex != messageCount && (
+      {scrollToIndex != messages.length && (
         <div
           className="absolute bottom-0 right-8"
           onClick={() => {
             console.log('test')
-            setScrollToIndex(messageCount)
+            setScrollToIndex(messages.length)
           }}
         >
           <FabButton icon={<BsArrowDown />} />

@@ -2,11 +2,13 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export interface ActiveChatSliceType {
   id: string
+  type: string
 }
 export const ActiveChatSlice = createSlice({
   name: 'activeChat',
   initialState: {
     id: '',
+    type: '',
   },
   reducers: {
     setActiveChat: (
