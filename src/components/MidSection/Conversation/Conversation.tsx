@@ -43,7 +43,7 @@ export default function Conversation() {
                 >
                   {() => (
                     <div
-                      className="rtl relative m-auto flex w-full flex-col px-3 py-1"
+                      className="rtl relative m-auto flex w-full flex-col px-4 py-1"
                       style={style}
                     >
                       <Message

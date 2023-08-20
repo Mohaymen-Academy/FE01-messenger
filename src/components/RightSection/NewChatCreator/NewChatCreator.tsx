@@ -65,7 +65,8 @@ export default function NewChatCreator({}: NewChatCreatorProps) {
           paper: {
             style: {
               position: 'absolute',
-              backgroundColor: 'white',
+              backgroundColor: 'rgb(var(--background-color-100))',
+              color: 'rgb(var(--background-color-500))',
               width: '150px',
               top: '10px',
             },

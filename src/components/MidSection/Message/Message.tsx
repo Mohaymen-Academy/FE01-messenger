@@ -67,8 +67,8 @@ export default function Message({
           className={classNames(
             'relative text-primary max-w-[400px] flex flex-row rounded-t-lg py-1',
             self
-              ? 'rounded-l-lg tail-right rtl bg-selfChatBg border-selfChatBg'
-              : 'rounded-r-lg tail-left ltr bg-primary border-primary',
+              ? 'rounded-l-lg rtl bg-selfChatBg border-selfChatBg'
+              : 'rounded-r-lg ltr bg-primary border-primary',
             oneLiner ? 'w-fit' : 'w-full'
           )}
         >

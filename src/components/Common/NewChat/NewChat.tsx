@@ -54,15 +54,15 @@ export default function NewChat({ type }: NewChatProps) {
     console.log(1)
   }
   return (
-    <div className="flex w-1/2 flex-col items-center justify-center gap-3 overflow-hidden rounded-lg bg-white py-3">
-      <div className="text-xl font-semibold">
+    <div className="flex w-1/2 flex-col items-center justify-center gap-3 overflow-hidden rounded-lg bg-primary py-3">
+      <div className="text-xl font-semibold text-primary">
         <p>ساخت {type === 'group' ? 'گروه' : 'کانال'} جدید</p>
       </div>
       <div className="relative mb-2 mt-4 flex w-full justify-center">
-        <label className="h-32 w-32 content-center overflow-hidden rounded-full bg-black text-center focus:outline-none">
+        <label className="h-32 w-32 content-center overflow-hidden rounded-full bg-black text-center focus:outline-none dark:bg-gray-500">
           <img
             style={{ display: img ? '' : 'none' }}
-            className="h-full w-full content-center overflow-hidden rounded-full bg-black text-center focus:outline-none"
+            className="h-full w-full content-center overflow-hidden rounded-full bg-primary text-center focus:outline-none"
             src={img}
           />
           <div className="mr-6 mt-5 transition-all duration-500 ease-in-out">
@@ -101,7 +101,7 @@ export default function NewChat({ type }: NewChatProps) {
         <button
           type="submit"
           className={classNames(
-            'mb-4 w-full rounded-lg px-5 bg-[#16a085] py-2.5 text-sm font-medium shadow-md hover:shadow-lg text-white transition-all duration-500 focus:outline-none focus:ring-4 hover:shadow-[#16a085]/40'
+            'mb-4 w-full rounded-lg px-5 bg-secondary hover:bg-[rgb(74,147,84)] hover:dark:bg-[#394079] py-2.5 text-sm font-medium shadow-md hover:shadow-lg text-white transition-all duration-500 focus:outline-none focus:ring-4 hover:shadow-[#16a085]/40'
           )}
         >
           <p>ساخت {type === 'group' ? 'گروه' : 'کانال'} </p>

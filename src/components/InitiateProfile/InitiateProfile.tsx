@@ -1,8 +1,8 @@
 import classNames from 'classnames'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
-import { Box, Modal } from '@mui/material'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import camera from '@/assets/camera-add.svg'
 import { storeStateTypes } from '@/types/types'
 import { UISlice } from '@/redux/slices/UISlice'
@@ -32,14 +32,19 @@ export default function InitiateProfile({ active }: InitiateProfileProps) {
       image: '',
     },
   })
-  const onSubmit: SubmitHandler<FieldValues> = data => {
-    const { userName, firstName, lastName, bio } = data
-    initiateProfileService(userName, firstName, lastName, bio)
-  }
 
+  const userNameValidation = useSelector(
+    (state: storeStateTypes) => state.UI.userNameValid
+  )
   const [image, setImage] = useState('')
   const dispatch = useDispatch()
   const img = useSelector((state: storeStateTypes) => state.user.image)
+  const onSubmit: SubmitHandler<FieldValues> = data => {
+    const { userName, firstName, lastName, bio } = data
+    if (userNameValidation) {
+      initiateProfileService(userName, firstName, lastName, bio)
+    }
+  }
   let openModal = useSelector(
     (state: storeStateTypes) => state.UI.initialProfileImageCropper
   )
@@ -59,23 +64,17 @@ export default function InitiateProfile({ active }: InitiateProfileProps) {
     if (files != null) {
       reader.readAsDataURL(files[0])
     }
-    dispatch(UISlice.actions.openInitialProfileImageCropper())
+    dispatch(UISlice.actions.initialProfileImageCropperHandler(true))
+    // dispatch(UISlice.actions.initiateProfileHandler(true))
   }
-  const uniqueUserNameHandler = e => {
+  const uniqueUserNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const myInput = e.target.value
-    // console.log(e.target.value)
-    const validate = usernameValidationService(myInput)
-    console.log(validate)
-    if (validate) {
-      console.log(1)
-    } else {
-      console.log(2)
-    }
+    usernameValidationService(myInput)
   }
   return (
     <div
       className={classNames(
-        'absolute right-[8%] top-0 flex w-[80%] items-center justify-center rounded-lg bg-white shadow transition-all duration-700 ease-in sm:right-[15%] sm:max-w-md md:right-[25%] xl:right-[34%]',
+        'absolute mt-12 right-[8%] top-0 flex w-[80%] items-center justify-center rounded-lg bg-white shadow transition-all duration-700 ease-in sm:right-[15%] sm:max-w-md md:right-[25%] xl:right-[34%]',
         active ? 'flex' : 'hidden'
       )}
     >
@@ -125,6 +124,13 @@ export default function InitiateProfile({ active }: InitiateProfileProps) {
             required
           />
           <TextInput
+            formId="lastName"
+            palceHolder="نام خانوادگی"
+            type="text"
+            register={register}
+            errors={errors}
+          />
+          <TextInput
             formId="userName"
             palceHolder=" نام کاربری"
             type="text"
@@ -133,13 +139,13 @@ export default function InitiateProfile({ active }: InitiateProfileProps) {
             onChange={uniqueUserNameHandler}
             required
           />
-          <TextInput
-            formId="lastName"
-            palceHolder="نام خانوادگی"
-            type="text"
-            register={register}
-            errors={errors}
-          />
+          <p
+            className={classNames(
+              !userNameValidation ? 'mt-[-10px] text-sm text-red-400' : 'hidden'
+            )}
+          >
+            این نام کاربری قبلا استفاده شده است
+          </p>
           <TextInput
             formId="bio"
             palceHolder="بیوگرافی"

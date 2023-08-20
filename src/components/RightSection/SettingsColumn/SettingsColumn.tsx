@@ -1,16 +1,14 @@
 import { FiAtSign, FiLogOut } from 'react-icons/fi'
-import {
-  BsTelephone,
-  BsInfoCircle,
-  BsFillMoonStarsFill,
-  BsSun,
-} from 'react-icons/bs'
+import { BsInfoCircle, BsFillMoonStarsFill, BsSun } from 'react-icons/bs'
 import classNames from 'classnames'
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import InfoImage from '@/components/Common/InfoImage'
 import InfoRow from '@/components/Common/InfoRow'
 import { storeStateTypes } from '@/types/types'
+import { UserSlice } from '@/redux/slices/UserSlice'
+import { myProfileService } from '@/services/dataService'
+import { UISlice } from '@/redux/slices/UISlice'
 import SettingsHeader from '../SettingsHeader/SettingsHeader'
 
 interface SettingsColumnProps {
@@ -23,7 +21,8 @@ export default function SettingsColumn({
   onClick,
 }: SettingsColumnProps) {
   const [darkmodeActive, setDarkModeActive] = useState(true)
-
+  const dispatch = useDispatch()
+  myProfileService()
   useEffect(() => {
     const darkMode = localStorage.getItem('theme')
     if (darkMode === 'true') {
@@ -46,7 +45,16 @@ export default function SettingsColumn({
       setDarkModeActive(false)
     }
   }
-  const name = useSelector((state: storeStateTypes) => state.user.name)
+
+  const signOutHandler = () => {
+    dispatch(UserSlice.actions.deleteToken())
+    localStorage.setItem('token', '')
+    dispatch(UISlice.actions.initialProfileCreatedHandler(false))
+  }
+  const firstName = useSelector(
+    (state: storeStateTypes) => state.user.firstName
+  )
+  const lastName = useSelector((state: storeStateTypes) => state.user.lastName)
   const userName = useSelector((state: storeStateTypes) => state.user.userName)
   const bio = useSelector((state: storeStateTypes) => state.user.bio)
   const image = useSelector((state: storeStateTypes) => state.user.image)
@@ -57,23 +65,23 @@ export default function SettingsColumn({
       className="absolute z-10 h-full w-full overflow-x-hidden bg-primary/100 shadow-xl transition-all duration-500 ease-in-out max-sm:w-full"
     >
       <SettingsHeader onClick={onClick} />
-      <InfoImage onlineStatus={true} infoName={name} img={image} />
+      <InfoImage
+        onlineStatus={true}
+        infoName={`${firstName} ${lastName}`}
+        img={image}
+      />
       <InfoRow
         title={userName}
-        subTitle="آیدی"
+        subTitle="نام کاربری"
         icon={<FiAtSign className="h-6 w-6 text-gray-600" />}
       />
-      <InfoRow
-        title="+989332905168"
-        subTitle="شماره همراه"
-        icon={<BsTelephone className="h-6 w-6 fill-current text-gray-600" />}
-      />
+
       <InfoRow
         title={bio}
         subTitle="بیوگرافی"
         icon={<BsInfoCircle className="h-6 w-6 fill-current text-gray-600" />}
       />
-      <div className="mr-4 mt-[70px] flex w-[355px] items-center justify-start gap-2 rounded-lg pr-1  transition-all duration-300 ease-in-out">
+      <div className="mr-4 mt-[95px] flex w-[355px] items-center justify-start gap-2 rounded-lg pr-1  transition-all duration-300 ease-in-out">
         <div
           onClick={darkModeHandler}
           className="fill-current transition-all duration-1000 ease-in-out"
@@ -96,7 +104,10 @@ export default function SettingsColumn({
         </div>
       </div>
 
-      <button className="mr-3 mt-2 flex w-[355px] justify-start gap-2 rounded-lg py-2 pr-1 text-red-500 transition-all duration-300 ease-in-out hover:bg-logout hover:text-white">
+      <button
+        onClick={signOutHandler}
+        className="mr-3 mt-2 flex w-[355px] justify-start gap-2 rounded-lg py-2 pr-1 text-red-500 transition-all duration-300 ease-in-out hover:bg-logout hover:text-white"
+      >
         <div className="fill-current">
           <FiLogOut className="h-7 w-7" />
         </div>

@@ -60,13 +60,14 @@
   --background-color-50: 170 170 170;
   --background-color-100: 255 255 255;
   --background-color-200: 96 167 240;
-  --background-color-300: 51 144 236;
+  --background-color-300: 22 160 133;
   --chatbox-hover: #efefef;
   --background-color-500: 0 0 0;
   --background-color-600: 239 18 41;
   --reply-border-color: #e57373;
   --reply-bg-color: #ffcdd2;
   --self-chat-bg-color: #ffebee;
+  --background-color-700: 229 231 235;
 }
 .dark {
   --background-color-50: 170 170 170;
@@ -79,4 +80,5 @@
   --reply-border-color: #e57373;
   --reply-bg-color: #ffcdd2;
   --self-chat-bg-color: #b71c1c;
+  --background-color-700: 156 163 175;
 }
