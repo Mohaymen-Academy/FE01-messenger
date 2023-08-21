@@ -63,9 +63,9 @@ export default function SignUp({ active, onClick }: SignUpProps) {
         <div className="flex flex-col">
           <button
             onClick={onClick}
-            className="flex w-full justify-end text-sm font-light text-gray-500"
+            className="flex w-full justify-start text-sm font-light text-gray-500"
           >
-            <BiArrowBack className="h-6 w-10" />
+            <BiArrowBack className="h-6 w-6 rotate-180" />
           </button>
           <h1 className="text-center text-xl font-bold text-gray-900  md:text-2xl">
             ثبت نام
