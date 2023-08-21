@@ -11,7 +11,6 @@ export default function Conversation() {
   const messages = useSelector(MessageSelectors.chatMessages)
   const [scrollToIndex, setScrollToIndex] = useState(messages.length - 1)
 
-  console.log(scrollToIndex)
   const cache = new CellMeasurerCache({
     defaultHeight: 50,
     fixedWidth: true,
@@ -50,7 +49,7 @@ export default function Conversation() {
                         message={messages[index].text}
                         mode="sent"
                         time={index.toString()}
-                        self
+                        self={!messages[index].self ?? false}
                       />
                     </div>
                   )}
@@ -74,7 +73,6 @@ export default function Conversation() {
         <div
           className="absolute bottom-0 right-8"
           onClick={() => {
-            console.log('test')
             setScrollToIndex(messages.length)
           }}
         >

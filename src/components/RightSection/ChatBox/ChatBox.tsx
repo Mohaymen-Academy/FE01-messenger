@@ -5,6 +5,7 @@ import { ActiveChatSlice } from '@/redux/slices/ActiveChatSlice'
 import { ChatListSlice } from '@/redux/slices/ChatListSlice'
 import { UISlice } from '@/redux/slices/UISlice'
 import { SearchSlice } from '@/redux/slices/SearchSlice'
+import { createChatService } from '@/services/dataService'
 
 interface ChatBoxProps {
   online?: boolean
@@ -18,7 +19,7 @@ interface ChatBoxProps {
   id: number
   active?: boolean
   type: string
-  onClick?: () => void
+  onClick: () => void
 }
 
 export default function ChatBox({
@@ -33,6 +34,7 @@ export default function ChatBox({
   id,
   type,
   active,
+  onClick,
 }: ChatBoxProps) {
   const colors = [
     'blue',
@@ -46,14 +48,16 @@ export default function ChatBox({
     'cyan',
   ]
   const bgColor = id % colors.length
-  const dispatch = useDispatch()
-  const activateChat = () => {
-    console.log('open chat box')
-    dispatch(UISlice.actions.openMidColumn())
-    dispatch(ActiveChatSlice.actions.setActiveChat({ id, type }))
-    dispatch(ChatListSlice.actions.setActive({ id }))
-    dispatch(SearchSlice.actions.setActive({ id }))
-  }
+  // const dispatch = useDispatch()
+  // const activateChat = () => {
+  //   console.log('open chat box')
+  //   dispatch(UISlice.actions.openMidColumn())
+  //   dispatch(ActiveChatSlice.actions.setActiveChat({ id, type }))
+  //   console.log('chatbox id:', id)
+  //   createChatService(id.toString())
+  //   // dispatch(ChatListSlice.actions.setActive({ id }))
+  //   // dispatch(SearchSlice.actions.setActive({ id }))
+  // }
   return (
     <div
       // style={{ backgroundColor: active ? '#7e85ed' : 'white' }}
@@ -61,7 +65,7 @@ export default function ChatBox({
         'flex items-center rounded-lg py-[10px] pl-2 text-secondary/100',
         active ? 'bg-[#7e85ed]' : 'bg-primary hover:bg-chatBoxHover'
       )}
-      onClick={activateChat}
+      onClick={onClick}
     >
       <div className="flex w-full justify-between">
         <div
@@ -83,7 +87,7 @@ export default function ChatBox({
             <div
               style={{ backgroundColor: online ? '#1BDC48' : '#888A88' }}
               className="h-[9px] w-[9px] rounded-full"
-            ></div>
+            />
           </div>
         </div>
         <div className="min-w-0 flex-1 items-center">

@@ -1,4 +1,4 @@
-import { ActiveChatSliceType } from '@/redux/slices/ActiveChatSlice'
+import { ActiveChatSliceType } from '@/redux/slices/ActiveChatSlice/ActiveChatSlice'
 import { ChatListSliceType } from '@/redux/slices/ChatListSlice/ChatListSlice'
 import { MessageSliceType } from '@/redux/slices/MessageSlice'
 import { SearchSliceType } from '@/redux/slices/SearchSlice'

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export interface chatBoxType {
+export interface searchBoxType {
   name: string
   type: string
   image: string
@@ -8,7 +8,7 @@ export interface chatBoxType {
 }
 
 export interface SearchSliceType {
-  chatBoxes: chatBoxType[]
+  chatBoxes: searchBoxType[]
 }
 
 export const SearchSlice = createSlice({
@@ -17,7 +17,10 @@ export const SearchSlice = createSlice({
     chatBoxes: [],
   },
   reducers: {
-    setResult: (state: SearchSliceType, action: { payload: chatBoxType[] }) => {
+    setResult: (
+      state: SearchSliceType,
+      action: { payload: searchBoxType[] }
+    ) => {
       console.log(action.payload)
       state.chatBoxes = action.payload
       console.log(state.chatBoxes.concat(action.payload))

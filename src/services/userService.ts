@@ -1,7 +1,9 @@
+import { getProfile } from '@/api/data'
 import { login, register } from '@/api/user'
 import { UISlice } from '@/redux/slices/UISlice'
 import { UserSlice } from '@/redux/slices/UserSlice'
 import store from '@/redux/store'
+import { createChatService } from './dataService'
 
 export function loginService(email: string, password: string) {
   login({ email, password })
@@ -55,6 +57,23 @@ export function registerService(email: string, password: string) {
             severity: 'error',
           })
         )
+      }
+    })
+    .catch(err => {
+      store.dispatch(
+        UISlice.actions.openSnack({
+          text: `Login failed:${err}`,
+          severity: 'error',
+        })
+      )
+    })
+}
+
+export function startChatService(id: string) {
+  getProfile(id)
+    .then(res => {
+      if (res.status == 200) {
+        createChatService(id)
       }
     })
     .catch(err => {
