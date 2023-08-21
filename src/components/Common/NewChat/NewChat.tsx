@@ -6,6 +6,7 @@ import camera from '@/assets/camera-add.svg'
 import { storeStateTypes } from '@/types/types'
 import ImageInput from '@/components/RightSection/ImageInput'
 import { UISlice } from '@/redux/slices/UISlice'
+import { newChannelService, newGroupService } from '@/services/newChatService'
 import ModalContainer from '../ModalContainer'
 import TextInput from '../TextInput'
 
@@ -21,6 +22,7 @@ export default function NewChat({ type }: NewChatProps) {
   } = useForm<FieldValues>({
     defaultValues: {
       name: '',
+      description: '',
     },
   })
   const [image, setImage] = useState('')
@@ -51,7 +53,14 @@ export default function NewChat({ type }: NewChatProps) {
     dispatch(UISlice.actions.openInitialProfileImageCropper())
   }
   const onSubmit: SubmitHandler<FieldValues> = data => {
-    console.log(1)
+    if (type === 'group') {
+      console.log(1)
+      newGroupService(data.name, null, [])
+      dispatch(UISlice.actions.createGroupHandler(false))
+    } else if (type === 'channel') {
+      newChannelService(data.name, null, data.description, [])
+      dispatch(UISlice.actions.createChannelHandler(false))
+    }
   }
   return (
     <div className="flex w-1/2 flex-col items-center justify-center gap-3 overflow-hidden rounded-lg bg-primary py-3">
@@ -87,7 +96,7 @@ export default function NewChat({ type }: NewChatProps) {
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-[80%] space-y-4 overflow-hidden md:space-y-6"
+        className="w-[80%] space-y-6 overflow-hidden pt-2"
       >
         <TextInput
           formId="name"
@@ -96,6 +105,13 @@ export default function NewChat({ type }: NewChatProps) {
           register={register}
           errors={errors}
           required
+        />
+        <TextInput
+          formId="description"
+          palceHolder="توضیحات"
+          type="text"
+          register={register}
+          errors={errors}
         />
 
         <button

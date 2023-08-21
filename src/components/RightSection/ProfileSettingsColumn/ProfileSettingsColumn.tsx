@@ -13,6 +13,7 @@ import {
   initiateProfileService,
   usernameValidationService,
 } from '@/services/dataService'
+import { editProfileService } from '@/services/userService'
 import ProfileSettingsPhoto from '../ProfileSettingsPhoto/ProfileSettingsPhoto'
 
 interface ProfileSettingsColumnProps {
@@ -52,7 +53,7 @@ export default function ProfileSettingsColumn({
     if (userNameValidation) {
       console.log(12222)
       const picture = null
-      initiateProfileService(userName, firstName, lastName, bio, picture)
+      editProfileService(userName, firstName, lastName, bio, picture)
     }
     dispatch(UISlice.actions.closeProfileSettings())
     setConfirmButtonActive(false)
