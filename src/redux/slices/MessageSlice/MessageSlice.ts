@@ -5,6 +5,7 @@ interface baseMessageType {
   sender: string
   type: string
   text: string
+  self?: boolean
 }
 interface textMessageType extends baseMessageType {
   text: string
@@ -61,14 +62,15 @@ export const MessageSlice = createSlice({
       action: {
         payload: {
           message: string
+          chatId: string
         }
       }
     ) => {
-      const { message } = action.payload
-      const index = state.chats.findIndex(chat => chat.id == '1')
+      const { message, chatId } = action.payload
+      const index = state.chats.findIndex(chat => chat.id == chatId)
       if (index === -1) {
         state.chats.push({
-          id: '1',
+          id: chatId,
           messages: [{ id: '1', sender: '1', type: 'text', text: message }],
         })
       } else {

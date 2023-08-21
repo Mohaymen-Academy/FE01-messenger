@@ -1,9 +1,11 @@
 import axios from 'axios'
 import {
   chatListData,
+  createChat,
   getMessages,
   initiateProfile,
   myProfile,
+  sendMessage,
   usernameValidation,
 } from '@/api/data'
 import { UISlice } from '@/redux/slices/UISlice'
@@ -33,29 +35,34 @@ export function ChatListDataService() {
     })
 }
 export function getMessagesService(chatId: string, type: string) {
-  if (type === 'chat') {
-    store.dispatch(ActiveChatSlice.actions.setActiveChat({ id: chatId }))
+  console.log('type', type)
+  if (type === 'PV') {
+    // store.dispatch(ActiveChatSlice.actions.setActiveChat({ id: chatId }))
     // get chat messages
     getMessages({ chatId })
       .then(res => {
-        if (res.status === 200) {
+        console.log(res)
+        if (res.status == 200) {
           store.dispatch(
             MessageSlice.actions.setData({
-              id: res.data.id,
-              messages: res.data.chat,
+              id: chatId,
+              messages: res.data,
             })
           )
-          // store.dispatch(UserSlice.actions.login({ token: res.data.token }))
-          // store.dispatch(
-          //   UISlice.actions.openSnack({
-          //     text: 'Login success',
-          //     severity: 'success',
-          //   })
-          // )
+          console.log('inside status 200', res.data.id, res.data.chat)
+          store.dispatch(
+            ActiveChatSlice.actions.setActiveChat({
+              id: parseInt(chatId, 10),
+              type: 'PV',
+            })
+          )
         } else {
-          // store.dispatch(
-          //   UISlice.actions.openSnack({ text: 'Login failed', severity: 'error' })
-          // )
+          store.dispatch(
+            UISlice.actions.openSnack({
+              text: 'دریافت پیام ها با خطا مواجه شد',
+              severity: 'error',
+            })
+          )
         }
       })
       .catch(err => {
@@ -67,6 +74,49 @@ export function getMessagesService(chatId: string, type: string) {
         )
       })
   }
+}
+
+export function sendMessageService(
+  message: string,
+  chatId: string,
+  type: string
+) {
+  sendMessage({ message, chatId, type })
+    .then(res => {
+      if (res.status == 200) {
+        store.dispatch(MessageSlice.actions.sendMessage({ message, chatId }))
+      }
+    })
+    .catch(err => {
+      store.dispatch(
+        UISlice.actions.openSnack({
+          text: `sending message failed:${err}`,
+          severity: 'error',
+        })
+      )
+    })
+}
+export function createChatService(profileId: string) {
+  createChat({ profileId })
+    .then(res => {
+      if (res.status == 200) {
+        console.log(res)
+        store.dispatch(
+          ActiveChatSlice.actions.setActiveChat({
+            id: res.data.chatId,
+            type: 'PV',
+          })
+        )
+      }
+    })
+    .catch(err => {
+      store.dispatch(
+        UISlice.actions.openSnack({
+          text: `creating chat failed:${err}`,
+          severity: 'error',
+        })
+      )
+    })
 }
 export function initiateProfileService(
   username: string,

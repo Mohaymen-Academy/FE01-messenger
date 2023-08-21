@@ -19,8 +19,12 @@ import {
 } from 'slate-react'
 import { Editor, Element, Transforms, createEditor } from 'slate'
 import ReactSpoiler from 'react-spoiler'
+import { useDispatch, useSelector } from 'react-redux'
 import FabButton from '@/components/Common/FabButton/FabButton'
 import IconButton from '@/components/Common/IconButton/IconButton'
+import { MessageSlice } from '@/redux/slices/MessageSlice'
+import { activeChatSelectors } from '@/redux/slices/ActiveChatSlice'
+import { sendMessageService } from '@/services/dataService'
 import serialize from './utils'
 
 const theme = {
@@ -31,6 +35,8 @@ const theme = {
 export default function MessageBox() {
   // TODO use SLATE
   const [pickerOpen, setPickerOpen] = useState(false)
+  const dispatch = useDispatch()
+  const activeChat = useSelector(activeChatSelectors.ActiveChat)
 
   const SpoilerElement = (props: { children: ReactNode | string }) => (
     <ReactSpoiler>{props.children}</ReactSpoiler>
@@ -61,6 +67,11 @@ export default function MessageBox() {
     sendMessage(editor: Editor) {
       console.log(editor.children)
       console.log(serialize(editor))
+      sendMessageService(
+        serialize(editor) as string,
+        activeChat.id.toString(),
+        activeChat.type
+      )
       while (editor.children.length > 0) {
         Transforms.removeNodes(editor, {})
       }
@@ -119,7 +130,7 @@ export default function MessageBox() {
   const initialValue = [
     {
       type: 'paragraph',
-      children: [{ text: '.' }],
+      children: [{ text: '' }],
     },
   ]
   const [editor] = useState(() => withReact(createEditor()))
@@ -191,7 +202,6 @@ export default function MessageBox() {
                   data={data}
                   onEmojiSelect={emoji => CustomEditor.addEmoji(editor, emoji)}
                   previewPosition="none"
-                  onClickOutside={toggleEmojiPicker}
                   showPreview={false}
                   showSkinTones={false}
                   searchPosition="none"

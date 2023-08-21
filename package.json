@@ -25,6 +25,7 @@
     "emoji-mart": "^5.5.2",
     "escape-html": "^1.0.3",
     "eslint-config-airbnb-typescript": "^17.1.0",
+    "html-react-parser": "^4.2.1",
     "react": "^18.2.0",
     "react-cropper": "^2.3.3",
     "react-dom": "^18.2.0",

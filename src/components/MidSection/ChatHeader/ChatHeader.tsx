@@ -15,17 +15,17 @@ export default function ChatHeader() {
   const activeChat = useSelector((state: storeStateTypes) =>
     state.chatList.chatBoxes.find(compo => compo.id === activeId)
   )
-  console.log(`active chat ${activeChat?.active}`)
-  const activeSearchChat = useSelector((state: storeStateTypes) =>
-    state.search.chatBoxes.find(compo => compo.id === activeId)
-  )
-  console.log(`active search chat${activeSearchChat?.username}`)
-  let active
-  if (activeChat) {
-    active = activeChat
-  } else {
-    active = activeSearchChat
-  }
+  // console.log(`active chat ${activeChat?.active}`)
+  // const activeSearchChat = useSelector((state: storeStateTypes) =>
+  //   state.search.chatBoxes.find(compo => compo.id === activeId)
+  // )
+  // console.log(`active search chat${activeSearchChat?.username}`)
+  const active = activeChat
+  // if (activeChat) {
+  //   active = activeChat
+  // } else {
+  //   active = activeSearchChat
+  // }
   return (
     <div className="z-20 flex w-full shrink-0 grow-0 items-center border-b bg-primary/100 pr-3 text-primary/100">
       <IconButton
@@ -39,7 +39,7 @@ export default function ChatHeader() {
         </div>
         <div className="flex flex-1 cursor-pointer flex-col justify-center overflow-hidden">
           <div className="overflow-hidden whitespace-nowrap text-base font-medium leading-tight text-primary/100">
-            {active?.username}
+            {active?.name}
           </div>
           {/* remove overflow hidden */}
           <div className="overflow-hidden whitespace-nowrap text-sm font-medium leading-tight text-gray-600">

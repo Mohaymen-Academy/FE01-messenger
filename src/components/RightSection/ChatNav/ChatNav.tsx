@@ -21,10 +21,10 @@ export default function ChatNav() {
       dispatch(UISlice.actions.chatListHandler({ chatList: 'PV' }))
     } else if (title === 'گروه ها') {
       changeIndexActivate(2)
-      dispatch(UISlice.actions.chatListHandler({ chatList: 'group' }))
+      dispatch(UISlice.actions.chatListHandler({ chatList: 'GROUP' }))
     } else if (title === 'کانال ها') {
       changeIndexActivate(3)
-      dispatch(UISlice.actions.chatListHandler({ chatList: 'channel' }))
+      dispatch(UISlice.actions.chatListHandler({ chatList: 'CHANNEL' }))
     }
   }
   return (

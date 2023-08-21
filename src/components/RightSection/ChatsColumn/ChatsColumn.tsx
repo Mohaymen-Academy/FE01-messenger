@@ -23,11 +23,11 @@ export default function ChatsColumn({ onClick, isActive }: ChatsColumnProps) {
         isActive ? 'right-0' : 'right-full'
       )}
     >
-      <div className="relative w-full bg-primary/100 shadow-xl max-sm:w-full">
+      <div className="relative flex h-full w-full flex-col bg-primary/100 shadow-xl max-sm:w-full">
         <RightHeader onClick={onClick} />
         <div
           className={classNames(
-            'transition-all duration-500',
+            'transition-all duration-500 h-0 grow flex flex-col relative',
             contactSearchBar ? 'hidden' : ''
           )}
         >

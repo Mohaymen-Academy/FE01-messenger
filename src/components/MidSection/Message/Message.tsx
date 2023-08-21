@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import { useTextWidth } from '@tag0/use-text-width'
 import { useLayoutEffect, useRef, useState } from 'react'
+import parse from 'html-react-parser'
 import Checkmark from '@/components/Common/Checkmark/Checkmark'
 
 interface MessageProps {
@@ -30,14 +31,14 @@ export default function Message({
   }, [])
   const oneLiner =
     useTextWidth({ text: message, font: '16px "Segoe UI"' }) < width
-  console.log(useTextWidth({ text: message, font: '16px "Segoe UI"' }))
+  // console.log(useTextWidth({ text: message, font: '16px "Segoe UI"' }))
 
   return (
     <div
       ref={ref}
       className={classNames(
         'my-1 flex w-full flex-col rounded-t-lg text-primary',
-        self ? 'justify-start' : 'justify-end'
+        self ? 'items-start' : 'items-end'
       )}
     >
       <div
@@ -79,7 +80,7 @@ export default function Message({
             )}
             dir="auto"
           >
-            {message}
+            {parse(message)}
           </span>
           <div className="mx-1 flex grow-0 flex-row items-end justify-end gap-1 pb-1 text-xs text-secondary">
             {time}

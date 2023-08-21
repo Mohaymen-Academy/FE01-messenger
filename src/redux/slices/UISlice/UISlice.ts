@@ -6,7 +6,7 @@ type SnackType = null | {
   severity: 'error' | 'warning' | 'info' | 'success'
 }
 type chatListType = null | {
-  chatList: 'all' | 'PV' | 'group' | 'channel'
+  chatList: 'all' | 'PV' | 'GROUP' | 'CHANNEL'
 }
 export interface UISliceType {
   infoColumn: boolean
@@ -24,7 +24,7 @@ export interface UISliceType {
   contactSearchBar: boolean
   chatColumnActive: boolean
   isInitialProfileCreated: boolean
-  chatList: chatListType
+  chatListCat: chatListType
 }
 
 export const UISlice = createSlice({
@@ -45,7 +45,7 @@ export const UISlice = createSlice({
     contactSearchBar: false,
     chatColumnActive: true,
     isInitialProfileCreated: false,
-    chatList: null,
+    chatListCat: null,
   },
   reducers: {
     openInfoColumn: (state: UISliceType) => {
@@ -135,7 +135,7 @@ export const UISlice = createSlice({
       state: UISliceType,
       action: { payload: chatListType }
     ) => {
-      state.chatList = action.payload
+      state.chatListCat = action.payload
     },
   },
 })
