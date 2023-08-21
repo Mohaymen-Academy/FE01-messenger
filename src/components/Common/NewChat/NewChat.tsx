@@ -54,7 +54,6 @@ export default function NewChat({ type }: NewChatProps) {
   }
   const onSubmit: SubmitHandler<FieldValues> = data => {
     if (type === 'group') {
-      console.log(1)
       newGroupService(data.name, null, [])
       dispatch(UISlice.actions.createGroupHandler(false))
     } else if (type === 'channel') {

@@ -52,8 +52,7 @@ export default function ProfileSettingsColumn({
     const { userName, firstName, lastName, bio } = data
     if (userNameValidation) {
       console.log(12222)
-      const picture = null
-      editProfileService(userName, firstName, lastName, bio, picture)
+      editProfileService(userName, firstName, lastName, bio, null)
     }
     dispatch(UISlice.actions.closeProfileSettings())
     setConfirmButtonActive(false)

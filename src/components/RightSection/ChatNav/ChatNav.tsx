@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import TabButton from '@/components/Common/TabButton'
+import { UISlice } from '@/redux/slices/UISlice'
 
 export default function ChatNav() {
   const [activate, setActivation] = useState<boolean[]>(new Array(5))
+  const dispatch = useDispatch()
   const changeIndexActivate = (index: number) => {
     const s = new Array(5).fill(false)
     s[index] = true
@@ -12,12 +15,16 @@ export default function ChatNav() {
     const title = e.currentTarget.innerText
     if (title === 'تمامی گفتگوها') {
       changeIndexActivate(0)
+      dispatch(UISlice.actions.chatListHandler({ chatList: 'all' }))
     } else if (title === 'شخصی') {
       changeIndexActivate(1)
+      dispatch(UISlice.actions.chatListHandler({ chatList: 'PV' }))
     } else if (title === 'گروه ها') {
       changeIndexActivate(2)
+      dispatch(UISlice.actions.chatListHandler({ chatList: 'group' }))
     } else if (title === 'کانال ها') {
       changeIndexActivate(3)
+      dispatch(UISlice.actions.chatListHandler({ chatList: 'channel' }))
     }
   }
   return (

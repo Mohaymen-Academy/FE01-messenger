@@ -8,6 +8,9 @@ export default function ChatList() {
   const chatBoxes = useSelector(
     (state: storeStateTypes) => state.chatList.chatBoxes
   )
+  const chatListType = useSelector(
+    (state: storeStateTypes) => state.UI.chatList
+  )
   useEffect(() => {
     const interval = setInterval(() => ChatListDataService(), 3000)
     return () => {
@@ -20,24 +23,27 @@ export default function ChatList() {
   // console.log(chatBoxes)
   return (
     <div className="relative mb-4 mt-2 h-[calc(100%_-_40px)] cursor-pointer overflow-x-hidden">
-      <div className="flex h-screen w-full flex-col overflow-y-auto px-2">
-        {chatBoxes.map(item => (
-          <>
-            <ChatBox
-              unReadMessage={item.unReadMessage}
-              seen={item.seen}
-              senderName={item.name}
-              lastMessageTime={item.lastMessageTime}
-              online={item.online}
-              textMessage={item.textMessage}
-              seenEnable={item.seenEnable}
-              img={item.image}
-              id={item.id}
-              active={item.active}
-              type="piaz"
-            />
-          </>
-        ))}
+      <div className="flex h-screen w-full flex-col overflow-y-auto px-2 pb-28">
+        {chatBoxes.map(item => {
+          if (item.type === chatListType)
+            return (
+              <>
+                <ChatBox
+                  unReadMessage={item.unReadMessage}
+                  seen={item.seen}
+                  senderName={item.name}
+                  lastMessageTime={item.lastMessageTime}
+                  online={item.online}
+                  textMessage={item.textMessage}
+                  seenEnable={item.seenEnable}
+                  img={item.image}
+                  id={item.id}
+                  active={item.active}
+                  type="piaz"
+                />
+              </>
+            )
+        })}
       </div>
     </div>
   )
