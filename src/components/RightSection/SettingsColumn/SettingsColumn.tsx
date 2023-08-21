@@ -50,6 +50,7 @@ export default function SettingsColumn({
     dispatch(UserSlice.actions.deleteToken())
     localStorage.setItem('token', '')
     dispatch(UISlice.actions.initialProfileCreatedHandler(false))
+    dispatch(UISlice.actions.initiateProfileHandler(false))
   }
   const firstName = useSelector(
     (state: storeStateTypes) => state.user.firstName
@@ -62,7 +63,7 @@ export default function SettingsColumn({
   return (
     <div
       style={{ transform: isActive ? '' : 'translateX(100%)' }}
-      className="absolute z-10 h-full w-full overflow-x-hidden bg-primary/100 shadow-xl transition-all duration-500 ease-in-out max-sm:w-full"
+      className="absolute z-10 h-full w-full overflow-x-hidden bg-primary shadow-xl transition-all duration-500 ease-in-out max-sm:w-full"
     >
       <SettingsHeader onClick={onClick} />
       <InfoImage
@@ -81,7 +82,7 @@ export default function SettingsColumn({
         subTitle="بیوگرافی"
         icon={<BsInfoCircle className="h-6 w-6 fill-current text-gray-600" />}
       />
-      <div className="mr-4 mt-[95px] flex w-[355px] items-center justify-start gap-2 rounded-lg pr-1  transition-all duration-300 ease-in-out">
+      <div className="absolute bottom-16 mr-4 flex w-[355px] items-center justify-start gap-2 rounded-lg pr-1  transition-all duration-300 ease-in-out">
         <div
           onClick={darkModeHandler}
           className="fill-current transition-all duration-1000 ease-in-out"
@@ -106,7 +107,7 @@ export default function SettingsColumn({
 
       <button
         onClick={signOutHandler}
-        className="mr-3 mt-2 flex w-[355px] justify-start gap-2 rounded-lg py-2 pr-1 text-red-500 transition-all duration-300 ease-in-out hover:bg-logout hover:text-white"
+        className="absolute bottom-2 right-0 mr-3 mt-2 flex w-[355px] justify-start gap-2 rounded-lg py-2 pr-1 text-red-500 transition-all duration-300 ease-in-out hover:bg-logout hover:text-white"
       >
         <div className="fill-current">
           <FiLogOut className="h-7 w-7" />

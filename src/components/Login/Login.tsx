@@ -1,5 +1,6 @@
 import { BiArrowBack } from 'react-icons/bi'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import React from 'react'
 import { loginService } from '@/services/userService'
 import LoginInput from '../Common/TextInput/TextInput'
 
@@ -17,6 +18,7 @@ export default function Login({ active, onClick }: LoginProps) {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<loginFormData>({
     defaultValues: {
       email: '',
@@ -26,6 +28,15 @@ export default function Login({ active, onClick }: LoginProps) {
   const onSubmit: SubmitHandler<loginFormData> = data => {
     loginService(data.email, data.password)
   }
+  const setEmailHandler = (e: React.ChangeEvent<HTMLDivElement>) => {
+    console.log(e.target.value)
+    setValue('email', e.target.value)
+  }
+  const setPasswordHandler = (e: React.ChangeEvent<HTMLDivElement>) => {
+    console.log(e.target.value)
+    setValue('password', e.target.value)
+  }
+
   return (
     <div
       style={{ display: active ? '' : 'none' }}
@@ -35,9 +46,9 @@ export default function Login({ active, onClick }: LoginProps) {
         <div className="flex flex-col">
           <button
             onClick={onClick}
-            className="flex w-full justify-end text-sm font-light text-gray-500"
+            className="flex w-full justify-start  text-sm font-light text-gray-500"
           >
-            <BiArrowBack className="h-6 w-10" />
+            <BiArrowBack className="h-6 w-6 rotate-180 " />
           </button>
           <h1 className="text-center text-xl font-bold text-gray-900  md:text-2xl">
             پیامرسان هرمس
@@ -47,6 +58,7 @@ export default function Login({ active, onClick }: LoginProps) {
           onSubmit={handleSubmit(onSubmit)}
           className="space-y-4 md:space-y-6"
           action="#"
+          autoComplete="on"
         >
           <LoginInput
             formId="email"
@@ -55,6 +67,7 @@ export default function Login({ active, onClick }: LoginProps) {
             register={register}
             errors={errors}
             required
+            onChange={setEmailHandler}
           />
           <LoginInput
             formId="password"
@@ -63,6 +76,7 @@ export default function Login({ active, onClick }: LoginProps) {
             errors={errors}
             required
             palceHolder="رمز عبور"
+            onChange={setPasswordHandler}
           />
           <div className="flex items-center justify-between">
             <div className="flex items-start">

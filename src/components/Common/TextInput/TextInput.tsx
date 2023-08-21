@@ -1,4 +1,5 @@
 import {
+  Control,
   FieldErrors,
   FieldValues,
   Path,
@@ -10,6 +11,7 @@ interface TextInputProps<T extends FieldValues> {
   palceHolder: string
   errors?: FieldErrors
   register?: UseFormRegister<T>
+  control?: Control<T, T>
   type?: 'password' | 'email' | 'checkpassword' | 'text' | 'tel'
   required?: boolean
   formId?: Path<T>

@@ -63,9 +63,9 @@ export default function SignUp({ active, onClick }: SignUpProps) {
         <div className="flex flex-col">
           <button
             onClick={onClick}
-            className="flex w-full justify-end text-sm font-light text-gray-500"
+            className="flex w-full justify-start text-sm font-light text-gray-500"
           >
-            <BiArrowBack className="h-6 w-10" />
+            <BiArrowBack className="h-6 w-6 rotate-180" />
           </button>
           <h1 className="text-center text-xl font-bold text-gray-900  md:text-2xl">
             ثبت نام
@@ -119,11 +119,11 @@ export default function SignUp({ active, onClick }: SignUpProps) {
               />
             </div>
             <div className="ml-3 text-sm">
-              <label className="font-light text-gray-500 dark:text-gray-300">
+              <label className="font-light text-gray-500">
                 <a className="mr-1 font-medium hover:underline" href="#">
                   شرایط و قوانین{' '}
                 </a>
-                پیامرسان حامی را می پذیرم
+                پیامرسان هرمس را می پذیرم
               </label>
             </div>
           </div>
