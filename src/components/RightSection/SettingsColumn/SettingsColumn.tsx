@@ -50,6 +50,7 @@ export default function SettingsColumn({
     dispatch(UserSlice.actions.deleteToken())
     localStorage.setItem('token', '')
     dispatch(UISlice.actions.initialProfileCreatedHandler(false))
+    dispatch(UISlice.actions.initiateProfileHandler(false))
   }
   const firstName = useSelector(
     (state: storeStateTypes) => state.user.firstName

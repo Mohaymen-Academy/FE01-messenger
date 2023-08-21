@@ -16,3 +16,14 @@ export const register = (data: {
   axiosInstance.post(`${apiUrl}/user/signup`, {
     ...data,
   })
+
+export const editProfile = (data: {
+  username: string
+  firstName: string
+  lastName: string
+  bio: string
+  photo: null
+}): AxiosPromise =>
+  axiosInstance.put(`${apiUrl}/profile`, {
+    ...data,
+  })

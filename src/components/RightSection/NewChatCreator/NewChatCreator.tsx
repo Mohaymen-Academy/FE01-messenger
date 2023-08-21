@@ -7,11 +7,11 @@ import { HiSpeakerphone } from 'react-icons/hi'
 import { Box, Paper } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import FabButton from '@/components/Common/FabButton'
-import Modal from '@/components/MidSection/MessageBox/FloatingTextFormatToolbarPlugin/utils/commentPlugin/ui/Modal'
 import NewChat from '@/components/Common/NewChat/NewChat'
 import { UISlice } from '@/redux/slices/UISlice'
 import { storeStateTypes } from '@/types/types'
 import ModalContainer from '@/components/Common/ModalContainer/ModalContainer'
+import Modal from '@/components/MidSection/MessageBox/FloatingTextFormatToolbarPlugin/utils/commentPlugin/ui/Modal'
 
 interface NewChatCreatorProps {}
 
@@ -43,7 +43,7 @@ export default function NewChatCreator({}: NewChatCreatorProps) {
   }
 
   return (
-    <div className="sticky bottom-3 left-5 z-40 mb-6 ml-4 flex flex-row justify-end">
+    <div className="absolute bottom-3 left-2 z-40 flex flex-row justify-end">
       <FabButton
         primary={true}
         icon={<FaPen className="h-5 w-5 fill-current text-white" />}

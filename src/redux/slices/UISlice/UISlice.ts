@@ -1,8 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { all } from 'axios'
 
 type SnackType = null | {
   text: string
   severity: 'error' | 'warning' | 'info' | 'success'
+}
+type chatListType = null | {
+  chatList: 'all' | 'PV' | 'GROUP' | 'CHANNEL'
 }
 export interface UISliceType {
   infoColumn: boolean
@@ -20,6 +24,7 @@ export interface UISliceType {
   contactSearchBar: boolean
   chatColumnActive: boolean
   isInitialProfileCreated: boolean
+  chatListCat: chatListType
 }
 
 export const UISlice = createSlice({
@@ -40,6 +45,7 @@ export const UISlice = createSlice({
     contactSearchBar: false,
     chatColumnActive: true,
     isInitialProfileCreated: false,
+    chatListCat: null,
   },
   reducers: {
     openInfoColumn: (state: UISliceType) => {
@@ -124,6 +130,12 @@ export const UISlice = createSlice({
     },
     chatColumnHandler: (state: UISliceType, action: { payload: boolean }) => {
       state.chatColumnActive = action.payload
+    },
+    chatListHandler: (
+      state: UISliceType,
+      action: { payload: chatListType }
+    ) => {
+      state.chatListCat = action.payload
     },
   },
 })

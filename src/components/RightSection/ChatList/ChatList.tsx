@@ -16,6 +16,9 @@ export default function ChatList() {
   const activeChat = useSelector(
     (state: storeStateTypes) => state.activeChat.id
   )
+  const chatListCat = useSelector(
+    (state: storeStateTypes) => state.UI.chatListCat
+  )
   useEffect(() => {
     ChatListDataService()
     // const interval = setInterval(() => ChatListDataService(), 3000)
@@ -42,25 +45,33 @@ export default function ChatList() {
 
   // console.log(chatBoxes)
   return (
-    <div className="relative mb-4 mt-2 h-[calc(100%_-_40px)] cursor-pointer overflow-x-hidden">
-      <div className="no-scrollbar flex h-screen w-full flex-col overflow-y-auto px-2">
-        {chatBoxes.map(item => (
-          <>
-            <ChatBox
-              unReadMessage={item.unReadMessage}
-              seen={item.seen}
-              senderName={item.name}
-              lastMessageTime={item.lastMessageTime}
-              online={item.online}
-              textMessage={item.lastMessageText}
-              img={item.image}
-              id={item.id}
-              active={item.id == activeChat}
-              onClick={() => chatBoxOnClick(item.id, item.type, item)}
-              type={item.type}
-            />
-          </>
-        ))}
+    <div className="no-scrollbar relative mt-2 h-0 grow cursor-pointer overflow-x-hidden">
+      <div className="flex h-screen w-full flex-col px-2">
+        {chatBoxes.map(item => {
+          console.log(chatListCat, item.type)
+          if (
+            item.type == chatListCat?.chatList ||
+            chatListCat?.chatList == 'all'
+          )
+            return (
+              <>
+                <ChatBox
+                  unReadMessage={item.unReadMessage}
+                  seen={item.seen}
+                  senderName={item.name}
+                  lastMessageTime={item.lastMessageTime}
+                  online={item.online}
+                  textMessage={item.lastMessageText}
+                  img={item.image}
+                  id={item.id}
+                  active={item.id == activeChat}
+                  onClick={() => chatBoxOnClick(item.id, item.type, item)}
+                  type={item.type}
+                />
+              </>
+            )
+          return ''
+        })}
       </div>
     </div>
   )
