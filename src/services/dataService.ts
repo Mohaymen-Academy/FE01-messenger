@@ -1,3 +1,4 @@
+import { File } from 'buffer'
 import axios, { AxiosError } from 'axios'
 import {
   chatListData,
@@ -99,6 +100,12 @@ export function sendMessageService(
       )
     })
 }
+
+export function sendFileService(file: string, chatId: string, type: string) {
+  const fd = new FormData()
+  fd.append('file', file)
+}
+
 export function createChatService(profileId: string) {
   createChat({ profileId })
     .then(res => {
