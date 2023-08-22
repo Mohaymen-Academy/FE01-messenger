@@ -23,6 +23,7 @@ export default function ProfileSettingsPhoto() {
   const [openImageModal, setOpenImageModal] = useState(false)
 
   const profileImage = useSelector((state: storeStateTypes) => state.user.image)
+  const [fileName, setFileName] = useState('')
   const cropImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation()
     let files
@@ -35,6 +36,7 @@ export default function ProfileSettingsPhoto() {
     }
     if (files != null) {
       reader.readAsDataURL(files[0])
+      setFileName(files[0].name)
     }
     setImageCropperActive(true)
     dispatch(UISlice.actions.openCropperModal())
@@ -135,12 +137,19 @@ export default function ProfileSettingsPhoto() {
         </div>
       </label>
       <ModalContainer
-        child={<ImageInput isActive={imageCropperActive} image={image} />}
+        child={
+          <ImageInput
+            isActive={imageCropperActive}
+            image={image}
+            fileName={fileName}
+            mode="profileEditor"
+          />
+        }
         isOpen={openModal}
         onClose={handleClose}
       />
       <ModalContainer
-        child={<img src={profileImage} />}
+        child={<img className="h-96 w-96" src={profileImage} />}
         isOpen={openImageModal}
         onClose={closeProfileModal}
       />

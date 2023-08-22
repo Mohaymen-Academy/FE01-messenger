@@ -40,15 +40,12 @@ export default function InitiateProfile({ active }: InitiateProfileProps) {
   const [image, setImage] = useState('')
   const dispatch = useDispatch()
   const img = useSelector((state: storeStateTypes) => state.user.image)
-  // const [files, setFiles] = useState<FileList>()
   const cropImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation()
     let files
-
     if (e.target) {
       files = e.target.files
     }
-
     const reader = new FileReader()
     reader.onload = () => {
       setImage(reader.result as string)
@@ -64,10 +61,6 @@ export default function InitiateProfile({ active }: InitiateProfileProps) {
     const { userName, firstName, lastName, bio } = data
     if (userNameValidation) {
       initiateProfileService(userName, firstName, lastName, bio)
-      // console.log(file)
-      // if (files != null) {
-      //   uploadProfilePhotoService(files)
-      // }
     }
   }
   const uniqueUserNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {

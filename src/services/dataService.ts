@@ -2,19 +2,18 @@ import axios, { AxiosError } from 'axios'
 import {
   chatListData,
   createChat,
+  editFile,
   getMessages,
   initiateProfile,
   myProfile,
   sendMessage,
-  uploadProfilePhoto,
+  uploadFile,
   usernameValidation,
 } from '@/api/data'
 import { UISlice } from '@/redux/slices/UISlice'
 import { UserSlice } from '@/redux/slices/UserSlice'
 import store from '@/redux/store'
-import { apiUrl } from '@/utils/constants'
 import { MessageSlice } from '@/redux/slices/MessageSlice'
-import axiosInstance from '@/api/axiosInstance'
 import { ActiveChatSlice } from '@/redux/slices/ActiveChatSlice'
 import { ChatListSlice } from '@/redux/slices/ChatListSlice'
 
@@ -206,9 +205,17 @@ export function myProfileService() {
     })
 }
 export function uploadProfilePhotoService(file: FormData) {
-  uploadProfilePhoto({ file })
+  uploadFile({ file })
     .then(res => {
-      console.log('*********************************************')
+      store.dispatch(UserSlice.actions.setImageId(res.data.id))
+    })
+    .catch(err => {})
+}
+
+export function editProfilePhotoService(file: FormData) {
+  editFile({ file })
+    .then(res => {
+      store.dispatch(UserSlice.actions.setImageId(res.data.id))
     })
     .catch(err => {})
 }
