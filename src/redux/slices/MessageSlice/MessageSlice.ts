@@ -5,6 +5,7 @@ interface baseMessageType {
   sender: string
   type: string
   text: string
+  createdAt: string
   self?: boolean
 }
 interface textMessageType extends baseMessageType {
@@ -33,6 +34,7 @@ export const MessageSlice = createSlice({
             sender: '1',
             type: 'text',
             text: 'Hello',
+            createdAt: new Date().toISOString(),
           } as messageType,
         ],
       },
@@ -71,7 +73,7 @@ export const MessageSlice = createSlice({
       if (index === -1) {
         state.chats.push({
           id: chatId,
-          messages: [{ id: '1', sender: '1', type: 'text', text: message }],
+          messages: [],
         })
       } else {
         state.chats[index].messages.push({
@@ -79,6 +81,7 @@ export const MessageSlice = createSlice({
           sender: '1',
           type: 'text',
           text: message,
+          createdAt: new Date().toISOString(),
         })
       }
     },

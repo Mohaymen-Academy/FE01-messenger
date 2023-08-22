@@ -46,7 +46,7 @@ export function getMessagesService(chatId: string, type: string) {
           store.dispatch(
             MessageSlice.actions.setData({
               id: chatId,
-              messages: res.data,
+              messages: res.data.messages.reverse(),
             })
           )
           console.log('inside status 200', res.data.id, res.data.chat)

@@ -35,7 +35,10 @@ export const usernameValidation = (data: { username: string }): AxiosPromise =>
   })
 
 export const getMessages = (data: { chatId: string }) =>
-  axiosInstance.get<messageType[]>(`${apiUrl}/message/${data.chatId}`)
+  axiosInstance.get<{
+    messages: messageType[]
+    pinned: messageType
+  }>(`${apiUrl}/message/${data.chatId}`)
 
 export const sendMessage = (data: {
   message: string

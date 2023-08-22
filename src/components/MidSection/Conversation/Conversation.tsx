@@ -48,7 +48,7 @@ export default function Conversation() {
                       <Message
                         message={messages[index].text}
                         mode="sent"
-                        time={index.toString()}
+                        time={messages[index].createdAt}
                         self={!messages[index].self ?? false}
                       />
                     </div>
