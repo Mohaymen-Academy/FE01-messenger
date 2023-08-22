@@ -1,9 +1,10 @@
 import classNames from 'classnames'
 import { useTextWidth } from '@tag0/use-text-width'
-import { useLayoutEffect, useRef, useState } from 'react'
-import parse from 'html-react-parser'
+import React, { useLayoutEffect, useRef, useState } from 'react'
+import parse, { domToReact } from 'html-react-parser'
 import ReactSpoiler from 'react-spoiler'
 import Checkmark from '@/components/Common/Checkmark/Checkmark'
+import { parseMessage, parseDate } from '@/utils/parser'
 
 interface MessageProps {
   self?: boolean
@@ -81,20 +82,26 @@ export default function Message({
             )}
             dir="auto"
           >
-            {parse(message, {
+            {/* {parse(message, {
               replace: domNode => {
-                if (domNode.name == 'Spoiler') {
-                  return <ReactSpoiler>{domNode.children}</ReactSpoiler>
+                // console.log('dom', domNode.name)
+                if (domNode.name && domNode.name == 'spoiler') {
+                  console.log('dom', domNode)
+                  return (
+                    <ReactSpoiler>{domToReact(domNode.children)}</ReactSpoiler>
+                  )
                 }
-                return domNode
               },
-            })}
+            })} */}
+            {parseMessage(message)}
           </span>
           <div className="mx-1 flex grow-0 flex-row items-end justify-end gap-1 pb-1 text-xs text-secondary">
-            {time}
-            <div className={classNames(self ? 'left-2' : 'right-2')}>
-              <Checkmark mode={mode} />
-            </div>
+            {parseDate(time)}
+            {self && (
+              <div className={classNames(self ? 'left-2' : 'right-2')}>
+                <Checkmark mode={mode} />
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -81,6 +81,7 @@ export const MessageSlice = createSlice({
           sender: '1',
           type: 'text',
           text: message,
+          self: true,
           createdAt: new Date().toISOString(),
         })
       }

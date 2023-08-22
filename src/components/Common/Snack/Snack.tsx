@@ -15,7 +15,7 @@ export default function Snack({}: SnackProps) {
       autoHideDuration={3000}
       onClose={() => dispatch(UISlice.actions.closeSnack())}
     >
-      <Alert variant="filled" severity={snack?.severity}>
+      <Alert variant="outlined" severity={snack?.severity}>
         {snack?.text}
       </Alert>
     </Snackbar>

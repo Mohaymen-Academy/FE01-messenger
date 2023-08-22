@@ -40,40 +40,41 @@ export function getMessagesService(chatId: string, type: string) {
   if (type === 'PV') {
     // store.dispatch(ActiveChatSlice.actions.setActiveChat({ id: chatId }))
     // get chat messages
-    getMessages({ chatId })
-      .then(res => {
-        console.log(res)
-        if (res.status == 200) {
-          store.dispatch(
-            MessageSlice.actions.setData({
-              id: chatId,
-              messages: res.data.messages.reverse(),
-            })
-          )
-          console.log('inside status 200', res.data.id, res.data.chat)
-          store.dispatch(
-            ActiveChatSlice.actions.setActiveChat({
-              id: parseInt(chatId, 10),
-              type: 'PV',
-            })
-          )
-        } else {
+    return setInterval(() => {
+      getMessages({ chatId })
+        .then(res => {
+          // console.log(res)
+          if (res.status == 200) {
+            store.dispatch(
+              MessageSlice.actions.setData({
+                id: chatId,
+                messages: res.data.messages.reverse(),
+              })
+            )
+            store.dispatch(
+              ActiveChatSlice.actions.setActiveChat({
+                id: parseInt(chatId, 10),
+                type: 'PV',
+              })
+            )
+          } else {
+            store.dispatch(
+              UISlice.actions.openSnack({
+                text: 'دریافت پیام ها با خطا مواجه شد',
+                severity: 'error',
+              })
+            )
+          }
+        })
+        .catch(err => {
           store.dispatch(
             UISlice.actions.openSnack({
-              text: 'دریافت پیام ها با خطا مواجه شد',
+              text: `fetching messages failed:${err}`,
               severity: 'error',
             })
           )
-        }
-      })
-      .catch(err => {
-        store.dispatch(
-          UISlice.actions.openSnack({
-            text: `fetching messages failed:${err}`,
-            severity: 'error',
-          })
-        )
-      })
+        })
+    }, 150)
   }
 }
 
@@ -82,6 +83,7 @@ export function sendMessageService(
   chatId: string,
   type: string
 ) {
+  store.dispatch(MessageSlice.actions.sendMessage({ message, chatId }))
   sendMessage({ message, chatId, type })
     .then(res => {
       if (res.status == 200) {
