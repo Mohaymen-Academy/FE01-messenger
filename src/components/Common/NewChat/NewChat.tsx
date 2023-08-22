@@ -6,7 +6,7 @@ import camera from '@/assets/camera-add.svg'
 import { storeStateTypes } from '@/types/types'
 import ImageInput from '@/components/RightSection/ImageInput'
 import { UISlice } from '@/redux/slices/UISlice'
-import { newChannelService, newGroupService } from '@/services/newChatService'
+import { newChannelService, newGroupService } from '@/services/communicationService'
 import ModalContainer from '../ModalContainer'
 import TextInput from '../TextInput'
 

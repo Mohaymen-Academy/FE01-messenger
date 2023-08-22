@@ -25,6 +25,7 @@ export interface UISliceType {
   chatColumnActive: boolean
   isInitialProfileCreated: boolean
   chatListCat: chatListType
+  addMemberModal: boolean
 }
 
 export const UISlice = createSlice({
@@ -46,6 +47,7 @@ export const UISlice = createSlice({
     chatColumnActive: true,
     isInitialProfileCreated: false,
     chatListCat: null,
+    addMemberModal: false,
   },
   reducers: {
     openInfoColumn: (state: UISliceType) => {
@@ -136,6 +138,9 @@ export const UISlice = createSlice({
       action: { payload: chatListType }
     ) => {
       state.chatListCat = action.payload
+    },
+    addMemberHandler: (state: UISliceType, action: { payload: boolean }) => {
+      state.addMemberModal = action.payload
     },
   },
 })

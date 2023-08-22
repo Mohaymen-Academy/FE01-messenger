@@ -23,12 +23,16 @@ interface ProfileSettingsColumnProps {
 export default function ProfileSettingsColumn({
   isActive,
 }: ProfileSettingsColumnProps) {
-  const firstName = useSelector(
+  const defaultFirstName = useSelector(
     (state: storeStateTypes) => state.user.firstName
   )
-  const lastName = useSelector((state: storeStateTypes) => state.user.lastName)
-  const userName = useSelector((state: storeStateTypes) => state.user.userName)
-  const bio = useSelector((state: storeStateTypes) => state.user.bio)
+  const defaultLastName = useSelector(
+    (state: storeStateTypes) => state.user.lastName
+  )
+  const defaultUserName = useSelector(
+    (state: storeStateTypes) => state.user.userName
+  )
+  const defaultBio = useSelector((state: storeStateTypes) => state.user.bio)
   const [confirmButtonActive, setConfirmButtonActive] = useState(false)
   const userNameValidation = useSelector(
     (state: storeStateTypes) => state.UI.userNameValid
@@ -41,17 +45,29 @@ export default function ProfileSettingsColumn({
     setValue,
   } = useForm<FieldValues>({
     defaultValues: {
-      firstName,
-      lastName,
-      bio,
-      userName,
+      defaultFirstName,
+      defaultLastName,
+      defaultBio,
+      defaultUserName,
     },
   })
   const dispatch = useDispatch()
   const onSubmit: SubmitHandler<FieldValues> = data => {
-    const { userName, firstName, lastName, bio } = data
+    console.log(data)
+    let { userName, firstName, lastName, bio } = data
+    if (userName === '') {
+      userName = defaultUserName
+    }
+    if (lastName === '') {
+      lastName = defaultLastName
+    }
+    if (bio === '') {
+      bio = defaultBio
+    }
+    if (firstName === '') {
+      firstName = defaultFirstName
+    }
     if (userNameValidation) {
-      console.log(12222)
       editProfileService(userName, firstName, lastName, bio, null)
     }
     dispatch(UISlice.actions.closeProfileSettings())
@@ -66,7 +82,7 @@ export default function ProfileSettingsColumn({
 
   const changeUserNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const myInput = e.target.value
-    if (myInput !== userName) {
+    if (myInput !== defaultUserName) {
       usernameValidationService(myInput)
       showConfirmButton()
     }
@@ -75,10 +91,10 @@ export default function ProfileSettingsColumn({
   const closeProfileSettings = () => {
     dispatch(UISlice.actions.closeProfileSettings())
     setConfirmButtonActive(false)
-    setValue('bio', bio)
-    setValue('firstName', firstName)
-    setValue('lastName', lastName)
-    setValue('userName', userName)
+    setValue('bio', defaultBio)
+    setValue('firstName', defaultFirstName)
+    setValue('lastName', defaultLastName)
+    setValue('userName', defaultUserName)
   }
 
   return (
@@ -111,7 +127,7 @@ export default function ProfileSettingsColumn({
           type="text"
           register={register}
           errors={errors}
-          onClick={() => setValue('firstName', firstName)}
+          onClick={() => setValue('firstName', defaultFirstName)}
           onChange={showConfirmButton}
         />
         <TextInput
@@ -120,7 +136,7 @@ export default function ProfileSettingsColumn({
           type="text"
           register={register}
           errors={errors}
-          onClick={() => setValue('lastName', lastName)}
+          onClick={() => setValue('lastName', defaultLastName)}
           onChange={showConfirmButton}
         />
         <div>
@@ -130,8 +146,8 @@ export default function ProfileSettingsColumn({
             type="text"
             register={register}
             errors={errors}
-            initialValue={bio}
-            onClick={() => setValue('bio', bio)}
+            initialValue={defaultBio}
+            onClick={() => setValue('bio', defaultBio)}
             onChange={showConfirmButton}
             maxLength={100}
           />
@@ -146,7 +162,7 @@ export default function ProfileSettingsColumn({
           type="text"
           register={register}
           errors={errors}
-          onClick={() => setValue('userName', userName)}
+          onClick={() => setValue('userName', defaultUserName)}
           onChange={changeUserNameHandler}
         />
         <p

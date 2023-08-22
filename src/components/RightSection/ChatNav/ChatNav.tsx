@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import TabButton from '@/components/Common/TabButton'
 import { UISlice } from '@/redux/slices/UISlice'
@@ -11,6 +11,11 @@ export default function ChatNav() {
     s[index] = true
     setActivation(s)
   }
+  useEffect(() => {
+    changeIndexActivate(0)
+    dispatch(UISlice.actions.chatListHandler({ chatList: 'all' }))
+  }, [])
+
   const changeActive = (e: React.MouseEvent<HTMLDivElement>) => {
     const title = e.currentTarget.innerText
     if (title === 'تمامی گفتگوها') {

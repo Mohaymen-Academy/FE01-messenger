@@ -102,8 +102,6 @@ export function editProfileService(
             severity: 'success',
           })
         )
-        store.dispatch(UISlice.actions.initialProfileCreatedHandler(true))
-        store.dispatch(UISlice.actions.chatColumnHandler(true))
       } else {
         store.dispatch(
           UISlice.actions.openSnack({

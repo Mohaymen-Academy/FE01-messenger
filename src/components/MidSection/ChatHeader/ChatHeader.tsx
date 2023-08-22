@@ -1,15 +1,23 @@
 import { BsArrowRight, BsSearch, BsThreeDotsVertical } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
+import classNames from 'classnames'
+import { MdOutlineGroupAdd } from 'react-icons/md'
 import IconButton from '@/components/Common/IconButton/IconButton'
 import mrHashemi from '@/assets/download.jpeg'
 import { UISlice } from '@/redux/slices/UISlice'
 import { storeStateTypes } from '@/types/types'
+import ModalContainer from '@/components/Common/ModalContainer'
+import NewChat from '@/components/Common/NewChat'
+import AddMember from '@/components/Common/AddMember/AddMember'
 
 export default function ChatHeader() {
   const dispatch = useDispatch()
   const openInfoColumn = () => {
     dispatch(UISlice.actions.openInfoColumn())
   }
+  const addMemberModalActive = useSelector(
+    (state: storeStateTypes) => state.UI.addMemberModal
+  )
   const activeId = useSelector((state: storeStateTypes) => state.activeChat.id)
   console.log(`active id: ${activeId}`)
   const activeChat = useSelector((state: storeStateTypes) =>
@@ -26,6 +34,10 @@ export default function ChatHeader() {
   // } else {
   //   active = activeSearchChat
   // }
+  
+  const addMemberHandler = () => {
+    dispatch(UISlice.actions.addMemberHandler(true))
+  }
   return (
     <div className="z-20 flex w-full shrink-0 grow-0 items-center border-b bg-primary/100 pr-3 text-primary/100">
       <IconButton
@@ -50,9 +62,31 @@ export default function ChatHeader() {
       <IconButton
         icon={<BsSearch className="h-6 w-6 fill-current text-gray-600" />}
       />
+
       <IconButton
         icon={
-          <BsThreeDotsVertical className="h-6 w-6 fill-current text-gray-600" />
+          <div className="flex h-6 w-6 items-center justify-center">
+            <MdOutlineGroupAdd
+              onClick={addMemberHandler}
+              className={classNames(
+                'h-6 w-6 fill-current text-gray-600',
+                !active?.name ? 'flex' : 'hidden'
+              )}
+            />
+            <ModalContainer
+              isOpen={addMemberModalActive}
+              onClose={() => {
+                dispatch(UISlice.actions.addMemberHandler(false))
+              }}
+              child={<AddMember />}
+            />
+            <BsThreeDotsVertical
+              className={classNames(
+                'h-6 w-6 fill-current text-gray-600',
+                active?.name ? 'flex' : 'hidden'
+              )}
+            />
+          </div>
         }
       />
     </div>

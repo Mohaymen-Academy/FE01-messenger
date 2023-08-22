@@ -38,17 +38,7 @@ export default function ChatBox({
   onClick,
   username,
 }: ChatBoxProps) {
-  const colors = [
-    'blue',
-    'red',
-    'green',
-    'black',
-    'yellow',
-    'pink',
-    'brown',
-    'gray',
-    'cyan',
-  ]
+  const colors = ['blue', 'red', 'green', 'black', 'yellow', 'pink', 'brown']
   const bgColor = id % colors.length
   // const dispatch = useDispatch()
   // const activateChat = () => {
@@ -116,7 +106,12 @@ export default function ChatBox({
           </div>
           <div className="flex justify-between text-sm">
             <span>{textMessage ?? username}</span>
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-500 text-right text-xs text-white">
+            <span
+              className={classNames(
+                'flex h-5 w-5 items-center justify-center rounded-full bg-green-500 text-right text-xs text-white',
+                unReadMessage ? 'flex' : 'hidden'
+              )}
+            >
               {unReadMessage}
             </span>
           </div>
