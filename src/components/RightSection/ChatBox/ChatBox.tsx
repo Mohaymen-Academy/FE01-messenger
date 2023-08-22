@@ -20,6 +20,7 @@ interface ChatBoxProps {
   active?: boolean
   type: string
   onClick: () => void
+  username?: string
 }
 
 export default function ChatBox({
@@ -35,6 +36,7 @@ export default function ChatBox({
   type,
   active,
   onClick,
+  username,
 }: ChatBoxProps) {
   const colors = [
     'blue',
@@ -113,7 +115,7 @@ export default function ChatBox({
             </span>
           </div>
           <div className="flex justify-between text-sm">
-            <span>{textMessage}</span>
+            <span>{textMessage ?? username}</span>
             <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-500 text-right text-xs text-white">
               {unReadMessage}
             </span>

@@ -50,7 +50,9 @@ export const UserSlice = createSlice({
       state.image = ''
     },
     deleteToken: (state: UserSliceType) => {
+      console.log('inside action')
       state.token = ''
+      localStorage.setItem('token', '')
     },
     setProfileId: (state: UserSliceType, action: { payload: string }) => {
       state.profileId = action.payload

@@ -35,6 +35,7 @@ const theme = {
 export default function MessageBox() {
   // TODO use SLATE
   const [pickerOpen, setPickerOpen] = useState(false)
+  const [toolboxOpen, setToolboxOpen] = useState(false)
   const dispatch = useDispatch()
   const activeChat = useSelector(activeChatSelectors.ActiveChat)
 
@@ -141,10 +142,17 @@ export default function MessageBox() {
   // const addEmoji = useCallback((emoji: { native: string }) => {
   //   setText(text => ({ ...text, message: text.message + emoji.native }))
   // }, [])
-
   return (
     <div className="relative flex w-full max-w-2xl items-center self-center p-3 text-gray-600">
-      <Slate editor={editor} initialValue={initialValue}>
+      <Slate
+        editor={editor}
+        initialValue={initialValue}
+        onChange={() => {
+          setToolboxOpen(
+            editor.selection?.anchor.offset != editor.selection?.focus.offset
+          )
+        }}
+      >
         <div className="flex items-center self-end pr-6">
           <FabButton
             onClick={() => {
@@ -154,26 +162,28 @@ export default function MessageBox() {
           />
         </div>
         <div className="tail-right relative flex h-full w-full rounded-l-lg rounded-t-lg border-primary bg-primary  p-2">
-          <div className="absolute right-0 top-0 flex -translate-y-full flex-row rounded-md bg-white">
-            <button
-              className="rounded-r-md p-2 transition-all hover:bg-gray-400 hover:text-white"
-              onMouseDown={event => {
-                event.preventDefault()
-                CustomEditor.toggleBoldMark(editor)
-              }}
-            >
-              Bold
-            </button>
-            <button
-              className="rounded-l-md p-2 transition-all hover:bg-gray-400 hover:text-white"
-              onMouseDown={event => {
-                event.preventDefault()
-                CustomEditor.toggleSpoilerBlock(editor)
-              }}
-            >
-              spoiler
-            </button>
-          </div>
+          {toolboxOpen && (
+            <div className="absolute right-0 top-0 flex -translate-y-full flex-row rounded-md bg-primary">
+              <button
+                className="rounded-r-md p-2 transition-all hover:bg-gray-400 hover:text-white"
+                onMouseDown={event => {
+                  event.preventDefault()
+                  CustomEditor.toggleBoldMark(editor)
+                }}
+              >
+                Bold
+              </button>
+              <button
+                className="rounded-l-md p-2 transition-all hover:bg-gray-400 hover:text-white"
+                onMouseDown={event => {
+                  event.preventDefault()
+                  CustomEditor.toggleSpoilerBlock(editor)
+                }}
+              >
+                spoiler
+              </button>
+            </div>
+          )}
           <Editable
             renderElement={renderElement}
             renderLeaf={renderLeaf}

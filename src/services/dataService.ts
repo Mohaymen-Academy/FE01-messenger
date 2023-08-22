@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import {
   chatListData,
   createChat,
@@ -165,6 +165,12 @@ export function usernameValidationService(username: string) {
     })
     .catch(err => {
       store.dispatch(UISlice.actions.userNameHandler(false))
+      // store.dispatch(
+      //   UISlice.actions.openSnack({
+      //     text: `u:${err}`,
+      //     severity: 'error',
+      //   })
+      // )
     })
 }
 export function myProfileService() {
@@ -184,10 +190,15 @@ export function myProfileService() {
         )
       }
     })
-    .catch(err => {
+    .catch((err: AxiosError) => {
+      console.log(err)
+      if (err.response?.status == 403) {
+        console.log('inside if')
+        store.dispatch(UserSlice.actions.deleteToken())
+      }
       store.dispatch(
         UISlice.actions.openSnack({
-          text: `Login failed:${err}`,
+          text: `خطای پروفایل :${err.message}`,
           severity: 'error',
         })
       )

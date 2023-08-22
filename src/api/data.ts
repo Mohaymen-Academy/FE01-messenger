@@ -11,6 +11,7 @@ export const chatListData = () =>
       chatType: string
       image: string
       lastMessage: string
+      username: string
     }[]
   >(`${apiUrl}/subscribe`)
 

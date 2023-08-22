@@ -7,25 +7,29 @@ import InfoImage from '../../../Common/InfoImage'
 import InfoRow from '../../../Common/InfoRow'
 
 export default function Info() {
-  const activeId = useSelector((state: storeStateTypes) => state.activeChat.id)
-  const activeChat = useSelector((state: storeStateTypes) =>
-    state.chatList.chatBoxes.find(compo => compo.id === activeId)
+  const activeProfile = useSelector(
+    (state: storeStateTypes) => state.activeChat
   )
-  const activeSearch = useSelector((state: storeStateTypes) =>
-    state.search.chatBoxes.find(compo => compo.id === activeId)
-  )
-  const active = activeChat ?? activeSearch
+  // const activeChat = useSelector((state: storeStateTypes) =>
+  //   state.chatList.chatBoxes.find(compo => compo.id === activeId)
+  // )
+  // const activeSearch = useSelector((state: storeStateTypes) =>
+  //   state.search.chatBoxes.find(compo => compo.id === activeId)
+  // )
   return (
     <div className="right-0 flex w-96 flex-col border-gray-300 bg-primary/100 pb-4 max-sm:w-full xl:block">
-      <InfoImage onlineStatus={active?.online} infoName={active?.name} />
+      <InfoImage
+        onlineStatus={activeProfile.profile.online}
+        infoName={activeProfile.profile.name}
+      />
       <InfoRow
-        title={active?.username}
+        title={activeProfile.profile.username}
         subTitle="نام کاربری"
         icon={<FiAtSign className="h-6 w-6 text-gray-600" />}
       />
 
       <InfoRow
-        title={activeChat?.bio}
+        title={activeProfile.profile.username}
         subTitle="بیوگرافی"
         icon={<BsInfoCircle className="h-6 w-6 fill-current text-gray-600" />}
       />
