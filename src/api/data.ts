@@ -6,11 +6,14 @@ import axiosInstance from './axiosInstance'
 export const chatListData = () =>
   axiosInstance.get<
     {
-      id: number
+      chatId: number
       name: string
       chatType: string
       image: string
-      lastMessage: string
+      lastMessage: {
+        data: string
+        sentAt: string
+      }
       username: string
     }[]
   >(`${apiUrl}/subscribe`)
@@ -44,7 +47,7 @@ export const sendMessage = (data: {
   })
 
 export const createChat = (data: { profileId: string }) =>
-  axiosInstance.post(`${apiUrl}/chat/PV/${data.profileId}`)
+  axiosInstance.post(`${apiUrl}/chat/pv/${data.profileId}`)
 
 export const myProfile = (): AxiosPromise<{
   username: string

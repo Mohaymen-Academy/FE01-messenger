@@ -19,6 +19,8 @@ export default function serialize(node) {
       return `<p>${children}</p>`
     case 'link':
       return `<a href="${escapeHtml(node.url)}">${children}</a>`
+    case 'spoiler':
+      return `<Spoiler>${children}</Spoiler>`
     default:
       return children
   }

@@ -10,7 +10,6 @@ export interface chatBoxType {
   type: string
   lastMessageTime: string
   lastMessageText: string
-  username: string
 }
 
 export interface ChatListSliceType {
@@ -130,26 +129,27 @@ export const ChatListSlice = createSlice({
       state: ChatListSliceType,
       action: {
         payload: {
-          id: number
+          chatId: number
           name: string
           chatType: string
           image: string
-          lastMessage: string
-          username: string
+          lastMessage: {
+            data: string
+            sentAt: string
+          }
         }[]
       }
     ) => {
       state.chatBoxes = action.payload.map(item => ({
-        id: item.id,
+        id: item.chatId,
         name: item.name,
         image: item.image,
         online: true,
         unReadMessage: 0,
         seen: true,
         type: item.chatType,
-        lastMessageTime: item.lastMessage,
-        lastMessageText: item.lastMessage,
-        username: item.username,
+        lastMessageTime: item.lastMessage?.sentAt ?? '',
+        lastMessageText: item.lastMessage?.data ?? '',
       }))
     },
   },
