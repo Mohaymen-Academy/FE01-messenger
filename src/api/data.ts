@@ -67,3 +67,8 @@ export const getProfile = (
   lastName: string
   bio: string
 }> => axiosInstance.get(`${apiUrl}/profile/${id}`)
+
+export const uploadProfilePhoto = (data: { file: FormData }) =>
+  axiosInstance.post(`${apiUrl}/file`, data.file, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  })

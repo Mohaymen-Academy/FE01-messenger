@@ -4,28 +4,44 @@ import { Cropper, ReactCropperElement } from 'react-cropper'
 import { useDispatch } from 'react-redux'
 import { UserSlice } from '@/redux/slices/UserSlice'
 import { UISlice } from '@/redux/slices/UISlice'
+import { uploadProfilePhotoService } from '@/services/dataService'
+import { uploadProfilePhoto } from '@/api/data'
 
 interface ImageInputProps {
   isActive: boolean
   image: string
   mode?: 'initiate' | 'editor'
+  fileName: string
 }
 
-export default function ImageInput({ isActive, image, mode }: ImageInputProps) {
+export default function ImageInput({
+  isActive,
+  image,
+  mode,
+  fileName,
+}: ImageInputProps) {
   const cropperRef = useRef<ReactCropperElement>(null)
 
   const dispatch = useDispatch()
 
   const confirmCropData = () => {
     if (typeof cropperRef.current?.cropper !== 'undefined') {
-      dispatch(
-        UserSlice.actions.setImage(
-          cropperRef.current?.cropper.getCroppedCanvas().toDataURL()
-        )
-      )
+      const dataurl = cropperRef.current?.cropper.getCroppedCanvas().toDataURL()
+      const arr = dataurl.split(',')
+      const bstr = atob(arr[arr.length - 1])
+      let n = bstr.length
+      const u8arr = new Uint8Array(n)
+      while (n > 0) {
+        u8arr[n] = bstr.charCodeAt(n)
+        n -= 1
+      }
+      const file = new File([u8arr], fileName)
+      const fd = new FormData()
+      fd.append('file', file)
+      uploadProfilePhotoService(fd)
+
       if (mode === 'initiate') {
         dispatch(UISlice.actions.initialProfileImageCropperHandler(false))
-        console.log(1)
       }
       dispatch(UISlice.actions.closeCropperModal())
     }

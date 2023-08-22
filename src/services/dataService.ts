@@ -6,6 +6,7 @@ import {
   initiateProfile,
   myProfile,
   sendMessage,
+  uploadProfilePhoto,
   usernameValidation,
 } from '@/api/data'
 import { UISlice } from '@/redux/slices/UISlice'
@@ -203,4 +204,11 @@ export function myProfileService() {
         })
       )
     })
+}
+export function uploadProfilePhotoService(file: FormData) {
+  uploadProfilePhoto({ file })
+    .then(res => {
+      console.log('*********************************************')
+    })
+    .catch(err => {})
 }

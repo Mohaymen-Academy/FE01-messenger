@@ -1,4 +1,4 @@
-import { newChannel, newGroup } from '@/api/newChat'
+import { addMember, newChannel, newGroup } from '@/api/communication'
 
 export function newGroupService(
   name: string,
@@ -23,7 +23,14 @@ export function newChannelService(
   console.log(12333)
   newChannel({ name, photo, description, profileIds })
     .then(res => {
-      console.log(321)
+    })
+    .catch(err => {})
+}
+
+export function addMemberService(chatId: number, profiles: number[]) {
+  console.log(12333)
+  addMember({ chatId, profiles })
+    .then(res => {
     })
     .catch(err => {})
 }
