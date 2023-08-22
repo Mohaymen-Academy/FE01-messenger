@@ -11,7 +11,7 @@ interface ChatBoxProps {
   online?: boolean
   lastMessageTime?: string
   senderName: string
-  textMessage?: string
+  lastMessageText?: string
   unReadMessage?: number
   seen?: boolean
   seenEnable?: boolean
@@ -27,7 +27,7 @@ export default function ChatBox({
   online,
   lastMessageTime,
   senderName,
-  textMessage,
+  lastMessageText,
   unReadMessage,
   seen,
   seenEnable,
@@ -105,7 +105,7 @@ export default function ChatBox({
             </span>
           </div>
           <div className="flex justify-between text-sm">
-            <span>{textMessage ?? username}</span>
+            <span>{lastMessageText ?? username}</span>
             <span
               className={classNames(
                 'flex h-5 w-5 items-center justify-center rounded-full bg-green-500 text-right text-xs text-white',

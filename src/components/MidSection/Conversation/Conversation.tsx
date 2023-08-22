@@ -25,7 +25,7 @@ export default function Conversation() {
               width={width}
               height={height}
               rowHeight={cache.rowHeight}
-              rowCount={messages.length}
+              rowCount={messages?.length ?? 0}
               // onRowsRendered={data => console.log(data)}
               scrollToIndex={scrollToIndex}
               scrollToRow={scrollToIndex}

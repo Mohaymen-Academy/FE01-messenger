@@ -11,4 +11,11 @@ export const setActiveChatService = (
   store.dispatch(ActiveChatSlice.actions.setActiveUser({ id, type, profile }))
   getMessagesService(id.toString(), type)
 }
+export const setActiveChatWithoutCreatingChatService = (
+  id: number,
+  type: string,
+  profile: chatBoxType
+) => {
+  store.dispatch(ActiveChatSlice.actions.setActiveUser({ id, type, profile }))
+}
 export default setActiveChatService

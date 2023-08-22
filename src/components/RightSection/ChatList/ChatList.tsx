@@ -1,11 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useCallback, useEffect } from 'react'
 import { storeStateTypes } from '@/types/types'
-import { ChatListDataService, createChatService } from '@/services/dataService'
+import { ChatListDataService } from '@/services/dataService'
 import { UISlice } from '@/redux/slices/UISlice'
-import { ActiveChatSlice } from '@/redux/slices/ActiveChatSlice'
 import { chatBoxType } from '@/redux/slices/ChatListSlice/ChatListSlice'
-import setActiveChatService from '@/services/activeService'
+import { setActiveChatService } from '@/services/activeService'
 import ChatBox from '../ChatBox'
 
 export default function ChatList() {
@@ -61,7 +60,7 @@ export default function ChatList() {
                   senderName={item.name}
                   lastMessageTime={item.lastMessageTime}
                   online={item.online}
-                  textMessage={item.lastMessageText}
+                  lastMessageText={item.lastMessageText}
                   img={item.image}
                   id={item.id}
                   active={item.id == activeChat}

@@ -8,13 +8,14 @@ const MessageSelectors = {
     (state: storeStateTypes) => state.message.chats,
     (state: storeStateTypes) => state.activeChat.id,
     (chats, id) => {
-      let index = chats.findIndex(chat => chat.id == id.toString())
+      console.group('chatid', id, chats)
+      let index = chats.findIndex(chat => chat.id == id?.toString())
       console.group('chatid', id, chats, index)
       if (index == -1) {
         console.log('chatid Not Found', id)
         store.dispatch(
           MessageSlice.actions.setData({
-            id: id.toString(),
+            id: id?.toString(),
             messages: [
               {
                 id: '1',

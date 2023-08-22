@@ -19,6 +19,8 @@ export default function AddMember() {
     (state: storeStateTypes) => state.activeChat.id
   )
   const addMember = id => {
+    console.log(activeChatId)
+    console.log([id])
     addMemberService(activeChatId, [id])
   }
   return (

@@ -20,7 +20,7 @@ import { ChatListSlice } from '@/redux/slices/ChatListSlice'
 export function ChatListDataService() {
   chatListData()
     .then(res => {
-      console.log('test Interval')
+      console.log('THIS', res)
       if (res.status === 200) {
         store.dispatch(ChatListSlice.actions.setChatBox(res.data))
       }

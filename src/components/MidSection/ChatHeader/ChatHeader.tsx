@@ -34,7 +34,7 @@ export default function ChatHeader() {
   // } else {
   //   active = activeSearchChat
   // }
-  
+
   const addMemberHandler = () => {
     dispatch(UISlice.actions.addMemberHandler(true))
   }
@@ -70,7 +70,9 @@ export default function ChatHeader() {
               onClick={addMemberHandler}
               className={classNames(
                 'h-6 w-6 fill-current text-gray-600',
-                !active?.name ? 'flex' : 'hidden'
+                active?.type === 'GROUP' || active?.type === 'CHANNEL'
+                  ? ''
+                  : 'hidden'
               )}
             />
             <ModalContainer
@@ -83,7 +85,9 @@ export default function ChatHeader() {
             <BsThreeDotsVertical
               className={classNames(
                 'h-6 w-6 fill-current text-gray-600',
-                active?.name ? 'flex' : 'hidden'
+                active?.type === 'GROUP' || active?.type === 'CHANNEL'
+                  ? 'hidden'
+                  : ''
               )}
             />
           </div>

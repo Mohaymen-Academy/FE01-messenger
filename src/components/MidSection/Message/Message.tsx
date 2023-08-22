@@ -2,6 +2,7 @@ import classNames from 'classnames'
 import { useTextWidth } from '@tag0/use-text-width'
 import { useLayoutEffect, useRef, useState } from 'react'
 import parse from 'html-react-parser'
+import ReactSpoiler from 'react-spoiler'
 import Checkmark from '@/components/Common/Checkmark/Checkmark'
 
 interface MessageProps {
@@ -80,7 +81,14 @@ export default function Message({
             )}
             dir="auto"
           >
-            {parse(message)}
+            {parse(message, {
+              replace: domNode => {
+                if (domNode.name == 'Spoiler') {
+                  return <ReactSpoiler>{domNode.children}</ReactSpoiler>
+                }
+                return domNode
+              },
+            })}
           </span>
           <div className="mx-1 flex grow-0 flex-row items-end justify-end gap-1 pb-1 text-xs text-secondary">
             {time}

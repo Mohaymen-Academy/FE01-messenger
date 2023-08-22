@@ -20,6 +20,7 @@ import {
 import { Editor, Element, Transforms, createEditor } from 'slate'
 import ReactSpoiler from 'react-spoiler'
 import { useDispatch, useSelector } from 'react-redux'
+import classNames from 'classnames'
 import FabButton from '@/components/Common/FabButton/FabButton'
 import IconButton from '@/components/Common/IconButton/IconButton'
 import { MessageSlice } from '@/redux/slices/MessageSlice'
@@ -70,7 +71,7 @@ export default function MessageBox() {
       console.log(serialize(editor))
       sendMessageService(
         serialize(editor) as string,
-        activeChat.id.toString(),
+        activeChat.id?.toString(),
         activeChat.type
       )
       while (editor.children.length > 0) {
@@ -162,28 +163,33 @@ export default function MessageBox() {
           />
         </div>
         <div className="tail-right relative flex h-full w-full rounded-l-lg rounded-t-lg border-primary bg-primary  p-2">
-          {toolboxOpen && (
-            <div className="absolute right-0 top-0 flex -translate-y-full flex-row rounded-md bg-primary">
-              <button
-                className="rounded-r-md p-2 transition-all hover:bg-gray-400 hover:text-white"
-                onMouseDown={event => {
-                  event.preventDefault()
-                  CustomEditor.toggleBoldMark(editor)
-                }}
-              >
-                Bold
-              </button>
-              <button
-                className="rounded-l-md p-2 transition-all hover:bg-gray-400 hover:text-white"
-                onMouseDown={event => {
-                  event.preventDefault()
-                  CustomEditor.toggleSpoilerBlock(editor)
-                }}
-              >
-                spoiler
-              </button>
-            </div>
-          )}
+          {/* {toolboxOpen && ( */}
+          <div
+            className={classNames(
+              'absolute right-0 top-0 flex -translate-y-full flex-row rounded-md bg-primary transition-all ease-in-out',
+              toolboxOpen ? '' : 'opacity-0 pointer-events-none'
+            )}
+          >
+            <button
+              className="rounded-r-md p-2 transition-all hover:bg-gray-400 hover:text-white"
+              onMouseDown={event => {
+                event.preventDefault()
+                CustomEditor.toggleBoldMark(editor)
+              }}
+            >
+              Bold
+            </button>
+            <button
+              className="rounded-l-md p-2 transition-all hover:bg-gray-400 hover:text-white"
+              onMouseDown={event => {
+                event.preventDefault()
+                CustomEditor.toggleSpoilerBlock(editor)
+              }}
+            >
+              spoiler
+            </button>
+          </div>
+          {/* )} */}
           <Editable
             renderElement={renderElement}
             renderLeaf={renderLeaf}
