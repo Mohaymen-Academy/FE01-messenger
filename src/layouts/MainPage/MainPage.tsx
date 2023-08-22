@@ -18,10 +18,10 @@ export default function MainPage() {
 
   return (
     <div
-      className="relative flex h-screen w-full overflow-hidden bg-gray-200 bg-cover bg-repeat antialiased"
+      className="relative flex h-screen w-full overflow-hidden bg-cover bg-repeat antialiased"
       style={{ backgroundImage: `url(${wallpaper})`, backgroundSize: '600px' }}
     >
-      <div className="absolute left-0 top-0 h-full w-full bg-primary/5" />
+      <div className="absolute left-0 top-0 h-full w-full bg-gray-300/90" />
       <RightSectionProvider>
         <RightSection />
       </RightSectionProvider>

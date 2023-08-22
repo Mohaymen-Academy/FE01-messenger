@@ -8,7 +8,6 @@ const MessageSelectors = {
     (state: storeStateTypes) => state.message.chats,
     (state: storeStateTypes) => state.activeChat.id,
     (chats, id) => {
-      console.group('chatid', id, chats)
       let index = chats.findIndex(chat => chat.id == id?.toString())
       console.group('chatid', id, chats, index)
       if (index == -1) {
@@ -22,6 +21,7 @@ const MessageSelectors = {
                 sender: '1',
                 type: 'text',
                 text: 'Hello',
+                createdAt: new Date().toISOString(),
               },
             ],
           })
