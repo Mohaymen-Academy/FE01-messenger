@@ -1,12 +1,14 @@
 import classNames from 'classnames'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { contactSearchService } from '@/services/searchService'
 import { storeStateTypes } from '@/types/types'
 import ChatBox from '@/components/RightSection/ChatBox'
 import { addMemberService } from '@/services/communicationService'
+import { UISlice } from '@/redux/slices/UISlice'
 import SearchBar from '../SearchBar/SearchBar'
 
 export default function AddMember() {
+  const dispatch = useDispatch()
   const result = useSelector((state: storeStateTypes) => state.search.chatBoxes)
 
   const searchContactHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,9 +21,8 @@ export default function AddMember() {
     (state: storeStateTypes) => state.activeChat.id
   )
   const addMember = id => {
-    console.log(activeChatId)
-    console.log([id])
     addMemberService(activeChatId, [id])
+    dispatch(UISlice.actions.addMemberHandler(false))
   }
   return (
     <div className="flex w-1/2 flex-col items-center justify-center gap-3 overflow-hidden rounded-lg bg-primary py-3">

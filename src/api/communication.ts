@@ -19,8 +19,7 @@ export const newChannel = (data: {
   axiosInstance.post(`${apiUrl}/chat/channel`, {
     ...data,
   })
-export const addMember = (datas: { chatId: number; profiles: number[] }) =>
-  // axiosInstance.post(`${apiUrl}/${data.chatId}/profiles?=${data.profiles}`)
-  axiosInstance.post(`${apiUrl}/subscribe/${datas.chatId}/profiles`, {
-    data: datas.profiles,
+export const addMember = (data: { chatId: number; profiles: number[] }) =>
+  axiosInstance.post(`${apiUrl}/subscribe/${data.chatId}/profiles`, {
+    profiles: data.profiles,
   })

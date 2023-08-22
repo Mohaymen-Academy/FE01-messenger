@@ -8,6 +8,7 @@ import { storeStateTypes } from '@/types/types'
 import { UISlice } from '@/redux/slices/UISlice'
 import {
   initiateProfileService,
+  uploadProfilePhotoService,
   usernameValidationService,
 } from '@/services/dataService'
 import TextInput from '../Common/TextInput'
@@ -32,44 +33,52 @@ export default function InitiateProfile({ active }: InitiateProfileProps) {
       image: '',
     },
   })
-
+  const [fileName, setFileName] = useState('')
   const userNameValidation = useSelector(
     (state: storeStateTypes) => state.UI.userNameValid
   )
   const [image, setImage] = useState('')
   const dispatch = useDispatch()
   const img = useSelector((state: storeStateTypes) => state.user.image)
-  const onSubmit: SubmitHandler<FieldValues> = data => {
-    const { userName, firstName, lastName, bio } = data
-    if (userNameValidation) {
-      initiateProfileService(userName, firstName, lastName, bio)
-    }
-  }
-  let openModal = useSelector(
-    (state: storeStateTypes) => state.UI.initialProfileImageCropper
-  )
-  const handleClose = () => {
-    openModal = false
-  }
+  // const [files, setFiles] = useState<FileList>()
   const cropImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation()
     let files
+
     if (e.target) {
       files = e.target.files
     }
+
     const reader = new FileReader()
     reader.onload = () => {
       setImage(reader.result as string)
     }
     if (files != null) {
       reader.readAsDataURL(files[0])
+      setFileName(files[0].name)
     }
     dispatch(UISlice.actions.initialProfileImageCropperHandler(true))
-    // dispatch(UISlice.actions.initiateProfileHandler(true))
+  }
+
+  const onSubmit: SubmitHandler<FieldValues> = data => {
+    const { userName, firstName, lastName, bio } = data
+    if (userNameValidation) {
+      initiateProfileService(userName, firstName, lastName, bio)
+      // console.log(file)
+      // if (files != null) {
+      //   uploadProfilePhotoService(files)
+      // }
+    }
   }
   const uniqueUserNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const myInput = e.target.value
     usernameValidationService(myInput)
+  }
+  let openModal = useSelector(
+    (state: storeStateTypes) => state.UI.initialProfileImageCropper
+  )
+  const handleClose = () => {
+    openModal = false
   }
   return (
     <div
@@ -106,7 +115,14 @@ export default function InitiateProfile({ active }: InitiateProfileProps) {
             />
           </label>
           <ModalContainer
-            child={<ImageInput isActive={true} image={image} mode="initiate" />}
+            child={
+              <ImageInput
+                isActive={true}
+                image={image}
+                mode="initiate"
+                fileName={fileName}
+              />
+            }
             isOpen={openModal}
             onClose={handleClose}
           />
