@@ -51,6 +51,7 @@ export default function Conversation() {
                       style={style}
                     >
                       <Message
+                        image={messages[index].file}
                         message={messages[index].text}
                         mode="sent"
                         time={messages[index].createdAt}
