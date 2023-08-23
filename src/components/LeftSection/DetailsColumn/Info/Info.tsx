@@ -10,29 +10,50 @@ export default function Info() {
   const activeProfile = useSelector(
     (state: storeStateTypes) => state.activeChat
   )
-  // const activeChat = useSelector((state: storeStateTypes) =>
-  //   state.chatList.chatBoxes.find(compo => compo.id === activeId)
-  // )
-  // const activeSearch = useSelector((state: storeStateTypes) =>
-  //   state.search.chatBoxes.find(compo => compo.id === activeId)
-  // )
+  let infoRowComponent
+  switch (activeProfile.type) {
+    case 'PV':
+      infoRowComponent = (
+        <>
+          <InfoRow
+            title={activeProfile.profile.username}
+            subTitle="نام کاربری"
+            icon={<FiAtSign className="h-6 w-6 text-gray-600" />}
+          />
+
+          <InfoRow
+            title={activeProfile.profile.username}
+            subTitle="بیوگرافی"
+            icon={
+              <BsInfoCircle className="h-6 w-6 fill-current text-gray-600" />
+            }
+          />
+        </>
+      )
+      break
+    case 'CHANNEL':
+    case 'GROUP':
+      infoRowComponent = (
+        <InfoRow
+          // title={activeProfile.}
+          subTitle="اطلاعات"
+          icon={<BsInfoCircle className="h-6 w-6 fill-current text-gray-600" />}
+        />
+      )
+      break
+    default:
+      infoRowComponent = <></>
+      break
+  }
   return (
     <div className="right-0 flex w-96 flex-col border-gray-300 bg-primary/100 pb-4 max-sm:w-full xl:block">
       <InfoImage
         onlineStatus={activeProfile.profile.online}
         infoName={activeProfile.profile.name}
+        type={activeProfile.type}
+        // subscription={}
       />
-      <InfoRow
-        title={activeProfile.profile.username}
-        subTitle="نام کاربری"
-        icon={<FiAtSign className="h-6 w-6 text-gray-600" />}
-      />
-
-      <InfoRow
-        title={activeProfile.profile.username}
-        subTitle="بیوگرافی"
-        icon={<BsInfoCircle className="h-6 w-6 fill-current text-gray-600" />}
-      />
+      {infoRowComponent}
     </div>
   )
 }

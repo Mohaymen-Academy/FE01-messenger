@@ -23,7 +23,7 @@ export const initiateProfile = (data: {
   firstName: string
   lastName: string
   bio: string
-  picture: null
+  photoId: number
 }): AxiosPromise =>
   axiosInstance.post(`${apiUrl}/profile`, {
     ...data,
@@ -57,6 +57,7 @@ export const myProfile = (): AxiosPromise<{
   firstName: string
   lastName: string
   bio: string
+  photo: string
 }> => axiosInstance.get(`${apiUrl}/profile/me`)
 
 export const getProfile = (
@@ -77,3 +78,6 @@ export const editFile = (data: { file: FormData }) =>
   axiosInstance.put(`${apiUrl}/file`, data.file, {
     headers: { 'Content-Type': 'multipart/form-data' },
   })
+
+export const getFile = (data: { fileId: number }) =>
+  axiosInstance.get(`${apiUrl}/file/${data.fileId}`)

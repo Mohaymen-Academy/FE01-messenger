@@ -54,9 +54,6 @@ export const UserSlice = createSlice({
       state.token = ''
       localStorage.setItem('token', '')
     },
-    setProfileId: (state: UserSliceType, action: { payload: string }) => {
-      state.profileId = action.payload
-    },
     setImageId: (state: UserSliceType, action: { payload: number }) => {
       state.imageId = action.payload
     },

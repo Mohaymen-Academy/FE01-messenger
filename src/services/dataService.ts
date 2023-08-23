@@ -3,6 +3,7 @@ import {
   chatListData,
   createChat,
   editFile,
+  getFile,
   getMessages,
   initiateProfile,
   myProfile,
@@ -123,9 +124,9 @@ export function initiateProfileService(
   firstName: string,
   lastName: string,
   bio: string,
-  picture: null
+  photoId: number
 ) {
-  initiateProfile({ username, firstName, lastName, bio, picture })
+  initiateProfile({ username, firstName, lastName, bio, photoId })
     .then(res => {
       if (res.status === 200) {
         store.dispatch(
@@ -181,6 +182,7 @@ export function myProfileService() {
         store.dispatch(UserSlice.actions.setFirstName(res.data.firstName))
         store.dispatch(UserSlice.actions.setLastName(res.data.lastName))
         store.dispatch(UserSlice.actions.setBio(res.data.bio))
+        store.dispatch(UserSlice.actions.setImage(res.data.photo))
       } else {
         store.dispatch(
           UISlice.actions.openSnack({
@@ -215,7 +217,16 @@ export function uploadProfilePhotoService(file: FormData) {
 export function editProfilePhotoService(file: FormData) {
   editFile({ file })
     .then(res => {
+      console.log(res.data.id)
       store.dispatch(UserSlice.actions.setImageId(res.data.id))
+    })
+    .catch(err => {})
+}
+
+export function getProfilePhotoService(fileId: number) {
+  getFile({ fileId })
+    .then(res => {
+      store.dispatch(UserSlice.actions.setImage)
     })
     .catch(err => {})
 }

@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux'
+import { storeStateTypes } from '@/types/types'
 import Info from './Info'
 import InfoHeader from './InfoHeader'
 import MediaList from './MediaList'
-import { storeStateTypes } from '@/types/types'
 
 export default function DetailsColumn() {
   const activeProfile = useSelector(
@@ -10,9 +10,9 @@ export default function DetailsColumn() {
   )
   return (
     <div className="absolute flex h-full flex-col bg-primary/100 max-sm:w-full">
-      <InfoHeader />
+      <InfoHeader type={activeProfile.type} />
       <div className="overflow-y-auto">
-        <Info />
+        <Info type={activeProfile.type} />
         <MediaList />
       </div>
     </div>

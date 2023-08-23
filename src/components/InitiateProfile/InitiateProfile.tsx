@@ -56,11 +56,11 @@ export default function InitiateProfile({ active }: InitiateProfileProps) {
     }
     dispatch(UISlice.actions.initialProfileImageCropperHandler(true))
   }
-
+  const photoId = useSelector((state: storeStateTypes)=> state.user.imageId) 
   const onSubmit: SubmitHandler<FieldValues> = data => {
     const { userName, firstName, lastName, bio } = data
     if (userNameValidation) {
-      initiateProfileService(userName, firstName, lastName, bio)
+      initiateProfileService(userName, firstName, lastName, bio,photoId)
     }
   }
   const uniqueUserNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
