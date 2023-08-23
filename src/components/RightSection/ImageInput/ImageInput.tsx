@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { UserSlice } from '@/redux/slices/UserSlice'
 import { UISlice } from '@/redux/slices/UISlice'
 import { uploadProfilePhotoService } from '@/services/dataService'
-import { uploadProfilePhoto } from '@/api/data'
+import { uploadFile } from '@/api/data'
 
 interface ImageInputProps {
   isActive: boolean

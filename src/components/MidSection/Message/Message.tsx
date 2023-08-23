@@ -1,10 +1,10 @@
 import classNames from 'classnames'
 import { useTextWidth } from '@tag0/use-text-width'
-import React, { useLayoutEffect, useRef, useState } from 'react'
-import parse, { domToReact } from 'html-react-parser'
-import ReactSpoiler from 'react-spoiler'
+import { useLayoutEffect, useRef, useState } from 'react'
+import { Menu, MenuItem } from '@mui/material'
 import Checkmark from '@/components/Common/Checkmark/Checkmark'
 import { parseMessage, parseDate } from '@/utils/parser'
+import { pinMessageService } from '@/services/messageService'
 
 interface MessageProps {
   self?: boolean
@@ -12,6 +12,7 @@ interface MessageProps {
   mode: 'loading' | 'sent' | 'seen'
   time: string
   header?: { title: string; text: string; mode: 'forward' | 'reply' }
+  pinMessage?: () => void
 }
 
 export default function Message({
@@ -20,9 +21,16 @@ export default function Message({
   mode,
   time,
   header,
+  pinMessage,
 }: MessageProps) {
   const [width, setWidth] = useState(0)
+  const [menuOpen, isMenuOpen] = useState<{
+    open: boolean
+    x: number
+    y: number
+  }>({ open: false, x: 0, y: 0 })
   const ref = useRef<HTMLDivElement>(null)
+
   useLayoutEffect(() => {
     if (ref.current?.getBoundingClientRect().width)
       setWidth(
@@ -42,7 +50,37 @@ export default function Message({
         'my-1 flex w-full flex-col rounded-t-lg text-primary',
         self ? 'items-start' : 'items-end'
       )}
+      onContextMenu={e => {
+        e.preventDefault()
+        e.stopPropagation()
+        // show pin and reply modal in mouse location with mui
+        isMenuOpen({ open: true, x: e.clientX, y: e.clientY })
+      }}
     >
+      <Menu
+        open={menuOpen.open}
+        onClose={() => isMenuOpen(s => ({ ...s, open: false }))}
+        anchorReference="anchorPosition"
+        anchorPosition={{ top: menuOpen.y, left: menuOpen.x }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+      >
+        <MenuItem onClick={() => isMenuOpen(s => ({ ...s, open: false }))}>
+          Reply
+        </MenuItem>
+        {pinMessage && (
+          <MenuItem
+            onClick={() => {
+              pinMessage()
+              isMenuOpen(s => ({ ...s, open: false }))
+            }}
+          >
+            Pin
+          </MenuItem>
+        )}
+        <MenuItem onClick={() => isMenuOpen(s => ({ ...s, open: false }))}>
+          Forward
+        </MenuItem>
+      </Menu>
       <div
         className={classNames(
           'relative text-primary max-w-[400px] flex flex-col px-2 rounded-t-lg ',
@@ -82,17 +120,6 @@ export default function Message({
             )}
             dir="auto"
           >
-            {/* {parse(message, {
-              replace: domNode => {
-                // console.log('dom', domNode.name)
-                if (domNode.name && domNode.name == 'spoiler') {
-                  console.log('dom', domNode)
-                  return (
-                    <ReactSpoiler>{domToReact(domNode.children)}</ReactSpoiler>
-                  )
-                }
-              },
-            })} */}
             {parseMessage(message)}
           </span>
           <div className="mx-1 flex grow-0 flex-row items-end justify-end gap-1 pb-1 text-xs text-secondary">

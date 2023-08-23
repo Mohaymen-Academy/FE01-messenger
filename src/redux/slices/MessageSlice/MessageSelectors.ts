@@ -18,7 +18,7 @@ const MessageSelectors = {
             messages: [
               {
                 id: '1',
-                sender: '1',
+                fullName: 'p',
                 type: 'text',
                 text: 'Hello',
                 createdAt: new Date().toISOString(),

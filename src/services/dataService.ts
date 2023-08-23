@@ -1,23 +1,19 @@
-import { File } from 'buffer'
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import {
   chatListData,
   createChat,
-  getMessages,
   initiateProfile,
   myProfile,
-  sendMessage,
-  uploadProfilePhoto,
+  uploadFile,
   usernameValidation,
 } from '@/api/data'
 import { UISlice } from '@/redux/slices/UISlice'
 import { UserSlice } from '@/redux/slices/UserSlice'
 import store from '@/redux/store'
-import { apiUrl } from '@/utils/constants'
 import { MessageSlice } from '@/redux/slices/MessageSlice'
-import axiosInstance from '@/api/axiosInstance'
 import { ActiveChatSlice } from '@/redux/slices/ActiveChatSlice'
 import { ChatListSlice } from '@/redux/slices/ChatListSlice'
+import { getMessages, sendMessage } from '@/api/message'
 
 export function ChatListDataService() {
   chatListData()
@@ -37,7 +33,7 @@ export function ChatListDataService() {
     })
 }
 export function getMessagesService(chatId: string, type: string) {
-  console.log('type', type)
+  // console.log('type', type)
   if (type === 'PV') {
     // store.dispatch(ActiveChatSlice.actions.setActiveChat({ id: chatId }))
     // get chat messages
@@ -50,6 +46,7 @@ export function getMessagesService(chatId: string, type: string) {
               MessageSlice.actions.setData({
                 id: chatId,
                 messages: res.data.messages.reverse(),
+                pin: res.data.pinned,
               })
             )
             store.dispatch(
@@ -79,31 +76,10 @@ export function getMessagesService(chatId: string, type: string) {
   }
 }
 
-export function sendMessageService(
-  message: string,
-  chatId: string,
-  type: string
-) {
-  store.dispatch(MessageSlice.actions.sendMessage({ message, chatId }))
-  sendMessage({ message, chatId, type })
-    .then(res => {
-      if (res.status == 200) {
-        store.dispatch(MessageSlice.actions.sendMessage({ message, chatId }))
-      }
-    })
-    .catch(err => {
-      store.dispatch(
-        UISlice.actions.openSnack({
-          text: `sending message failed:${err}`,
-          severity: 'error',
-        })
-      )
-    })
-}
-
 export function sendFileService(file: string, chatId: string, type: string) {
   const fd = new FormData()
   fd.append('file', file)
+  // uploadFile({ file: fd }).then(res => {
 }
 
 export function createChatService(profileId: string) {
@@ -215,7 +191,7 @@ export function myProfileService() {
     })
 }
 export function uploadProfilePhotoService(file: FormData) {
-  uploadProfilePhoto({ file })
+  uploadFile({ file })
     .then(res => {
       console.log('*********************************************')
     })

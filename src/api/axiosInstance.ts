@@ -13,7 +13,8 @@ axiosInstance.interceptors.request.use(config => {
 })
 
 axiosInstance.interceptors.response.use(response => {
-  console.log('server response to', response.config.url, response)
+  // console.log('server response to', response.config.url, response)
+  let p
   return response
 })
 export default axiosInstance

@@ -1,15 +1,17 @@
 import List from 'react-virtualized/dist/commonjs/List'
 import { AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized'
 import { BsArrowDown } from 'react-icons/bs'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import FabButton from '@/components/Common/FabButton/FabButton'
 import MessageSelectors from '@/redux/slices/MessageSlice/MessageSelectors'
-import { clearActiveChatService } from '@/services/activeService'
+import { pinMessageService } from '@/services/messageService'
+import { activeChatSelectors } from '@/redux/slices/ActiveChatSlice'
 import Message from '../Message/Message'
 
 export default function Conversation() {
   const messages = useSelector(MessageSelectors.chatMessages)
+  const activeChat = useSelector(activeChatSelectors.ActiveChat)
   const [scrollToIndex, setScrollToIndex] = useState(messages.length - 1)
 
   const cache = new CellMeasurerCache({
@@ -52,6 +54,12 @@ export default function Conversation() {
                         mode="sent"
                         time={messages[index].createdAt}
                         self={messages[index].self ?? false}
+                        pinMessage={() => {
+                          pinMessageService(
+                            messages[index].id,
+                            activeChat.id.toString()
+                          )
+                        }}
                       />
                     </div>
                   )}

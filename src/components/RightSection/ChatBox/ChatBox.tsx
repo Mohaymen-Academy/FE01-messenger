@@ -85,7 +85,7 @@ export default function ChatBox({
         </div>
         <div className="min-w-0 flex-1 items-center">
           <div className="mb-1 flex justify-between">
-            <h2 className="text-sm font-semibold text-primary/100">
+            <h2 className="line-clamp-1 text-sm font-semibold text-primary/100">
               {senderName}
             </h2>
             <div
@@ -108,7 +108,7 @@ export default function ChatBox({
             )}
           </div>
           <div className="flex justify-between text-sm">
-            <span>
+            <span className="pointer-events-none line-clamp-1 select-none">
               {lastMessageText ? parseMessage(lastMessageText) : username}
             </span>
             <span

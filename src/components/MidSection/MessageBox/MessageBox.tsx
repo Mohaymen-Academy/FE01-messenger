@@ -25,7 +25,8 @@ import FabButton from '@/components/Common/FabButton/FabButton'
 import IconButton from '@/components/Common/IconButton/IconButton'
 import { MessageSlice } from '@/redux/slices/MessageSlice'
 import { activeChatSelectors } from '@/redux/slices/ActiveChatSlice'
-import { sendFileService, sendMessageService } from '@/services/dataService'
+import { sendFileService } from '@/services/dataService'
+import { sendMessageService } from '@/services/messageService'
 import serialize from './utils'
 
 const theme = {
