@@ -1,7 +1,7 @@
 import List from 'react-virtualized/dist/commonjs/List'
 import { AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized'
 import { BsArrowDown } from 'react-icons/bs'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import FabButton from '@/components/Common/FabButton/FabButton'
 import MessageSelectors from '@/redux/slices/MessageSlice/MessageSelectors'
@@ -13,6 +13,7 @@ export default function Conversation() {
   const messages = useSelector(MessageSelectors.chatMessages)
   const activeChat = useSelector(activeChatSelectors.ActiveChat)
   const [scrollToIndex, setScrollToIndex] = useState(messages.length - 1)
+  const ref = useRef<HTMLTableElement>(null)
 
   const cache = new CellMeasurerCache({
     defaultHeight: 50,
@@ -84,6 +85,7 @@ export default function Conversation() {
           className="absolute bottom-0 right-8"
           onClick={() => {
             setScrollToIndex(messages.length)
+            ref.forceUpdateGrid()
           }}
         >
           <FabButton icon={<BsArrowDown />} />
