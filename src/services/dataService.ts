@@ -1,22 +1,19 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import {
   chatListData,
   createChat,
-  getMessages,
   initiateProfile,
   myProfile,
-  sendMessage,
-  uploadProfilePhoto,
+  uploadFile,
   usernameValidation,
 } from '@/api/data'
 import { UISlice } from '@/redux/slices/UISlice'
 import { UserSlice } from '@/redux/slices/UserSlice'
 import store from '@/redux/store'
-import { apiUrl } from '@/utils/constants'
 import { MessageSlice } from '@/redux/slices/MessageSlice'
-import axiosInstance from '@/api/axiosInstance'
 import { ActiveChatSlice } from '@/redux/slices/ActiveChatSlice'
 import { ChatListSlice } from '@/redux/slices/ChatListSlice'
+import { getMessages, sendMessage } from '@/api/message'
 
 export function ChatListDataService() {
   chatListData()
@@ -36,67 +33,55 @@ export function ChatListDataService() {
     })
 }
 export function getMessagesService(chatId: string, type: string) {
-  console.log('type', type)
+  // console.log('type', type)
   if (type === 'PV') {
     // store.dispatch(ActiveChatSlice.actions.setActiveChat({ id: chatId }))
     // get chat messages
-    getMessages({ chatId })
-      .then(res => {
-        console.log(res)
-        if (res.status == 200) {
-          store.dispatch(
-            MessageSlice.actions.setData({
-              id: chatId,
-              messages: res.data.messages.reverse(),
-            })
-          )
-          console.log('inside status 200', res.data.id, res.data.chat)
-          store.dispatch(
-            ActiveChatSlice.actions.setActiveChat({
-              id: parseInt(chatId, 10),
-              type: 'PV',
-            })
-          )
-        } else {
+    return setInterval(() => {
+      getMessages({ chatId })
+        .then(res => {
+          // console.log(res)
+          if (res.status == 200) {
+            store.dispatch(
+              MessageSlice.actions.setData({
+                id: chatId,
+                messages: res.data.messages.reverse(),
+                pin: res.data.pinned,
+              })
+            )
+            store.dispatch(
+              ActiveChatSlice.actions.setActiveChat({
+                id: parseInt(chatId, 10),
+                type: 'PV',
+              })
+            )
+          } else {
+            store.dispatch(
+              UISlice.actions.openSnack({
+                text: 'دریافت پیام ها با خطا مواجه شد',
+                severity: 'error',
+              })
+            )
+          }
+        })
+        .catch(err => {
           store.dispatch(
             UISlice.actions.openSnack({
-              text: 'دریافت پیام ها با خطا مواجه شد',
+              text: `fetching messages failed:${err}`,
               severity: 'error',
             })
           )
-        }
-      })
-      .catch(err => {
-        store.dispatch(
-          UISlice.actions.openSnack({
-            text: `fetching messages failed:${err}`,
-            severity: 'error',
-          })
-        )
-      })
+        })
+    }, 150)
   }
 }
 
-export function sendMessageService(
-  message: string,
-  chatId: string,
-  type: string
-) {
-  sendMessage({ message, chatId, type })
-    .then(res => {
-      if (res.status == 200) {
-        store.dispatch(MessageSlice.actions.sendMessage({ message, chatId }))
-      }
-    })
-    .catch(err => {
-      store.dispatch(
-        UISlice.actions.openSnack({
-          text: `sending message failed:${err}`,
-          severity: 'error',
-        })
-      )
-    })
+export function sendFileService(file: string, chatId: string, type: string) {
+  const fd = new FormData()
+  fd.append('file', file)
+  // uploadFile({ file: fd }).then(res => {
 }
+
 export function createChatService(profileId: string) {
   createChat({ profileId })
     .then(res => {
@@ -206,7 +191,7 @@ export function myProfileService() {
     })
 }
 export function uploadProfilePhotoService(file: FormData) {
-  uploadProfilePhoto({ file })
+  uploadFile({ file })
     .then(res => {
       console.log('*********************************************')
     })

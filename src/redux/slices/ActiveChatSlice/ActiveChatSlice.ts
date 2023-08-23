@@ -29,6 +29,7 @@ export const ActiveChatSlice = createSlice({
       action: { payload: { id: number; type: string } }
     ) => {
       const { id, type } = action.payload
+      if (id === state.id && type === state.type) return
       state.id = id
       state.type = type
     },

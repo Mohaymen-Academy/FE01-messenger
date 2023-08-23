@@ -9,7 +9,7 @@ const MessageSelectors = {
     (state: storeStateTypes) => state.activeChat.id,
     (chats, id) => {
       let index = chats.findIndex(chat => chat.id == id?.toString())
-      console.group('chatid', id, chats, index)
+      // console.group('chatid', id, chats, index)
       if (index == -1) {
         console.log('chatid Not Found', id)
         store.dispatch(
@@ -18,7 +18,7 @@ const MessageSelectors = {
             messages: [
               {
                 id: '1',
-                sender: '1',
+                fullName: 'p',
                 type: 'text',
                 text: 'Hello',
                 createdAt: new Date().toISOString(),
@@ -28,7 +28,7 @@ const MessageSelectors = {
         )
         index = chats.length - 1
       } else {
-        console.log('chatid found', id, chats[index].messages, index)
+        // console.log('chatid found', id, chats[index].messages, index)
       }
       console.groupEnd()
       return chats[index].messages

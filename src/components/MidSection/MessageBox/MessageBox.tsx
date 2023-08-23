@@ -1,4 +1,4 @@
-import { BsEmojiLaughing } from 'react-icons/bs'
+import { BsEmojiLaughing, BsPaperclip } from 'react-icons/bs'
 import {
   HtmlHTMLAttributes,
   ReactNode,
@@ -25,7 +25,8 @@ import FabButton from '@/components/Common/FabButton/FabButton'
 import IconButton from '@/components/Common/IconButton/IconButton'
 import { MessageSlice } from '@/redux/slices/MessageSlice'
 import { activeChatSelectors } from '@/redux/slices/ActiveChatSlice'
-import { sendMessageService } from '@/services/dataService'
+import { sendFileService } from '@/services/dataService'
+import { sendMessageService } from '@/services/messageService'
 import serialize from './utils'
 
 const theme = {
@@ -67,8 +68,6 @@ export default function MessageBox() {
     },
 
     sendMessage(editor: Editor) {
-      console.log(editor.children)
-      console.log(serialize(editor))
       sendMessageService(
         serialize(editor) as string,
         activeChat.id?.toString(),
@@ -195,6 +194,16 @@ export default function MessageBox() {
             renderLeaf={renderLeaf}
             className="no-scrollbar relative h-full max-h-28 w-0 grow overflow-y-scroll rounded-lg p-1 text-base text-gray-900 placeholder:text-gray-700 focus:outline-none"
           />
+          <div
+            className="relative z-10 my-2 flex items-center self-end"
+            onClick={() => sendFileService()}
+          >
+            <IconButton
+              icon={
+                <BsPaperclip className="h-6 w-6 text-inherit hover:text-blue-500" />
+              }
+            />
+          </div>
           <div
             className="relative z-10 m-2 flex items-center self-end"
             onMouseEnter={e => {
