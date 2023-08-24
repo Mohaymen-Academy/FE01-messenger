@@ -6,7 +6,7 @@ type SnackType = null | {
   severity: 'error' | 'warning' | 'info' | 'success'
 }
 type chatListType = null | {
-  chatList: 'all' | 'PV' | 'GROUP' | 'CHANNEL'
+  chatList: 'all' | 'PV' | 'GROUP' | 'CHANNEL' | 'SELF'
 }
 export interface UISliceType {
   infoColumn: boolean

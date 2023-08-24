@@ -34,7 +34,7 @@ export function ChatListDataService() {
 }
 export function getMessagesService(chatId: string, type: string) {
   // console.log('type', type)
-  if (type === 'PV') {
+  if (type === 'PV' || type === 'SELF') {
     // store.dispatch(ActiveChatSlice.actions.setActiveChat({ id: chatId }))
     // get chat messages
     return setInterval(() => {

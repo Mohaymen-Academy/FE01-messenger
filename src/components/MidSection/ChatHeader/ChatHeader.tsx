@@ -58,9 +58,11 @@ export default function ChatHeader() {
             {active?.name}
           </div>
           {/* remove overflow hidden */}
-          <div className="overflow-hidden whitespace-nowrap text-sm font-medium leading-tight text-gray-600">
-            {active?.online ? 'آنلاین' : 'آخرین بازدید به تازگی'}
-          </div>
+          {active?.name != 'saved message' && (
+            <div className="overflow-hidden whitespace-nowrap text-sm font-medium leading-tight text-gray-600">
+              {active?.online ? 'آنلاین' : 'آخرین بازدید به تازگی'}
+            </div>
+          )}
         </div>
       </div>
       {pin && (
