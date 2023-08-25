@@ -3,6 +3,7 @@ import { BiPencil } from 'react-icons/bi'
 import { useDispatch } from 'react-redux'
 import IconButton from '@/components/Common/IconButton/IconButton'
 import { UISlice } from '@/redux/slices/UISlice'
+import { storeStateTypes } from '@/types/types'
 
 interface InfoHeaderProps {
   type: 'PV' | 'CHANNEL' | 'GROUP'

@@ -229,6 +229,14 @@ export function deleteProfilePhotoService() {
     })
     .catch(err => {})
 }
+export function uploadChannelPhotoService(file: FormData) {
+  uploadFile({ file })
+    .then(res => {
+      console.log(res.data.id)
+      store.dispatch(UISlice.actions.setChannelImageId(res.data.id))
+    })
+    .catch(err => {})
+}
 
 export function editProfilePhotoService(file: FormData, photoId: number) {
   editFile({ file, photoId })
@@ -250,7 +258,9 @@ export function editProfilePhotoService(file: FormData, photoId: number) {
 export function channelLeftSectionService(chatId: number) {
   getChannelChat({ chatId })
     .then(res => {
-      // store.dispatch(LeftSectionSlice.actions)
+      store.dispatch(LeftSectionSlice.actions.setDescription(res.data.description))
+      store.dispatch(LeftSectionSlice.actions.setName(res.data.fullName))
+      store.dispatch(LeftSectionSlice.actions.setImage(res.data.photo))
     })
     .catch(err => {})
 }
@@ -258,8 +268,10 @@ export function channelLeftSectionService(chatId: number) {
 export function getLeftProfileService(profileId: number) {
   getLeftProfile({ profileId })
     .then(res => {
-      console.log(res)
-      // store.dispatch(LeftSectionSlice.actions)
+      store.dispatch(LeftSectionSlice.actions.setBio(res.data.bio))
+      store.dispatch(LeftSectionSlice.actions.setName(res.data.fullName))
+      store.dispatch(LeftSectionSlice.actions.setImage(res.data.photo))
+      store.dispatch(LeftSectionSlice.actions.setUserName(res.data.username))
     })
     .catch(err => {})
 }

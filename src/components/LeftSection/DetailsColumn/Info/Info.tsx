@@ -10,6 +10,8 @@ export default function Info() {
   const activeProfile = useSelector(
     (state: storeStateTypes) => state.activeChat
   )
+  const name = useSelector((state: storeStateTypes) => state.LeftSection.name)
+
   let infoRowComponent
   switch (activeProfile.type) {
     case 'PV':
@@ -49,7 +51,7 @@ export default function Info() {
     <div className="right-0 flex w-96 flex-col border-gray-300 bg-primary/100 pb-4 max-sm:w-full xl:block">
       <InfoImage
         onlineStatus={activeProfile.profile.online}
-        infoName={activeProfile.profile.name}
+        infoName={name}
         type={activeProfile.type}
         // subscription={}
       />

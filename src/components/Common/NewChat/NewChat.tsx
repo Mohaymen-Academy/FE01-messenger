@@ -50,14 +50,17 @@ export default function NewChat({ type }: NewChatProps) {
     if (files != null) {
       reader.readAsDataURL(files[0])
     }
-    dispatch(UISlice.actions.openInitialProfileImageCropper())
+    dispatch(UISlice.actions.initialProfileImageCropperHandler(true))
   }
+  const photoId = useSelector(
+    (state: storeStateTypes) => state.UI.channelImageId
+  )
   const onSubmit: SubmitHandler<FieldValues> = data => {
     if (type === 'group') {
-      newGroupService(data.name, null, [])
+      newGroupService(data.name, photoId, [])
       dispatch(UISlice.actions.createGroupHandler(false))
     } else if (type === 'channel') {
-      newChannelService(data.name, null, data.description, [])
+      newChannelService(data.name, photoId, data.description, [])
       dispatch(UISlice.actions.createChannelHandler(false))
     }
   }

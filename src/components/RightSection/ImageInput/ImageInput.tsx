@@ -6,6 +6,7 @@ import { UserSlice } from '@/redux/slices/UserSlice'
 import { UISlice } from '@/redux/slices/UISlice'
 import {
   editProfilePhotoService,
+  uploadChannelPhotoService,
   uploadProfilePhotoService,
 } from '@/services/dataService'
 import { uploadProfilePhoto } from '@/api/data'
@@ -53,6 +54,8 @@ export default function ImageInput({
       } else if (mode === 'profileEditor') {
         editProfilePhotoService(fd, Number(photoId))
       } else if (mode === 'newChannel') {
+        dispatch(UISlice.actions.initialProfileImageCropperHandler(false))
+        uploadChannelPhotoService(fd)
       }
       dispatch(UISlice.actions.closeCropperModal())
     }
