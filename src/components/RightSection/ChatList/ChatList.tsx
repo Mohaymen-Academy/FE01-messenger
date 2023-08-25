@@ -27,11 +27,11 @@ export default function ChatList() {
   }, [])
   const chatBoxOnClick = useCallback(
     (id: number, type: string, profile: chatBoxType) => {
-      console.log('open chat box')
+      // console.log('open chat box')
       dispatch(UISlice.actions.openMidColumn())
       setActiveChatService(id, type, profile)
       // dispatch(ActiveChatSlice.actions.setActiveUser({ id, type, profile }))
-      console.log('chatbox id:', id)
+      // console.log('chatbox id:', id)
       // createChatService(id.toString())
       // dispatch(ChatListSlice.actions.setActive({ id }))
       // dispatch(SearchSlice.actions.setActive({ id }))

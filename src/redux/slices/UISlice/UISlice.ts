@@ -90,6 +90,7 @@ export const UISlice = createSlice({
       if (state.isInitialProfileCreated === true && action.payload) {
         state.initiateProfile = false
       } else {
+        console.log(123)
         state.initiateProfile = action.payload
       }
     },

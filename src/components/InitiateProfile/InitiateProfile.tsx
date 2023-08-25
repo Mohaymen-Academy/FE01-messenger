@@ -56,11 +56,11 @@ export default function InitiateProfile({ active }: InitiateProfileProps) {
     }
     dispatch(UISlice.actions.initialProfileImageCropperHandler(true))
   }
-  const photoId = useSelector((state: storeStateTypes)=> state.user.imageId) 
+  const photoId = useSelector((state: storeStateTypes) => state.user.imageId)
   const onSubmit: SubmitHandler<FieldValues> = data => {
     const { userName, firstName, lastName, bio } = data
     if (userNameValidation) {
-      initiateProfileService(userName, firstName, lastName, bio,photoId)
+      initiateProfileService(userName, firstName, lastName, bio, photoId)
     }
   }
   const uniqueUserNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,9 +89,9 @@ export default function InitiateProfile({ active }: InitiateProfileProps) {
         <div className="relative mb-2 mt-4 flex w-full justify-center">
           <label className="h-32 w-32 content-center overflow-hidden rounded-full bg-black text-center focus:outline-none">
             <img
-              style={{ display: img ? '' : 'none' }}
+              style={{ display: image ? '' : 'none' }}
               className="h-full w-full content-center overflow-hidden rounded-full bg-black text-center focus:outline-none"
-              src={img}
+              src={image}
             />
             <div className="mr-6 mt-6 transition-all duration-500 ease-in-out">
               <img

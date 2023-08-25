@@ -29,11 +29,11 @@ export default function Login({ active, onClick }: LoginProps) {
     loginService(data.email, data.password)
   }
   const setEmailHandler = (e: React.ChangeEvent<HTMLDivElement>) => {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     setValue('email', e.target.value)
   }
   const setPasswordHandler = (e: React.ChangeEvent<HTMLDivElement>) => {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     setValue('password', e.target.value)
   }
 

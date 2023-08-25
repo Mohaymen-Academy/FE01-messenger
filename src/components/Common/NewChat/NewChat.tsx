@@ -1,4 +1,4 @@
-import { FieldValues, useForm } from 'react-hook-form'
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import classNames from 'classnames'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,7 +6,10 @@ import camera from '@/assets/camera-add.svg'
 import { storeStateTypes } from '@/types/types'
 import ImageInput from '@/components/RightSection/ImageInput'
 import { UISlice } from '@/redux/slices/UISlice'
-import { newChannelService, newGroupService } from '@/services/communicationService'
+import {
+  newChannelService,
+  newGroupService,
+} from '@/services/communicationService'
 import ModalContainer from '../ModalContainer'
 import TextInput from '../TextInput'
 
@@ -27,7 +30,7 @@ export default function NewChat({ type }: NewChatProps) {
   })
   const [image, setImage] = useState('')
   const dispatch = useDispatch()
-  const img = useSelector((state: storeStateTypes) => state.user.image)
+  // const img = useSelector((state: storeStateTypes) => state.user.image)
   let openModal = useSelector(
     (state: storeStateTypes) => state.UI.initialProfileImageCropper
   )
@@ -38,14 +41,11 @@ export default function NewChat({ type }: NewChatProps) {
     e.stopPropagation()
     let files
     if (e.target) {
-      console.log(e.target.files)
       files = e.target.files
     }
     const reader = new FileReader()
     reader.onload = () => {
       setImage(reader.result as string)
-      console.log(1)
-      console.log(image)
     }
     if (files != null) {
       reader.readAsDataURL(files[0])
@@ -69,9 +69,9 @@ export default function NewChat({ type }: NewChatProps) {
       <div className="relative mb-2 mt-4 flex w-full justify-center">
         <label className="h-32 w-32 content-center overflow-hidden rounded-full bg-black text-center focus:outline-none dark:bg-gray-500">
           <img
-            style={{ display: img ? '' : 'none' }}
+            style={{ display: image ? '' : 'none' }}
             className="h-full w-full content-center overflow-hidden rounded-full bg-primary text-center focus:outline-none"
-            src={img}
+            src={image}
           />
           <div className="mr-6 mt-5 transition-all duration-500 ease-in-out">
             <img
@@ -88,7 +88,7 @@ export default function NewChat({ type }: NewChatProps) {
           />
         </label>
         <ModalContainer
-          child={<ImageInput isActive={true} image={image} mode="initiate" />}
+          child={<ImageInput isActive={true} image={image} mode="newChannel" />}
           isOpen={openModal}
           onClose={handleClose}
         />

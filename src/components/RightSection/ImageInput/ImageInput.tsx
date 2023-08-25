@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import 'cropperjs/dist/cropper.css'
 import { Cropper, ReactCropperElement } from 'react-cropper'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { UserSlice } from '@/redux/slices/UserSlice'
 import { UISlice } from '@/redux/slices/UISlice'
 import {
@@ -9,12 +9,13 @@ import {
   uploadProfilePhotoService,
 } from '@/services/dataService'
 import { uploadProfilePhoto } from '@/api/data'
+import { storeStateTypes } from '@/types/types'
 
 interface ImageInputProps {
   isActive: boolean
   image: string
-  mode?: 'initiate' | 'profileEditor'
-  fileName: string
+  mode?: 'initiate' | 'profileEditor' | 'newChannel'
+  fileName?: string
 }
 
 export default function ImageInput({
@@ -24,7 +25,7 @@ export default function ImageInput({
   fileName,
 }: ImageInputProps) {
   const cropperRef = useRef<ReactCropperElement>(null)
-
+  const photoId = localStorage.getItem('imageId')
   const dispatch = useDispatch()
 
   const confirmCropData = () => {
@@ -50,7 +51,8 @@ export default function ImageInput({
         )
         dispatch(UISlice.actions.initialProfileImageCropperHandler(false))
       } else if (mode === 'profileEditor') {
-        editProfilePhotoService(fd)
+        editProfilePhotoService(fd, Number(photoId))
+      } else if (mode === 'newChannel') {
       }
       dispatch(UISlice.actions.closeCropperModal())
     }

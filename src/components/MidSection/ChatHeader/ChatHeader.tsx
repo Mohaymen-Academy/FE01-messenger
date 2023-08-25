@@ -19,7 +19,7 @@ export default function ChatHeader() {
     (state: storeStateTypes) => state.UI.addMemberModal
   )
   const activeId = useSelector((state: storeStateTypes) => state.activeChat.id)
-  console.log(`active id: ${activeId}`)
+  // console.log(`active id: ${activeId}`)
   const activeChat = useSelector((state: storeStateTypes) =>
     state.chatList.chatBoxes.find(compo => compo.id === activeId)
   )

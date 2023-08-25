@@ -14,6 +14,7 @@ import {
   usernameValidationService,
 } from '@/services/dataService'
 import { editProfileService } from '@/services/userService'
+import { UserSlice } from '@/redux/slices/UserSlice'
 import ProfileSettingsPhoto from '../ProfileSettingsPhoto/ProfileSettingsPhoto'
 
 interface ProfileSettingsColumnProps {
@@ -52,8 +53,9 @@ export default function ProfileSettingsColumn({
     },
   })
   const dispatch = useDispatch()
+  // const image = useSelector((state: storeStateTypes) => state.user.image)
   const onSubmit: SubmitHandler<FieldValues> = data => {
-    console.log(data)
+    // console.log(data)
     let { userName, firstName, lastName, bio } = data
     if (userName === '') {
       userName = defaultUserName
@@ -68,7 +70,7 @@ export default function ProfileSettingsColumn({
       firstName = defaultFirstName
     }
     if (userNameValidation) {
-      editProfileService(userName, firstName, lastName, bio, null)
+      editProfileService(userName, firstName, lastName, bio)
     }
     dispatch(UISlice.actions.closeProfileSettings())
     setConfirmButtonActive(false)

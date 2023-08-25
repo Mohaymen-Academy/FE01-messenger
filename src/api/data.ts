@@ -74,10 +74,18 @@ export const uploadFile = (data: { file: FormData }) =>
     headers: { 'Content-Type': 'multipart/form-data' },
   })
 
-export const editFile = (data: { file: FormData }) =>
-  axiosInstance.put(`${apiUrl}/file`, data.file, {
+export const editFile = (data: { file: FormData; photoId: number }) =>
+  axiosInstance.put(`${apiUrl}/profile/photo/${data.photoId}`, data.file, {
     headers: { 'Content-Type': 'multipart/form-data' },
   })
 
+export const deletePhoto = () => axiosInstance.delete(`${apiUrl}/profile/photo`)
+
 export const getFile = (data: { fileId: number }) =>
   axiosInstance.get(`${apiUrl}/file/${data.fileId}`)
+
+export const getChannelChat = (data: { chatId: number }) =>
+  axiosInstance.get(`${apiUrl}/chat/${data.chatId}`)
+
+export const getLeftProfile = (data: { profileId: number }) =>
+  axiosInstance.get(`${apiUrl}/profile/${data.profileId}`)

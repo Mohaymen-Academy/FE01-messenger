@@ -103,7 +103,7 @@ export default function SignUp({ active, onClick }: SignUpProps) {
           />
           <TextInput
             formId="checkpassword"
-            type="checkpassword"
+            type="password"
             palceHolder="تایید رمز عبور"
             register={register}
             errors={errors}

@@ -2,8 +2,12 @@ import axios, { AxiosError } from 'axios'
 import {
   chatListData,
   createChat,
+  deletePhoto,
   editFile,
+  getChannelChat,
+  getChat,
   getFile,
+  getLeftProfile,
   getMessages,
   initiateProfile,
   myProfile,
@@ -17,6 +21,8 @@ import store from '@/redux/store'
 import { MessageSlice } from '@/redux/slices/MessageSlice'
 import { ActiveChatSlice } from '@/redux/slices/ActiveChatSlice'
 import { ChatListSlice } from '@/redux/slices/ChatListSlice'
+import LeftSection from '@/components/LeftSection/LeftSection'
+import { LeftSectionSlice } from '@/redux/slices/LeftSectionSlice'
 
 export function ChatListDataService() {
   chatListData()
@@ -209,24 +215,51 @@ export function myProfileService() {
 export function uploadProfilePhotoService(file: FormData) {
   uploadFile({ file })
     .then(res => {
-      store.dispatch(UserSlice.actions.setImageId(res.data.id))
-    })
-    .catch(err => {})
-}
-
-export function editProfilePhotoService(file: FormData) {
-  editFile({ file })
-    .then(res => {
       console.log(res.data.id)
+      localStorage.setItem('imageId', String(res.data.id))
       store.dispatch(UserSlice.actions.setImageId(res.data.id))
     })
     .catch(err => {})
 }
 
-export function getProfilePhotoService(fileId: number) {
-  getFile({ fileId })
+export function deleteProfilePhotoService() {
+  deletePhoto()
     .then(res => {
-      store.dispatch(UserSlice.actions.setImage)
+      console.log(1)
+    })
+    .catch(err => {})
+}
+
+export function editProfilePhotoService(file: FormData, photoId: number) {
+  editFile({ file, photoId })
+    .then(res => {
+      console.log(res.data)
+      // store.dispatch(UserSlice.actions.setImageId(res.data.id))
+    })
+    .catch(err => {})
+}
+
+// export function getProfilePhotoService(fileId: number) {
+//   getFile({ fileId })
+//     .then(res => {
+//       store.dispatch(UserSlice.actions.setImage(res.data.photo))
+//     })
+//     .catch(err => {})
+// }
+
+export function channelLeftSectionService(chatId: number) {
+  getChannelChat({ chatId })
+    .then(res => {
+      // store.dispatch(LeftSectionSlice.actions)
+    })
+    .catch(err => {})
+}
+
+export function getLeftProfileService(profileId: number) {
+  getLeftProfile({ profileId })
+    .then(res => {
+      console.log(res)
+      // store.dispatch(LeftSectionSlice.actions)
     })
     .catch(err => {})
 }

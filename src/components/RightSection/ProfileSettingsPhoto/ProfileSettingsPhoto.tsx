@@ -8,6 +8,7 @@ import { UISlice } from '@/redux/slices/UISlice'
 import { UserSlice } from '@/redux/slices/UserSlice'
 import camera from '@/assets/camera-add.svg'
 import ModalContainer from '@/components/Common/ModalContainer/ModalContainer'
+import { deleteProfilePhotoService } from '@/services/dataService'
 import ImageInput from '../ImageInput'
 
 export default function ProfileSettingsPhoto() {
@@ -59,6 +60,7 @@ export default function ProfileSettingsPhoto() {
     e.preventDefault()
     e.stopPropagation()
     dispatch(UserSlice.actions.deleteImage())
+    deleteProfilePhotoService()
   }
 
   // show Image Modal

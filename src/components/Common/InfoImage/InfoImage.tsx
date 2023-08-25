@@ -12,7 +12,7 @@ export default function InfoImage({
   infoName,
   type,
 }: InfoImageProps) {
-  console.log(img)
+  // console.log(img)
   return (
     <div className="relative mb-4 flex w-full justify-center">
       <div className="block h-[370px] w-full content-center overflow-hidden text-center focus:outline-none">
@@ -31,11 +31,11 @@ export default function InfoImage({
       <div className="absolute bottom-0 right-0 z-10 w-full bg-gradient-to-t from-[#00000088] to-transparent pb-5 pr-5">
         <p className="text-lg font-semibold text-white">{infoName}</p>
         <p className="text-sm font-medium text-gray-400">
-          {type === 'PV'
-            ? onlineStatus
-              ? 'آنلاین'
-              : 'آخرین بازدید به تازگی'
-            : 'مشترک'}
+          {type === 'CHANNEL' || type === 'GROUP'
+            ? 'مشترک'
+            : onlineStatus
+            ? 'آنلاین'
+            : 'آخرین بازدید به تازگی'}
         </p>
       </div>
     </div>

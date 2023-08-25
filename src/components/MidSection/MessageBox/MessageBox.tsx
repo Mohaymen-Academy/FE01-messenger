@@ -67,7 +67,7 @@ export default function MessageBox() {
     },
 
     sendMessage(editor: Editor) {
-      console.log(editor.children)
+      // console.log(editor.children)
       console.log(serialize(editor))
       sendMessageService(
         serialize(editor) as string,
