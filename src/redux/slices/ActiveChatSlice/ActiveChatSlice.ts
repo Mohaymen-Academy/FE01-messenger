@@ -21,6 +21,7 @@ export const ActiveChatSlice = createSlice({
       type: '',
       lastMessageTime: '',
       lastMessageText: '',
+      profileId: null,
     },
   },
   reducers: {
