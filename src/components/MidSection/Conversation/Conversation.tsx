@@ -1,7 +1,7 @@
 import List from 'react-virtualized/dist/commonjs/List'
 import { AutoSizer, CellMeasurer, CellMeasurerCache } from 'react-virtualized'
 import { BsArrowDown } from 'react-icons/bs'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import FabButton from '@/components/Common/FabButton/FabButton'
 import MessageSelectors from '@/redux/slices/MessageSlice/MessageSelectors'
@@ -14,13 +14,18 @@ export default function Conversation() {
   const messages = useSelector(MessageSelectors.chatMessages)
   const activeChat = useSelector(activeChatSelectors.ActiveChat)
   const [scrollToIndex, setScrollToIndex] = useState(messages.length - 1)
-  const ref = useRef<HTMLTableElement>(null)
+  const ref = useRef<List>(null)
+  console.log(scrollToIndex)
 
   const cache = new CellMeasurerCache({
     defaultHeight: 50,
     fixedWidth: true,
   })
 
+  useEffect(() => {
+    console.log('did')
+    ref.current?.scrollToRow(scrollToIndex)
+  }, [messages, scrollToIndex])
   return (
     <div className="relative h-0 w-full flex-1 grow self-center">
       <div className="relative m-auto flex h-full w-full max-w-xl flex-col px-3 py-1">
@@ -35,10 +40,11 @@ export default function Conversation() {
                 rowCount={messages?.length ?? 0}
                 // onRowsRendered={data => console.log(data)}
                 scrollToIndex={scrollToIndex}
-                scrollToRow={scrollToIndex}
+                // scrollToRow={scrollToIndex}
                 onScroll={() => {
-                  setScrollToIndex(-1)
+                  // setScrollToIndex(-1)
                 }}
+                ref={ref}
                 rowRenderer={({ index, key, parent, style }) => (
                   <CellMeasurer
                     cache={cache}
@@ -96,12 +102,11 @@ export default function Conversation() {
         /> */}
       </div>
       {/* TODO move functionality to fab button instead of div */}
-      {scrollToIndex != messages.length && (
+      {scrollToIndex < messages.length && (
         <div
           className="absolute bottom-0 right-8"
           onClick={() => {
             setScrollToIndex(messages.length)
-            ref.forceUpdateGrid()
           }}
         >
           <FabButton icon={<BsArrowDown />} />
