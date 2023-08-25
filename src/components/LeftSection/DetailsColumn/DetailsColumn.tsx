@@ -17,7 +17,7 @@ export default function DetailsColumn() {
   if (activeProfile.type === 'GROUP' || activeProfile.type === 'CHANNEL') {
     channelLeftSectionService(activeProfile.id)
   } else {
-    getLeftProfileService(activeProfile.profile.id)
+    getLeftProfileService(activeProfile.profile.profileId)
   }
   return (
     <div className="absolute flex h-full flex-col bg-primary/100 max-sm:w-full">

@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import {
   chatListData,
   createChat,
@@ -8,10 +8,8 @@ import {
   getChat,
   getFile,
   getLeftProfile,
-  getMessages,
   initiateProfile,
   myProfile,
-  sendMessage,
   uploadFile,
   usernameValidation,
 } from '@/api/data'
@@ -23,6 +21,7 @@ import { ActiveChatSlice } from '@/redux/slices/ActiveChatSlice'
 import { ChatListSlice } from '@/redux/slices/ChatListSlice'
 import LeftSection from '@/components/LeftSection/LeftSection'
 import { LeftSectionSlice } from '@/redux/slices/LeftSectionSlice'
+import { getMessages, sendMessage } from '@/api/message'
 
 export function ChatListDataService() {
   chatListData()
@@ -42,67 +41,55 @@ export function ChatListDataService() {
     })
 }
 export function getMessagesService(chatId: string, type: string) {
-  console.log('type', type)
-  if (type === 'PV') {
+  // console.log('type', type)
+  if (type === 'PV' || type === 'SELF') {
     // store.dispatch(ActiveChatSlice.actions.setActiveChat({ id: chatId }))
     // get chat messages
-    getMessages({ chatId })
-      .then(res => {
-        console.log(res)
-        if (res.status == 200) {
-          store.dispatch(
-            MessageSlice.actions.setData({
-              id: chatId,
-              messages: res.data.messages.reverse(),
-            })
-          )
-          console.log('inside status 200', res.data.id, res.data.chat)
-          store.dispatch(
-            ActiveChatSlice.actions.setActiveChat({
-              id: parseInt(chatId, 10),
-              type: 'PV',
-            })
-          )
-        } else {
+    return setInterval(() => {
+      getMessages({ chatId })
+        .then(res => {
+          // console.log(res)
+          if (res.status == 200) {
+            store.dispatch(
+              MessageSlice.actions.setData({
+                id: chatId,
+                messages: res.data.messages.reverse(),
+                pin: res.data.pinned,
+              })
+            )
+            store.dispatch(
+              ActiveChatSlice.actions.setActiveChat({
+                id: parseInt(chatId, 10),
+                type: 'PV',
+              })
+            )
+          } else {
+            store.dispatch(
+              UISlice.actions.openSnack({
+                text: 'دریافت پیام ها با خطا مواجه شد',
+                severity: 'error',
+              })
+            )
+          }
+        })
+        .catch(err => {
           store.dispatch(
             UISlice.actions.openSnack({
-              text: 'دریافت پیام ها با خطا مواجه شد',
+              text: `fetching messages failed:${err}`,
               severity: 'error',
             })
           )
-        }
-      })
-      .catch(err => {
-        store.dispatch(
-          UISlice.actions.openSnack({
-            text: `fetching messages failed:${err}`,
-            severity: 'error',
-          })
-        )
-      })
+        })
+    }, 150)
   }
 }
 
-export function sendMessageService(
-  message: string,
-  chatId: string,
-  type: string
-) {
-  sendMessage({ message, chatId, type })
-    .then(res => {
-      if (res.status == 200) {
-        store.dispatch(MessageSlice.actions.sendMessage({ message, chatId }))
-      }
-    })
-    .catch(err => {
-      store.dispatch(
-        UISlice.actions.openSnack({
-          text: `sending message failed:${err}`,
-          severity: 'error',
-        })
-      )
-    })
+export function sendFileService(file: string, chatId: string, type: string) {
+  const fd = new FormData()
+  fd.append('file', file)
+  // uploadFile({ file: fd }).then(res => {
 }
+
 export function createChatService(profileId: string) {
   createChat({ profileId })
     .then(res => {
@@ -258,7 +245,9 @@ export function editProfilePhotoService(file: FormData, photoId: number) {
 export function channelLeftSectionService(chatId: number) {
   getChannelChat({ chatId })
     .then(res => {
-      store.dispatch(LeftSectionSlice.actions.setDescription(res.data.description))
+      store.dispatch(
+        LeftSectionSlice.actions.setDescription(res.data.description)
+      )
       store.dispatch(LeftSectionSlice.actions.setName(res.data.fullName))
       store.dispatch(LeftSectionSlice.actions.setImage(res.data.photo))
     })

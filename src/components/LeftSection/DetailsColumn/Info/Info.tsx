@@ -1,8 +1,7 @@
 import { FiAtSign } from 'react-icons/fi'
-import { BsInfoCircle, BsTelephone } from 'react-icons/bs'
+import { BsInfoCircle } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 import { storeStateTypes } from '@/types/types'
-import InfoHeader from '../InfoHeader'
 import InfoImage from '../../../Common/InfoImage'
 import InfoRow from '../../../Common/InfoRow'
 
@@ -10,6 +9,7 @@ export default function Info() {
   const activeProfile = useSelector(
     (state: storeStateTypes) => state.activeChat
   )
+  const details = useSelector((state: storeStateTypes) => state.LeftSection)
   const name = useSelector((state: storeStateTypes) => state.LeftSection.name)
 
   let infoRowComponent
@@ -18,13 +18,13 @@ export default function Info() {
       infoRowComponent = (
         <>
           <InfoRow
-            title={activeProfile.profile.username}
+            title={details.username}
             subTitle="نام کاربری"
             icon={<FiAtSign className="h-6 w-6 text-gray-600" />}
           />
 
           <InfoRow
-            title={activeProfile.profile.username}
+            title={details.bio}
             subTitle="بیوگرافی"
             icon={
               <BsInfoCircle className="h-6 w-6 fill-current text-gray-600" />
@@ -37,7 +37,7 @@ export default function Info() {
     case 'GROUP':
       infoRowComponent = (
         <InfoRow
-          // title={activeProfile.}
+          title={details.description}
           subTitle="اطلاعات"
           icon={<BsInfoCircle className="h-6 w-6 fill-current text-gray-600" />}
         />
@@ -53,7 +53,8 @@ export default function Info() {
         onlineStatus={activeProfile.profile.online}
         infoName={name}
         type={activeProfile.type}
-        // subscription={}
+        img={details.image}
+        subscription={details.subscribeCount}
       />
       {infoRowComponent}
     </div>

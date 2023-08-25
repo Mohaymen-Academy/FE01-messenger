@@ -6,6 +6,7 @@ import { ChatListSlice } from '@/redux/slices/ChatListSlice'
 import { UISlice } from '@/redux/slices/UISlice'
 import { SearchSlice } from '@/redux/slices/SearchSlice'
 import { createChatService } from '@/services/dataService'
+import { parseMessage, parseDate } from '@/utils/parser'
 
 interface ChatBoxProps {
   online?: boolean
@@ -84,7 +85,7 @@ export default function ChatBox({
         </div>
         <div className="min-w-0 flex-1 items-center">
           <div className="mb-1 flex justify-between">
-            <h2 className="text-sm font-semibold text-primary/100">
+            <h2 className="line-clamp-1 text-sm font-semibold text-primary/100">
               {senderName}
             </h2>
             <div
@@ -100,20 +101,22 @@ export default function ChatBox({
                 className="ml-2 h-4 w-4 fill-current"
               />
             </div>
-            <span className="ml-1 text-xs font-medium text-secondary/100">
-              {lastMessageTime}
-            </span>
+            {!!lastMessageTime && (
+              <span className="ml-1 text-xs font-medium text-secondary/100">
+                {parseDate(lastMessageTime)}
+              </span>
+            )}
           </div>
           <div className="flex justify-between text-sm">
-            <span>{lastMessageText ?? username}</span>
+            <span className="pointer-events-none line-clamp-1 select-none">
+              {lastMessageText ? parseMessage(lastMessageText) : username}
+            </span>
             <span
               className={classNames(
                 'flex h-5 w-5 items-center justify-center rounded-full bg-green-500 text-right text-xs text-white',
                 unReadMessage ? 'flex' : 'hidden'
               )}
-            >
-              {unReadMessage}
-            </span>
+            ></span>
           </div>
         </div>
       </div>

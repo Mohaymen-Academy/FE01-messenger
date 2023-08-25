@@ -3,14 +3,19 @@ import { chatBoxType } from '@/redux/slices/ChatListSlice/ChatListSlice'
 import store from '@/redux/store'
 import { getMessagesService } from './dataService'
 
+let activechatIntervalId: NodeJS.Timer | undefined
 export const setActiveChatService = (
   id: number,
   type: string,
   profile: chatBoxType
 ) => {
+  if (activechatIntervalId) {
+    clearInterval(activechatIntervalId)
+  }
   store.dispatch(ActiveChatSlice.actions.setActiveUser({ id, type, profile }))
-  getMessagesService(id.toString(), type)
+  activechatIntervalId = getMessagesService(id.toString(), type)
 }
+
 export const setActiveChatWithoutCreatingChatService = (
   id: number,
   type: string,

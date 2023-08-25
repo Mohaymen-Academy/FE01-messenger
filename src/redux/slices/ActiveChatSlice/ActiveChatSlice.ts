@@ -9,7 +9,7 @@ export interface ActiveChatSliceType {
 export const ActiveChatSlice = createSlice({
   name: 'activeChat',
   initialState: {
-    id: 0,
+    id: -1,
     type: 'PV',
     profile: {
       id: 0,
@@ -21,6 +21,7 @@ export const ActiveChatSlice = createSlice({
       type: '',
       lastMessageTime: '',
       lastMessageText: '',
+      profileId: 0,
     },
   },
   reducers: {
@@ -29,6 +30,7 @@ export const ActiveChatSlice = createSlice({
       action: { payload: { id: number; type: string } }
     ) => {
       const { id, type } = action.payload
+      if (id === state.id && type === state.type) return
       state.id = id
       state.type = type
     },

@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios'
 import { getProfile } from '@/api/data'
 import { editProfile, login, register } from '@/api/user'
 import { UISlice } from '@/redux/slices/UISlice'
@@ -16,7 +17,7 @@ export function loginService(email: string, password: string) {
         )
         store.dispatch(
           UISlice.actions.openSnack({
-            text: 'Login success',
+            text: 'با موفقیت وارد شدید',
             severity: 'success',
           })
         )
@@ -60,13 +61,15 @@ export function registerService(email: string, password: string) {
         )
       }
     })
-    .catch(err => {
-      store.dispatch(
-        UISlice.actions.openSnack({
-          text: `Login failed:${err}`,
-          severity: 'error',
-        })
-      )
+    .catch((err: AxiosError) => {
+      if (err.response?.status === 409) {
+        store.dispatch(
+          UISlice.actions.openSnack({
+            text: `این ایمیل قبلا ثبت نام کرده است`,
+            severity: 'error',
+          })
+        )
+      }
     })
 }
 

@@ -9,7 +9,7 @@ import {
   uploadChannelPhotoService,
   uploadProfilePhotoService,
 } from '@/services/dataService'
-import { uploadProfilePhoto } from '@/api/data'
+import { uploadProfilePhoto, uploadFile } from '@/api/data'
 import { storeStateTypes } from '@/types/types'
 
 interface ImageInputProps {

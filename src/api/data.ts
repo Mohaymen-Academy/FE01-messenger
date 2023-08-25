@@ -33,22 +33,6 @@ export const usernameValidation = (data: { username: string }): AxiosPromise =>
   axiosInstance.get(`${apiUrl}/profile/username`, {
     params: { search: data.username },
   })
-
-export const getMessages = (data: { chatId: string }) =>
-  axiosInstance.get<{
-    messages: messageType[]
-    pinned: messageType
-  }>(`${apiUrl}/message/${data.chatId}`)
-
-export const sendMessage = (data: {
-  message: string
-  chatId: string
-  type: string
-}) =>
-  axiosInstance.post(`${apiUrl}/message/${data.chatId}`, {
-    text: data.message,
-  })
-
 export const createChat = (data: { profileId: string }) =>
   axiosInstance.post(`${apiUrl}/chat/pv/${data.profileId}`)
 

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 interface baseMessageType {
   id: string
-  sender: string
+  fullName: string
   type: string
   text: string
   createdAt: string
@@ -20,25 +20,13 @@ export interface MessageSliceType {
   chats: {
     id: string
     messages: messageType[]
+    pin?: messageType
   }[]
 }
 export const MessageSlice = createSlice({
   name: 'message',
   initialState: {
-    chats: [
-      {
-        id: '1',
-        messages: [
-          {
-            id: '1',
-            sender: '1',
-            type: 'text',
-            text: 'Hello',
-            createdAt: new Date().toISOString(),
-          } as messageType,
-        ],
-      },
-    ],
+    chats: [],
   },
 
   reducers: {
@@ -48,17 +36,19 @@ export const MessageSlice = createSlice({
         payload: {
           id: string
           messages: messageType[]
+          pin?: messageType
         }
       }
     ) => {
-      const { id, messages } = action.payload
+      const { id, messages, pin } = action.payload
       const index = state.chats.findIndex(chat => chat.id == id)
       if (index === -1) {
-        state.chats.push({ id, messages })
-      } else {
+        state.chats.push({ id, messages, pin })
+      } else if (messages.length > state.chats[index].messages.length)
         state.chats[index].messages = messages
-      }
+      if (pin) state.chats[index].pin = pin
     },
+
     sendMessage: (
       state: MessageSliceType,
       action: {
@@ -74,15 +64,39 @@ export const MessageSlice = createSlice({
         state.chats.push({
           id: chatId,
           messages: [],
+          pin: undefined,
         })
       } else {
         state.chats[index].messages.push({
           id: '1',
-          sender: '1',
+          fullName: '1',
           type: 'text',
           text: message,
+          self: true,
           createdAt: new Date().toISOString(),
         })
+      }
+    },
+
+    pinMessage: (
+      state: MessageSliceType,
+      action: {
+        payload: {
+          message: messageType
+          chatId: string
+        }
+      }
+    ) => {
+      const { message, chatId } = action.payload
+      const index = state.chats.findIndex(chat => chat.id == chatId)
+      if (index === -1) {
+        state.chats.push({
+          id: chatId,
+          messages: [],
+          pin: message,
+        })
+      } else {
+        state.chats[index].pin = message
       }
     },
   },
