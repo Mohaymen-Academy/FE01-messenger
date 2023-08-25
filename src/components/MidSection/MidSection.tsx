@@ -15,11 +15,15 @@ export default function MidSection({ active }: MidSectionProps) {
       style={{ display: active ? 'flex' : 'none' }}
       className="flex flex-1 flex-col max-md:absolute max-md:h-full max-md:w-full"
     >
-      {activeChat.id > 0 && <ChatHeader />}
-      <div className="flex h-0 flex-1 flex-col bg-transparent">
-        <Conversation />
-        <MessageBox />
-      </div>
+      {activeChat.id > 0 && (
+        <>
+          <ChatHeader />
+          <div className="flex h-0 flex-1 flex-col bg-transparent">
+            <Conversation />
+            <MessageBox />
+          </div>
+        </>
+      )}
     </div>
   )
 }
