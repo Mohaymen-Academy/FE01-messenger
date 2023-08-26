@@ -107,7 +107,7 @@ export default function ChatHeader() {
               onClose={() => {
                 dispatch(UISlice.actions.addMemberHandler(false))
               }}
-              child={<AddMember />}
+              children={<AddMember />}
             />
             <BsThreeDotsVertical
               className={classNames(

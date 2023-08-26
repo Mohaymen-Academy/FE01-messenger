@@ -20,3 +20,10 @@ export const pinMessage = (data: { messageId: string; chatId: string }) =>
   axiosInstance.post(`${apiUrl}/chat/${data.chatId}/pin/${data.messageId}`)
 export const unpinMessage = (data: { messageId: string; chatId: string }) =>
   axiosInstance.delete(`${apiUrl}/chat/${data.chatId}/pin/${data.messageId}`)
+export const forwardMessage = (data: { messageId: string; chatId: string }) =>
+  axiosInstance.post(`${apiUrl}/message/forward`, {
+    messageId: data.messageId,
+    chatId: data.chatId,
+  })
+export const deleteMessage = (data: { messageId: string }) =>
+  axiosInstance.delete(`${apiUrl}/message/${data.messageId}`)

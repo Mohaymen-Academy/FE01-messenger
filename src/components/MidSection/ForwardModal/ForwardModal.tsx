@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useCallback, useEffect } from 'react'
+import ChatBox from '@/components/RightSection/ChatBox/ChatBox'
 import { storeStateTypes } from '@/types/types'
 import { ChatListDataService } from '@/services/dataService'
 import { UISlice } from '@/redux/slices/UISlice'
@@ -8,9 +9,18 @@ import {
   setActiveChatService,
   stopUpdatingChat,
 } from '@/services/activeService'
-import ChatBox from '../ChatBox'
+import { forwardMessage } from '@/api/message'
+import { forwardMessageService } from '@/services/messageService'
 
-export default function ChatList() {
+interface ForwardModalProps {
+  messageId: string
+  onClose: () => void
+}
+
+export default function ForwardModal({
+  messageId,
+  onClose,
+}: ForwardModalProps) {
   const dispatch = useDispatch()
   const chatBoxes = useSelector(
     (state: storeStateTypes) => state.chatList.chatBoxes
@@ -21,34 +31,15 @@ export default function ChatList() {
   const chatListCat = useSelector(
     (state: storeStateTypes) => state.UI.chatListCat
   )
-  useEffect(() => {
-    ChatListDataService()
-    const interval = setInterval(() => ChatListDataService(), 1000)
-    return () => {
-      clearInterval(interval)
-    }
-  }, [])
   const chatBoxOnClick = useCallback(
-    (id: number, type: string, profile: chatBoxType) => {
-      console.log('open chat box')
-      stopUpdatingChat()
-      setActiveChatService(id, type, profile)
-      dispatch(UISlice.actions.openMidColumn())
-      // dispatch(ActiveChatSlice.actions.setActiveUser({ id, type, profile }))
-      console.log('chatbox id:', id)
-      // createChatService(id.toString())
-      // dispatch(ChatListSlice.actions.setActive({ id }))
-      // dispatch(SearchSlice.actions.setActive({ id }))
+    (chatId: string) => {
+      forwardMessageService(messageId, chatId)
     },
     [dispatch]
   )
 
-  // ChatListDataService()
-  // console.log(typeof chatBoxes)
-
-  // console.log(chatBoxes)
   return (
-    <div className="no-scrollbar relative mt-2 h-0 grow cursor-pointer overflow-x-hidden">
+    <div className="no-scrollbar relative mt-2 h-0 max-w-sm grow cursor-pointer overflow-x-hidden">
       <div className="flex h-screen w-full flex-col px-2">
         {chatBoxes.map(item => {
           // console.log(chatListCat, item.type)
@@ -69,7 +60,10 @@ export default function ChatList() {
                   img={item.image}
                   id={item.id}
                   active={item.id == activeChat}
-                  onClick={() => chatBoxOnClick(item.id, item.type, item)}
+                  onClick={() => {
+                    chatBoxOnClick(item.id.toString())
+                    onClose()
+                  }}
                   type={item.type}
                 />
               </>

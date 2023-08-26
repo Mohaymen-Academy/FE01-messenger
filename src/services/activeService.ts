@@ -16,6 +16,12 @@ export const setActiveChatService = (
   activechatIntervalId = getMessagesService(id.toString(), type)
 }
 
+export const stopUpdatingChat = () => {
+  if (activechatIntervalId) {
+    clearInterval(activechatIntervalId)
+  }
+}
+
 export const setActiveChatWithoutCreatingChatService = (
   id: number,
   type: string,

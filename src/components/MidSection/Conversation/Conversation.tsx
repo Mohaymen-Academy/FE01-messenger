@@ -73,6 +73,7 @@ export default function Conversation() {
                         style={style}
                       >
                         <Message
+                          id={messages[index].id}
                           message={messages[index].text}
                           mode="sent"
                           time={messages[index].createdAt}
@@ -83,6 +84,14 @@ export default function Conversation() {
                               activeChat.id.toString()
                             )
                           }}
+                          header={
+                            messages[index].forwarded
+                              ? {
+                                  title: messages[index].fullName,
+                                  mode: 'forward',
+                                }
+                              : undefined
+                          }
                         />
                       </div>
                     )}
