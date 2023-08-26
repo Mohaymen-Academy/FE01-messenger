@@ -35,7 +35,7 @@ export default function ChatList() {
       setActiveChatService(id, type, profile)
       dispatch(UISlice.actions.openMidColumn())
       // dispatch(ActiveChatSlice.actions.setActiveUser({ id, type, profile }))
-      console.log('chatbox id:', id)
+      // console.log('chatbox id:', id)
       // createChatService(id.toString())
       // dispatch(ChatListSlice.actions.setActive({ id }))
       // dispatch(SearchSlice.actions.setActive({ id }))

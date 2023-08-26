@@ -22,7 +22,6 @@ export const editProfile = (data: {
   firstName: string
   lastName: string
   bio: string
-  photo: null
 }): AxiosPromise =>
   axiosInstance.put(`${apiUrl}/profile`, {
     ...data,

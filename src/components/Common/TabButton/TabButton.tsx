@@ -12,7 +12,7 @@ export default function TabButton({ text, active, onClick }: TabButtonProps) {
     <>
       <div
         onClick={onClick}
-        className="mt-1 w-full rounded-t-lg bg-primary px-1 hover:bg-tabButton"
+        className="mt-1 w-full cursor-pointer rounded-t-lg bg-primary px-1 hover:bg-tabButton"
       >
         <div
           className={classNames(

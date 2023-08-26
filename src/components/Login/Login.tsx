@@ -29,18 +29,18 @@ export default function Login({ active, onClick }: LoginProps) {
     loginService(data.email, data.password)
   }
   const setEmailHandler = (e: React.ChangeEvent<HTMLDivElement>) => {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     setValue('email', e.target.value)
   }
   const setPasswordHandler = (e: React.ChangeEvent<HTMLDivElement>) => {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     setValue('password', e.target.value)
   }
 
   return (
     <div
       style={{ display: active ? '' : 'none' }}
-      className="absolute right-[8%] top-0 mt-32 w-[80%] rounded-lg bg-white shadow transition-all duration-700 ease-in sm:right-[15%] sm:max-w-md md:right-[25%] xl:right-[34%]"
+      className="absolute right-[8%] top-0 mt-32 w-[80%] rounded-lg bg-white shadow transition-all duration-700 ease-in sm:right-[15%] sm:max-w-md md:right-[25%] xl:right-[35.5%]"
     >
       <div className="w-full space-y-4 px-4 pb-6 pt-3 sm:px-8 md:space-y-6">
         <div className="flex flex-col">

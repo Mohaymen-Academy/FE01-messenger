@@ -4,15 +4,15 @@ import axiosInstance from './axiosInstance'
 
 export const newGroup = (data: {
   name: string
-  photo: null
+  photoId: number
   profileIds: number[]
 }) =>
-  axiosInstance.post(`${apiUrl}/chat/Group`, {
+  axiosInstance.post(`${apiUrl}/chat/group`, {
     ...data,
   })
 export const newChannel = (data: {
   name: string
-  photo: null
+  photoId: number
   description: string
   profileIds: number[]
 }) =>

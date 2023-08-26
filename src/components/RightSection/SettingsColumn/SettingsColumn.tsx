@@ -7,7 +7,10 @@ import InfoImage from '@/components/Common/InfoImage'
 import InfoRow from '@/components/Common/InfoRow'
 import { storeStateTypes } from '@/types/types'
 import { UserSlice } from '@/redux/slices/UserSlice'
-import { myProfileService } from '@/services/dataService'
+import {
+  getProfilePhotoService,
+  myProfileService,
+} from '@/services/dataService'
 import { UISlice } from '@/redux/slices/UISlice'
 import SettingsHeader from '../SettingsHeader/SettingsHeader'
 
@@ -22,7 +25,9 @@ export default function SettingsColumn({
 }: SettingsColumnProps) {
   const [darkmodeActive, setDarkModeActive] = useState(true)
   const dispatch = useDispatch()
+  // console.log(useSelector((state: storeStateTypes) => state.user.image))
   myProfileService()
+
   useEffect(() => {
     const darkMode = localStorage.getItem('theme')
     if (darkMode === 'true') {
@@ -58,6 +63,10 @@ export default function SettingsColumn({
   const lastName = useSelector((state: storeStateTypes) => state.user.lastName)
   const userName = useSelector((state: storeStateTypes) => state.user.userName)
   const bio = useSelector((state: storeStateTypes) => state.user.bio)
+  const photoId = localStorage.getItem('imageId')
+  useEffect(() => {
+    getProfilePhotoService(Number(photoId))
+  }, [])
   const image = useSelector((state: storeStateTypes) => state.user.image)
 
   return (

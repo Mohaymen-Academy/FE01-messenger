@@ -1,5 +1,6 @@
 import { ActiveChatSliceType } from '@/redux/slices/ActiveChatSlice/ActiveChatSlice'
 import { ChatListSliceType } from '@/redux/slices/ChatListSlice/ChatListSlice'
+import { LeftSectionSliceType } from '@/redux/slices/LeftSectionSlice'
 import { MessageSliceType } from '@/redux/slices/MessageSlice'
 import { SearchSliceType } from '@/redux/slices/SearchSlice'
 import { UISliceType } from '@/redux/slices/UISlice'
@@ -12,4 +13,5 @@ export interface storeStateTypes {
   UI: UISliceType
   message: MessageSliceType
   search: SearchSliceType
+  LeftSection: LeftSectionSliceType
 }

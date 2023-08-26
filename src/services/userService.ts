@@ -101,10 +101,9 @@ export function editProfileService(
   username: string,
   firstName: string,
   lastName: string,
-  bio: string,
-  photo: null
+  bio: string
 ) {
-  editProfile({ username, firstName, lastName, bio, photo })
+  editProfile({ username, firstName, lastName, bio })
     .then(res => {
       if (res.status === 200) {
         store.dispatch(

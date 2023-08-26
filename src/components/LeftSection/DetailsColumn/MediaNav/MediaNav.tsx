@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import TabButton from '@/components/Common/TabButton'
 
-export default function MediaNav() {
+interface MediaNavProps {
+  type: 'PV' | 'CHANNEL' | 'GROUP'
+}
+export default function MediaNav({ type }: MediaNavProps) {
   const [activate, setActivation] = useState<boolean[]>(new Array(5))
 
   const changeIndexActivate = (index: number) => {
@@ -24,13 +27,31 @@ export default function MediaNav() {
       changeIndexActivate(4)
     }
   }
-  return (
-    <div className="mb-1 flex select-none list-none flex-row items-center justify-around px-3">
-      <TabButton onClick={changeActive} text="رسانه" active={activate[0]} />
-      <TabButton onClick={changeActive} text="فایل ها" active={activate[1]} />
-      <TabButton onClick={changeActive} text="لینک" active={activate[2]} />
-      <TabButton onClick={changeActive} text="موسیقی" active={activate[3]} />
-      <TabButton onClick={changeActive} text="صدا" active={activate[4]} />
-    </div>
-  )
+  switch (type) {
+    case 'PV':
+      return (
+        <div className="mb-1 flex select-none list-none flex-row items-center justify-around px-3">
+          <TabButton onClick={changeActive} text="رسانه" active={activate[0]} />
+          <TabButton
+            onClick={changeActive}
+            text="فایل ها"
+            active={activate[1]}
+          />
+          <TabButton onClick={changeActive} text="لینک" active={activate[2]} />
+          <TabButton
+            onClick={changeActive}
+            text="موسیقی"
+            active={activate[3]}
+          />
+          <TabButton onClick={changeActive} text="صدا" active={activate[4]} />
+        </div>
+      )
+      break
+    default:
+      return (
+        <div className="mb-1 flex select-none list-none flex-row items-center justify-around px-3">
+          <TabButton onClick={changeActive} text="اعضا" active={activate[0]} />
+        </div>
+      )
+  }
 }
