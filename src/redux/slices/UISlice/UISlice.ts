@@ -25,7 +25,7 @@ export interface UISliceType {
   isInitialProfileCreated: boolean
   chatListCat: chatListType
   addMemberModal: boolean
-  channelImageId: number
+  channelImageId: number | null
   activeChatRow: number
 }
 
@@ -49,7 +49,7 @@ export const UISlice = createSlice({
     isInitialProfileCreated: false,
     chatListCat: null,
     addMemberModal: false,
-    channelImageId: 0,
+    channelImageId: null,
     activeChatRow: -1,
   },
   reducers: {

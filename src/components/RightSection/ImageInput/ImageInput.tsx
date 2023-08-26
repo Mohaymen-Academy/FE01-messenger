@@ -43,8 +43,10 @@ export default function ImageInput({
           console.log(editId)
           editProfilePhotoService(Number(editId))
         } else if (mode === 'newChannel') {
-          dispatch(UISlice.actions.initialProfileImageCropperHandler(false))
+          // uploadChannelPhotoService(fd)
+          console.log('+++++++++++++++')
           uploadChannelPhotoService(fd)
+          dispatch(UISlice.actions.initialProfileImageCropperHandler(false))
         }
       })
       // const arr = dataurl.split(',')

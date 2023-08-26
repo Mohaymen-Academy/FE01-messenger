@@ -53,7 +53,7 @@ export default function Info() {
     <div className="right-0 flex w-96 flex-col border-gray-300 bg-primary/100 pb-4 max-sm:w-full xl:block">
       <InfoImage
         onlineStatus={activeProfile.profile.online}
-        infoName={details.name}
+        infoName={name}
         type={activeProfile.type}
         img={details.image}
         subscription={membersCount}

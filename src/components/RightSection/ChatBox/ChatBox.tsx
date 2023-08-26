@@ -51,6 +51,7 @@ export default function ChatBox({
   //   // dispatch(ChatListSlice.actions.setActive({ id }))
   //   // dispatch(SearchSlice.actions.setActive({ id }))
   // }
+  // console.log(img)
   return (
     <div
       // style={{ backgroundColor: active ? '#7e85ed' : 'white' }}

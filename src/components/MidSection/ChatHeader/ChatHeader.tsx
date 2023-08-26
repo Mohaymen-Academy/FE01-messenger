@@ -63,7 +63,7 @@ export default function ChatHeader() {
       />
       <div onClick={openInfoColumn} className="flex w-0 grow justify-between">
         <div className="mx-4 my-2 h-12 w-12 cursor-pointer rounded-full bg-blue-500 bg-cover bg-center bg-no-repeat">
-          <img className="rounded-full" src={img} />
+          <img className="rounded-full" src={`data:image/png;base64,${img}`} />
         </div>
         <div className="flex flex-1 cursor-pointer flex-col justify-center overflow-hidden">
           <div className="overflow-hidden whitespace-nowrap text-base font-medium leading-tight text-primary/100">

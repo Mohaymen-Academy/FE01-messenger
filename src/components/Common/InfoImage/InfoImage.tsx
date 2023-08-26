@@ -32,7 +32,7 @@ export default function InfoImage({
             'absolute max-h-[370px] w-full content-center object-cover max-sm:object-contain',
             type === undefined ? '' : 'hidden'
           )}
-          src={`data:image/png;base64,${img.data}`}
+          src={`data:image/png;base64,${img?.data}`}
         />
         <div
           className={classNames(

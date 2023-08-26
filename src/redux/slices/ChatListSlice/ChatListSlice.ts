@@ -145,7 +145,7 @@ export const ChatListSlice = createSlice({
       state.chatBoxes = action.payload.map(item => ({
         id: item.chatId,
         name: item.name,
-        image: item.image,
+        image: item.photo,
         online: true,
         unReadMessage: 0,
         seen: true,
