@@ -39,7 +39,7 @@ export default function InitiateProfile({ active }: InitiateProfileProps) {
   )
   const [image, setImage] = useState('')
   const dispatch = useDispatch()
-  const img = useSelector((state: storeStateTypes) => state.user.image)
+  // const img = useSelector((state: storeStateTypes) => state.user.image)
   const cropImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation()
     let files
@@ -56,11 +56,17 @@ export default function InitiateProfile({ active }: InitiateProfileProps) {
     }
     dispatch(UISlice.actions.initialProfileImageCropperHandler(true))
   }
-  const photoId = useSelector((state: storeStateTypes) => state.user.imageId)
+  const photoId = localStorage.getItem('imageId')
   const onSubmit: SubmitHandler<FieldValues> = data => {
     const { userName, firstName, lastName, bio } = data
     if (userNameValidation) {
-      initiateProfileService(userName, firstName, lastName, bio, photoId)
+      initiateProfileService(
+        userName,
+        firstName,
+        lastName,
+        bio,
+        Number(photoId)
+      )
     }
   }
   const uniqueUserNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {

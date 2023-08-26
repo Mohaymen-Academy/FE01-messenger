@@ -39,7 +39,10 @@ export default function ChatHeader() {
   // } else {
   //   active = activeSearchChat
   // }
-
+  const img = useSelector(
+    (state: storeStateTypes) => state.activeChat.profile.image
+  )
+  const type = useSelector((state: storeStateTypes) => state.activeChat.type)
   const addMemberHandler = () => {
     dispatch(UISlice.actions.addMemberHandler(true))
   }
@@ -52,7 +55,7 @@ export default function ChatHeader() {
       />
       <div onClick={openInfoColumn} className="flex w-0 grow justify-between">
         <div className="mx-4 my-2 h-12 w-12 cursor-pointer rounded-full bg-blue-500 bg-cover bg-center bg-no-repeat">
-          <img className="rounded-full" src={mrHashemi} />
+          <img className="rounded-full" src={img} />
         </div>
         <div className="flex flex-1 cursor-pointer flex-col justify-center overflow-hidden">
           <div className="overflow-hidden whitespace-nowrap text-base font-medium leading-tight text-primary/100">
@@ -60,7 +63,10 @@ export default function ChatHeader() {
           </div>
           {/* remove overflow hidden */}
           {active?.name != 'saved message' && (
-            <div className="overflow-hidden whitespace-nowrap text-sm font-medium leading-tight text-gray-600">
+            <div
+              style={{ display: type === 'PV' ? '' : 'none' }}
+              className="overflow-hidden whitespace-nowrap text-sm font-medium leading-tight text-gray-600"
+            >
               {active?.online ? 'آنلاین' : 'آخرین بازدید به تازگی'}
             </div>
           )}

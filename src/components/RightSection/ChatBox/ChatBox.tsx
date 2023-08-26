@@ -76,9 +76,16 @@ export default function ChatBox({
             className="h-12 w-12 rounded-full"
             src={img}
           />
-          <div className="absolute bottom-0 right-0 flex h-[13px] w-[13px] items-center justify-center rounded-full bg-white">
+          <div
+            style={{
+              display: type === 'PV' ? '' : 'none',
+            }}
+            className="absolute bottom-0 right-0 flex h-[13px] w-[13px] items-center justify-center rounded-full bg-white"
+          >
             <div
-              style={{ backgroundColor: online ? '#1BDC48' : '#888A88' }}
+              style={{
+                backgroundColor: online ? '#1BDC48' : '#888A88',
+              }}
               className="h-[9px] w-[9px] rounded-full"
             />
           </div>

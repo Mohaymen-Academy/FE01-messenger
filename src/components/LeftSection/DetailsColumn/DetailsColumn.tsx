@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux'
 import { storeStateTypes } from '@/types/types'
 import {
   channelLeftSectionService,
+  channelMemberService,
   getLeftProfileService,
   getProfileService,
   leftSectionService,
@@ -16,6 +17,7 @@ export default function DetailsColumn() {
   )
   if (activeProfile.type === 'GROUP' || activeProfile.type === 'CHANNEL') {
     channelLeftSectionService(activeProfile.id)
+    channelMemberService(activeProfile.id)
   } else {
     getLeftProfileService(activeProfile.profile.profileId)
   }
@@ -24,7 +26,7 @@ export default function DetailsColumn() {
       <InfoHeader type={activeProfile.type} />
       <div className="overflow-y-auto">
         <Info type={activeProfile.type} />
-        <MediaList />
+        <MediaList type={activeProfile.type} />
       </div>
     </div>
   )

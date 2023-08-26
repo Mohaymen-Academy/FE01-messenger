@@ -27,6 +27,7 @@ export default function SettingsColumn({
   const dispatch = useDispatch()
   // console.log(useSelector((state: storeStateTypes) => state.user.image))
   myProfileService()
+
   useEffect(() => {
     const darkMode = localStorage.getItem('theme')
     if (darkMode === 'true') {
@@ -62,6 +63,10 @@ export default function SettingsColumn({
   const lastName = useSelector((state: storeStateTypes) => state.user.lastName)
   const userName = useSelector((state: storeStateTypes) => state.user.userName)
   const bio = useSelector((state: storeStateTypes) => state.user.bio)
+  const photoId = localStorage.getItem('imageId')
+  useEffect(() => {
+    getProfilePhotoService(Number(photoId))
+  }, [])
   const image = useSelector((state: storeStateTypes) => state.user.image)
 
   return (

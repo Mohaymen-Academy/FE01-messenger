@@ -15,13 +15,14 @@ export default function InfoImage({
   type,
   subscription,
 }: InfoImageProps) {
-  console.log(img)
+  // console.log(img)
+
   return (
     <div className="relative mb-4 flex w-full justify-center">
       <div className="block h-[370px] w-full content-center overflow-hidden text-center focus:outline-none">
         <div
           style={{ display: img ? 'none' : 'flex' }}
-          className="flex  h-[370px] w-full items-center justify-center bg-blue-500 text-7xl text-white"
+          className="h-[370px] w-full items-center justify-center bg-blue-500 text-7xl text-white"
         >
           <p>{infoName?.charAt(0)}</p>
         </div>
@@ -35,7 +36,7 @@ export default function InfoImage({
         <p className="text-lg font-semibold text-white">{infoName}</p>
         <p className="text-sm font-medium text-gray-400">
           {type === 'CHANNEL' || type === 'GROUP'
-            ? `${subscription + 1} مشترک`
+            ? `${subscription} مشترک`
             : onlineStatus
             ? 'آنلاین'
             : 'آخرین بازدید به تازگی'}

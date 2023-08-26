@@ -11,7 +11,9 @@ export default function Info() {
   )
   const details = useSelector((state: storeStateTypes) => state.LeftSection)
   const name = useSelector((state: storeStateTypes) => state.LeftSection.name)
-
+  const membersCount = useSelector(
+    (state: storeStateTypes) => state.LeftSection.members.length
+  )
   let infoRowComponent
   switch (activeProfile.type) {
     case 'PV':
@@ -54,7 +56,7 @@ export default function Info() {
         infoName={name}
         type={activeProfile.type}
         img={details.image}
-        subscription={details.subscribeCount}
+        subscription={membersCount}
       />
       {infoRowComponent}
     </div>

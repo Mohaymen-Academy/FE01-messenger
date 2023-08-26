@@ -65,11 +65,14 @@ export const editFile = (data: { file: FormData; photoId: number }) =>
 
 export const deletePhoto = () => axiosInstance.delete(`${apiUrl}/profile/photo`)
 
-export const getFile = (data: { fileId: number }) =>
-  axiosInstance.get(`${apiUrl}/file/${data.fileId}`)
+export const getFile = (data: { photoId: number }) =>
+  axiosInstance.get(`${apiUrl}/file/${data.photoId}`)
 
 export const getChannelChat = (data: { chatId: number }) =>
   axiosInstance.get(`${apiUrl}/chat/${data.chatId}`)
+
+export const getMembers = (data: { chatId: number }) =>
+  axiosInstance.get(`${apiUrl}/chat/${data.chatId}/subscribers`)
 
 export const getLeftProfile = (data: { profileId: number }) =>
   axiosInstance.get(`${apiUrl}/profile/${data.profileId}`)

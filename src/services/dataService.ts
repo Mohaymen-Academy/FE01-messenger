@@ -8,6 +8,7 @@ import {
   getChat,
   getFile,
   getLeftProfile,
+  getMembers,
   initiateProfile,
   myProfile,
   uploadFile,
@@ -175,7 +176,7 @@ export function myProfileService() {
         store.dispatch(UserSlice.actions.setFirstName(res.data.firstName))
         store.dispatch(UserSlice.actions.setLastName(res.data.lastName))
         store.dispatch(UserSlice.actions.setBio(res.data.bio))
-        store.dispatch(UserSlice.actions.setImage(res.data.photo))
+        // store.dispatch(UserSlice.actions.setImage(res.data.photo))
       } else {
         store.dispatch(
           UISlice.actions.openSnack({
@@ -191,12 +192,6 @@ export function myProfileService() {
         console.log('inside if')
         store.dispatch(UserSlice.actions.deleteToken())
       }
-      store.dispatch(
-        UISlice.actions.openSnack({
-          text: `خطای پروفایل :${err.message}`,
-          severity: 'error',
-        })
-      )
     })
 }
 export function uploadProfilePhotoService(file: FormData) {
@@ -229,18 +224,19 @@ export function editProfilePhotoService(file: FormData, photoId: number) {
   editFile({ file, photoId })
     .then(res => {
       console.log(res.data)
-      // store.dispatch(UserSlice.actions.setImageId(res.data.id))
+      store.dispatch(UserSlice.actions.setImageId(res.data))
     })
     .catch(err => {})
 }
 
-// export function getProfilePhotoService(fileId: number) {
-//   getFile({ fileId })
-//     .then(res => {
-//       store.dispatch(UserSlice.actions.setImage(res.data.photo))
-//     })
-//     .catch(err => {})
-// }
+export function getProfilePhotoService(photoId: number) {
+  getFile({ photoId })
+    .then(res => {
+      console.log(res.data)
+      store.dispatch(UserSlice.actions.setImage(res.data))
+    })
+    .catch(err => {})
+}
 
 export function channelLeftSectionService(chatId: number) {
   getChannelChat({ chatId })
@@ -250,6 +246,14 @@ export function channelLeftSectionService(chatId: number) {
       )
       store.dispatch(LeftSectionSlice.actions.setName(res.data.fullName))
       store.dispatch(LeftSectionSlice.actions.setImage(res.data.photo))
+    })
+    .catch(err => {})
+}
+export function channelMemberService(chatId: number) {
+  getMembers({ chatId })
+    .then(res => {
+      console.log(res.data)
+      store.dispatch(LeftSectionSlice.actions.setMembers(res.data))
     })
     .catch(err => {})
 }

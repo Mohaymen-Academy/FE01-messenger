@@ -1,4 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { searchBoxType } from '../SearchSlice/SearchSlice'
+
+interface memberType {
+  photo: string
+  fullName: string
+}
 
 export interface LeftSectionSliceType {
   name: string
@@ -7,6 +13,7 @@ export interface LeftSectionSliceType {
   bio: string
   description: string
   subscribeCount: number
+  members: memberType[]
 }
 
 export const LeftSectionSlice = createSlice({
@@ -18,6 +25,7 @@ export const LeftSectionSlice = createSlice({
     bio: '',
     description: '',
     subscribeCount: 0,
+    members: [],
   },
   reducers: {
     setName: (state: LeftSectionSliceType, action: { payload: string }) => {
@@ -43,6 +51,12 @@ export const LeftSectionSlice = createSlice({
       action: { payload: number }
     ) => {
       state.subscribeCount = action.payload
+    },
+    setMembers: (
+      state: LeftSectionSliceType,
+      action: { payload: memberType[] }
+    ) => {
+      state.members = action.payload
     },
   },
 })
