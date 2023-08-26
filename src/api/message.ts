@@ -11,9 +11,19 @@ export const getMessages = (data: { chatId: string }) =>
 export const sendMessage = (data: {
   message: string
   chatId: string
-  type: string
+  type: string,
+  fileId: string | null
 }) =>
   axiosInstance.post(`${apiUrl}/message/${data.chatId}`, {
+    text: data.message,
+    fileId: data.fileId
+  })
+export const sendReply = (data: {
+  message: string
+  messageId: string
+  type: string
+}) =>
+  axiosInstance.post(`${apiUrl}/message/reply/${data.messageId}`, {
     text: data.message,
   })
 export const pinMessage = (data: { messageId: string; chatId: string }) =>

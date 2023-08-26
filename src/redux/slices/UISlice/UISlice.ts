@@ -27,6 +27,7 @@ export interface UISliceType {
   addMemberModal: boolean
   channelImageId: number | null
   activeChatRow: number
+  replying: undefined | { messageId: string; name: string }
 }
 
 export const UISlice = createSlice({
@@ -51,6 +52,7 @@ export const UISlice = createSlice({
     addMemberModal: false,
     channelImageId: null,
     activeChatRow: -1,
+    replying: undefined,
   },
   reducers: {
     openInfoColumn: (state: UISliceType) => {
@@ -154,6 +156,15 @@ export const UISlice = createSlice({
     },
     resetActiveChatRow: (state: UISliceType) => {
       state.activeChatRow = -1
+    },
+    setReplying: (
+      state: UISliceType,
+      action: { payload: { messageId: string; name: string } }
+    ) => {
+      state.replying = action.payload
+    },
+    resetReplying: (state: UISliceType) => {
+      state.replying = undefined
     },
   },
 })

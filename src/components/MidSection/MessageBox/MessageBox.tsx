@@ -1,4 +1,4 @@
-import { BsEmojiLaughing, BsPaperclip } from 'react-icons/bs'
+import { BsEmojiLaughing, BsPaperclip, BsX, BsXCircle } from 'react-icons/bs'
 import {
   HtmlHTMLAttributes,
   ReactNode,
@@ -26,7 +26,14 @@ import IconButton from '@/components/Common/IconButton/IconButton'
 import { MessageSlice } from '@/redux/slices/MessageSlice'
 import { activeChatSelectors } from '@/redux/slices/ActiveChatSlice'
 import { sendFileService } from '@/services/dataService'
-import { sendMessageService } from '@/services/messageService'
+import {
+  sendMessageService,
+  sendReplyMessageService,
+} from '@/services/messageService'
+import { storeStateTypes } from '@/types/types'
+import { UISlice } from '@/redux/slices/UISlice'
+import axiosInstance from '@/api/axiosInstance'
+import { apiUrl } from '@/utils/constants'
 import serialize from './utils'
 
 const theme = {
@@ -38,8 +45,10 @@ export default function MessageBox() {
   // TODO use SLATE
   const [pickerOpen, setPickerOpen] = useState(false)
   const [toolboxOpen, setToolboxOpen] = useState(false)
+  const [fileId, setFileId] = useState<string | null>(null)
   const dispatch = useDispatch()
   const activeChat = useSelector(activeChatSelectors.ActiveChat)
+  const replying = useSelector((state: storeStateTypes) => state.UI.replying)
 
   const SpoilerElement = (props: { children: ReactNode | string }) => (
     <ReactSpoiler>{props.children}</ReactSpoiler>
@@ -70,11 +79,20 @@ export default function MessageBox() {
     sendMessage(editor: Editor) {
       // console.log(editor.children)
       console.log(serialize(editor))
-      sendMessageService(
-        serialize(editor) as string,
-        activeChat.id?.toString(),
-        activeChat.type
-      )
+      if (replying) {
+        sendReplyMessageService(
+          serialize(editor) as string,
+          replying.messageId,
+          activeChat.type
+        )
+        dispatch(UISlice.actions.resetReplying())
+      } else
+        sendMessageService(
+          serialize(editor) as string,
+          activeChat.id?.toString(),
+          activeChat.type,
+          fileId
+        )
       while (editor.children.length > 0) {
         Transforms.removeNodes(editor, {})
       }
@@ -141,103 +159,131 @@ export default function MessageBox() {
     setPickerOpen(!pickerOpen)
   }, [pickerOpen])
 
+  const uploadFile = async (
+    file: File,
+    callbackFn: (id: string | null) => void
+  ) => {
+    const fd = new FormData()
+    fd.append('file', file)
+    const response = await axiosInstance.post(`${apiUrl}/file`, fd)
+    callbackFn(response.data.id ?? null)
+  }
+
   // const addEmoji = useCallback((emoji: { native: string }) => {
   //   setText(text => ({ ...text, message: text.message + emoji.native }))
   // }, [])
   return (
-    <div className="relative flex w-full max-w-2xl items-center self-center p-3 text-gray-600">
-      <Slate
-        editor={editor}
-        initialValue={initialValue}
-        onChange={() => {
-          setToolboxOpen(
-            editor.selection?.anchor.offset != editor.selection?.focus.offset
-          )
-        }}
-      >
-        <div className="flex items-center self-end pr-6">
-          <FabButton
-            onClick={() => {
-              CustomEditor.sendMessage(editor)
-            }}
-            icon={<IoSend className="h-7 w-7" />}
-          />
+    <div className="flex flex-col">
+      {replying && (
+        <div className="relative mx-3 flex w-fit max-w-2xl items-center justify-end gap-2 self-end rounded-xl bg-white p-3 text-gray-600">
+          <button onClick={() => dispatch(UISlice.actions.resetReplying())}>
+            <BsXCircle />
+          </button>
+          در حال جواب دادن به {replying?.name}
         </div>
-        <div className="tail-right relative flex h-full w-full rounded-l-lg rounded-t-lg border-primary bg-primary  p-2">
-          {/* {toolboxOpen && ( */}
-          <div
-            className={classNames(
-              'absolute right-0 top-0 flex -translate-y-full flex-row rounded-md bg-primary transition-all ease-in-out',
-              toolboxOpen ? '' : 'opacity-0 pointer-events-none'
-            )}
-          >
-            <button
-              className="rounded-r-md p-2 transition-all hover:bg-gray-400 hover:text-white"
-              onMouseDown={event => {
-                event.preventDefault()
-                CustomEditor.toggleBoldMark(editor)
+      )}
+      <div className="relative flex w-full max-w-2xl items-center self-center p-3 text-gray-600">
+        <Slate
+          editor={editor}
+          initialValue={initialValue}
+          onChange={() => {
+            setToolboxOpen(
+              editor.selection?.anchor.offset != editor.selection?.focus.offset
+            )
+          }}
+        >
+          <div className="flex items-center self-end pr-6">
+            <FabButton
+              onClick={() => {
+                CustomEditor.sendMessage(editor)
               }}
-            >
-              Bold
-            </button>
-            <button
-              className="rounded-l-md p-2 transition-all hover:bg-gray-400 hover:text-white"
-              onMouseDown={event => {
-                event.preventDefault()
-                CustomEditor.toggleSpoilerBlock(editor)
-              }}
-            >
-              spoiler
-            </button>
+              icon={<IoSend className="h-7 w-7" />}
+            />
           </div>
-          {/* )} */}
-          <Editable
-            renderElement={renderElement}
-            renderLeaf={renderLeaf}
-            className="no-scrollbar relative h-full max-h-28 w-0 grow overflow-y-scroll rounded-lg p-1 text-base text-gray-900 placeholder:text-gray-700 focus:outline-none"
-          />
-          <div
-            className="relative z-10 my-2 flex items-center self-end"
-            onClick={() => sendFileService()}
-          >
-            <IconButton
-              icon={
+          <div className="tail-right relative flex h-full w-full rounded-l-lg rounded-t-lg border-primary bg-primary  p-2">
+            {/* {toolboxOpen && ( */}
+            <div
+              className={classNames(
+                'absolute right-0 top-0 flex -translate-y-full flex-row rounded-md bg-primary transition-all ease-in-out',
+                toolboxOpen ? '' : 'opacity-0 pointer-events-none'
+              )}
+            >
+              <button
+                className="rounded-r-md p-2 transition-all hover:bg-gray-400 hover:text-white"
+                onMouseDown={event => {
+                  event.preventDefault()
+                  CustomEditor.toggleBoldMark(editor)
+                }}
+              >
+                Bold
+              </button>
+              <button
+                className="rounded-l-md p-2 transition-all hover:bg-gray-400 hover:text-white"
+                onMouseDown={event => {
+                  event.preventDefault()
+                  CustomEditor.toggleSpoilerBlock(editor)
+                }}
+              >
+                spoiler
+              </button>
+            </div>
+            {/* )} */}
+            <Editable
+              renderElement={renderElement}
+              renderLeaf={renderLeaf}
+              className="no-scrollbar relative h-full max-h-28 w-0 grow overflow-y-scroll rounded-lg p-1 text-base text-gray-900 placeholder:text-gray-700 focus:outline-none"
+            />
+            <div
+              className="relative z-10 my-2 flex items-center self-end"
+              onClick={() => sendFileService()}
+            >
+              <label className="flex h-full">
+                {fileId && <p>{`فایل آپلود شد (${fileId})`}</p>}
                 <BsPaperclip className="h-6 w-6 text-inherit hover:text-blue-500" />
-              }
-            />
-          </div>
-          <div
-            className="relative z-10 m-2 flex items-center self-end"
-            onMouseEnter={e => {
-              e.stopPropagation()
-              toggleEmojiPicker()
-            }}
-            onMouseLeave={e => {
-              e.stopPropagation()
-              toggleEmojiPicker()
-            }}
-          >
-            <IconButton
-              className="p-0 text-inherit hover:bg-inherit"
-              icon={
-                <BsEmojiLaughing className="h-6 w-6 text-inherit hover:text-blue-500" />
-              }
-            />
-            {pickerOpen && (
-              <div className="absolute left-0 top-0 z-20 flex w-0 grow -translate-y-full items-center justify-center text-right max-2xl:translate-x-44">
-                <Picker
-                  data={data}
-                  onEmojiSelect={emoji => CustomEditor.addEmoji(editor, emoji)}
-                  previewPosition="none"
-                  showPreview={false}
-                  showSkinTones={false}
-                  searchPosition="none"
+                <input
+                  type="file"
+                  onChange={async e => {
+                    await uploadFile(e.target.files[0], setFileId)
+                  }}
+                  className="hidden"
                 />
-              </div>
-            )}
+              </label>
+            </div>
+            <div
+              className="relative z-10 m-2 flex items-center self-end"
+              onMouseEnter={e => {
+                e.stopPropagation()
+                toggleEmojiPicker()
+              }}
+              onMouseLeave={e => {
+                e.stopPropagation()
+                toggleEmojiPicker()
+              }}
+            >
+              <IconButton
+                className="p-0 text-inherit hover:bg-inherit"
+                icon={
+                  <BsEmojiLaughing className="h-6 w-6 text-inherit hover:text-blue-500" />
+                }
+              />
+              {pickerOpen && (
+                <div className="absolute left-0 top-0 z-20 flex w-0 grow -translate-y-full items-center justify-center text-right max-2xl:translate-x-44">
+                  <Picker
+                    data={data}
+                    onEmojiSelect={emoji =>
+                      CustomEditor.addEmoji(editor, emoji)
+                    }
+                    previewPosition="none"
+                    showPreview={false}
+                    showSkinTones={false}
+                    searchPosition="none"
+                  />
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      </Slate>
+        </Slate>
+      </div>
     </div>
   )
 }

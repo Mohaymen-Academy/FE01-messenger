@@ -73,6 +73,7 @@ export default function Conversation() {
                         style={style}
                       >
                         <Message
+                          image={messages[index].file}
                           id={messages[index].id}
                           message={messages[index].text}
                           mode="sent"
@@ -90,8 +91,19 @@ export default function Conversation() {
                                   title: messages[index].fullName,
                                   mode: 'forward',
                                 }
-                              : undefined
+                              : !!messages[index].replyMessageId && {
+                                  title: messages[index].replyPreview.fullName,
+                                  text: messages[index].replyPreview.text,
+                                }
                           }
+                          onReply={() => {
+                            dispatch(
+                              UISlice.actions.setReplying({
+                                messageId: messages[index].id.toString(),
+                                name: messages[index].fullName,
+                              })
+                            )
+                          }}
                         />
                       </div>
                     )}
