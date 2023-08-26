@@ -3,6 +3,7 @@ import {
   getMessages,
   pinMessage,
   sendMessage,
+  sendReply,
 } from '@/api/message'
 import { ActiveChatSlice } from '@/redux/slices/ActiveChatSlice'
 import { MessageSlice } from '@/redux/slices/MessageSlice'
@@ -55,6 +56,27 @@ export function getMessagesService(chatId: string, type: string) {
     }, 150)
   }
   return 0
+}
+
+export function sendReplyMessageService(
+  message: string,
+  messageId: string,
+  type: string
+) {
+  sendReply({ message, messageId, type })
+    .then(res => {
+      if (res.status == 200) {
+        // store.dispatch(MessageSlice.actions.sendMessage({ message, messageId }))
+      }
+    })
+    .catch(err => {
+      store.dispatch(
+        UISlice.actions.openSnack({
+          text: `sending message failed:${err}`,
+          severity: 'error',
+        })
+      )
+    })
 }
 
 export function sendMessageService(

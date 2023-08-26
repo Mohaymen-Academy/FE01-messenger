@@ -2,9 +2,11 @@ import classNames from 'classnames'
 import { useTextWidth } from '@tag0/use-text-width'
 import { useLayoutEffect, useRef, useState } from 'react'
 import { Menu, MenuItem, Modal } from '@mui/material'
+import { useDispatch } from 'react-redux'
 import Checkmark from '@/components/Common/Checkmark/Checkmark'
 import { parseMessage, parseDate } from '@/utils/parser'
 import { pinMessageService } from '@/services/messageService'
+import { UISlice } from '@/redux/slices/UISlice'
 import ForwardModal from '../ForwardModal/ForwardModal'
 
 interface MessageProps {
@@ -15,6 +17,7 @@ interface MessageProps {
   header?: { title: string; text?: string; mode: 'forward' | 'reply' }
   pinMessage?: () => void
   id: string
+  onReply?: () => void
 }
 
 export default function Message({
@@ -25,6 +28,7 @@ export default function Message({
   header,
   pinMessage,
   id,
+  onReply,
 }: MessageProps) {
   const [width, setWidth] = useState(0)
   const [menuOpen, setMenuOpen] = useState<{
@@ -34,6 +38,7 @@ export default function Message({
   }>({ open: false, x: 0, y: 0 })
   const [forwardOpen, setForwardOpen] = useState<undefined | string>(undefined)
   const ref = useRef<HTMLDivElement>(null)
+  const dispatch = useDispatch()
 
   const closeForward = () => {
     setForwardOpen(undefined)
@@ -79,6 +84,7 @@ export default function Message({
       >
         <MenuItem
           onClick={() => {
+            if (onReply) onReply()
             setMenuOpen(s => ({ ...s, open: false }))
           }}
         >
@@ -122,7 +128,7 @@ export default function Message({
               {header.title}
             </span>
             <span dir="auto" className="relative line-clamp-2 rounded-l-md">
-              {header.text}
+              {parseMessage(header.text)}
             </span>
           </div>
         )}

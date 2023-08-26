@@ -16,6 +16,14 @@ export const sendMessage = (data: {
   axiosInstance.post(`${apiUrl}/message/${data.chatId}`, {
     text: data.message,
   })
+export const sendReply = (data: {
+  message: string
+  messageId: string
+  type: string
+}) =>
+  axiosInstance.post(`${apiUrl}/message/reply/${data.messageId}`, {
+    text: data.message,
+  })
 export const pinMessage = (data: { messageId: string; chatId: string }) =>
   axiosInstance.post(`${apiUrl}/chat/${data.chatId}/pin/${data.messageId}`)
 export const unpinMessage = (data: { messageId: string; chatId: string }) =>
