@@ -15,6 +15,7 @@ export default function ChatList() {
   const chatBoxes = useSelector(
     (state: storeStateTypes) => state.chatList.chatBoxes
   )
+  console.log(chatBoxes)
   const activeChat = useSelector(
     (state: storeStateTypes) => state.activeChat.id
   )

@@ -5,6 +5,7 @@ import axiosInstance from './axiosInstance'
 export const newGroup = (data: {
   name: string
   photoId: number
+  description: string
   profileIds: number[]
 }) =>
   axiosInstance.post(`${apiUrl}/chat/group`, {

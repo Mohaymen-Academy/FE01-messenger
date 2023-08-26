@@ -1,4 +1,5 @@
 import { subscribe } from 'diagnostics_channel'
+import classNames from 'classnames'
 
 interface InfoImageProps {
   img?: string
@@ -27,10 +28,28 @@ export default function InfoImage({
         </div>
         <img
           style={{ display: img ? 'block' : 'none' }}
-          className="absolute max-h-[370px] w-full content-center object-cover max-sm:object-contain"
-          src={`data:image/png;base64,${img.data}`}
-          // src={img}
+          className={classNames(
+            'absolute max-h-[370px] w-full content-center object-cover max-sm:object-contain',
+            type === undefined ? '' : 'hidden'
+          )}
+          src={`data:image/png;base64,${img?.data}`}
         />
+        <div
+          className={classNames(
+            type === 'PV' || type === 'CHANNEL' || type === 'GROUP'
+              ? ''
+              : 'hidden'
+          )}
+        >
+          <img
+            style={{ display: img ? 'block' : 'none' }}
+            className={classNames(
+              'absolute max-h-[370px] w-full content-center object-cover max-sm:object-contain',
+              type !== undefined ? '' : 'hidden'
+            )}
+            src={`data:image/png;base64,${img}`}
+          />
+        </div>
       </div>
       <div className="absolute bottom-0 right-0 z-10 w-full bg-gradient-to-t from-[#00000088] to-transparent pb-5 pr-5">
         <p className="text-lg font-semibold text-white">{infoName}</p>

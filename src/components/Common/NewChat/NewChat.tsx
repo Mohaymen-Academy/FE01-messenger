@@ -57,7 +57,7 @@ export default function NewChat({ type }: NewChatProps) {
   )
   const onSubmit: SubmitHandler<FieldValues> = data => {
     if (type === 'group') {
-      newGroupService(data.name, photoId, [])
+      newGroupService(data.name, photoId, data.description, [])
       dispatch(UISlice.actions.createGroupHandler(false))
     } else if (type === 'channel') {
       newChannelService(data.name, photoId, data.description, [])
@@ -91,7 +91,7 @@ export default function NewChat({ type }: NewChatProps) {
           />
         </label>
         <ModalContainer isOpen={openModal} onClose={handleClose}>
-          <ImageInput isActive={true} image={image} mode="initiate" />
+          <ImageInput isActive={true} image={image} mode="newChannel" />
         </ModalContainer>
       </div>
       <form

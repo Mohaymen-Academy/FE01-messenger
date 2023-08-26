@@ -2,15 +2,17 @@ import { addMember, newChannel, newGroup } from '@/api/communication'
 
 export function newGroupService(
   name: string,
-  // description: string,
   photoId: number,
+  description: string,
   profileIds: number[]
 ) {
-  newGroup({ name, photoId, profileIds })
+  newGroup({ name, photoId, description, profileIds })
     .then(res => {
       console.log(3)
     })
-    .catch(err => {})
+    .catch(err => {
+      console.log(4)
+    })
 }
 
 export function newChannelService(
@@ -19,7 +21,6 @@ export function newChannelService(
   description: string,
   profileIds: number[]
 ) {
-  console.log(12333)
   newChannel({ name, photoId, description, profileIds })
     .then(res => {})
     .catch(err => {})

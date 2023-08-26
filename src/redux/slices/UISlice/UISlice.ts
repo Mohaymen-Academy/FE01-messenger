@@ -25,7 +25,7 @@ export interface UISliceType {
   isInitialProfileCreated: boolean
   chatListCat: chatListType
   addMemberModal: boolean
-  channelImageId: number
+  channelImageId: number | null
   activeChatRow: number
   replying: undefined | { messageId: string; name: string }
 }
@@ -50,7 +50,7 @@ export const UISlice = createSlice({
     isInitialProfileCreated: false,
     chatListCat: null,
     addMemberModal: false,
-    channelImageId: 0,
+    channelImageId: null,
     activeChatRow: -1,
     replying: undefined,
   },

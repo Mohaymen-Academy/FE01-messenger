@@ -51,6 +51,7 @@ export default function ChatBox({
   //   // dispatch(ChatListSlice.actions.setActive({ id }))
   //   // dispatch(SearchSlice.actions.setActive({ id }))
   // }
+  // console.log(img)
   return (
     <div
       // style={{ backgroundColor: active ? '#7e85ed' : 'white' }}
@@ -74,7 +75,7 @@ export default function ChatBox({
           <img
             style={{ display: img ? 'flex' : 'none' }}
             className="h-12 w-12 rounded-full"
-            src={img}
+            src={`data:image/png;base64,${img}`}
           />
           <div
             style={{

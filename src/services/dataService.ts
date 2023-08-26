@@ -30,6 +30,7 @@ export function ChatListDataService() {
     .then(res => {
       // console.log('THIS', res)
       if (res.status === 200) {
+        console.log(res.data)
         store.dispatch(ChatListSlice.actions.setChatBox(res.data))
       }
     })
@@ -239,23 +240,21 @@ export function uploadChannelPhotoService(file: FormData) {
     .then(res => {
       console.log(res.data.id)
       store.dispatch(UISlice.actions.setChannelImageId(res.data.id))
+      console.log(1)
     })
     .catch(err => {})
 }
 
 export function editProfilePhotoService(photoId: number) {
-  console.log(photoId)
   editFile({ photoId })
-    .then(res => {
-      console.log(res.data)
-    })
+    .then(res => {})
     .catch(err => {})
 }
 
 export function getProfilePhotoService(photoId: number) {
   getFile({ photoId })
     .then(res => {
-      console.log(res.data)
+      // console.log(res.data)
       store.dispatch(UserSlice.actions.setImage(res.data))
     })
     .catch(err => {})
@@ -267,7 +266,7 @@ export function channelLeftSectionService(chatId: number) {
       store.dispatch(
         LeftSectionSlice.actions.setDescription(res.data.description)
       )
-      store.dispatch(LeftSectionSlice.actions.setName(res.data.fullName))
+      store.dispatch(LeftSectionSlice.actions.setName(res.data.firstName))
       store.dispatch(LeftSectionSlice.actions.setImage(res.data.photo))
     })
     .catch(err => {})
