@@ -29,6 +29,14 @@ export default function ChatHeader() {
     (state: storeStateTypes) =>
       state.message.chats.find(compo => compo.id === activeId.toString())?.pin
   )
+
+  const pinIdInChat = useSelector(
+    (state: storeStateTypes) =>
+      state.message.chats
+        .find(compo => compo.id === activeId.toString())
+        ?.messages.findIndex(message => message.id === pin?.id) ?? -1
+  )
+
   // const activeSearchChat = useSelector((state: storeStateTypes) =>
   //   state.search.chatBoxes.find(compo => compo.id === activeId)
   // )
@@ -73,7 +81,12 @@ export default function ChatHeader() {
         </div>
       </div>
       {pin && (
-        <div className="relative my-auto ml-2 w-0 max-w-fit grow cursor-pointer border-l-2 border-replyBorder pl-2">
+        <div
+          className="relative my-auto ml-2 w-0 max-w-fit grow cursor-pointer border-l-2 border-replyBorder pl-2"
+          onClick={() =>
+            dispatch(UISlice.actions.setActiveChatRow(pinIdInChat))
+          }
+        >
           <div className="line-clamp-1 text-base text-primary">
             {parseMessage(pin.text)}
           </div>
@@ -101,7 +114,7 @@ export default function ChatHeader() {
               onClose={() => {
                 dispatch(UISlice.actions.addMemberHandler(false))
               }}
-              child={<AddMember />}
+              children={<AddMember />}
             />
             <BsThreeDotsVertical
               className={classNames(

@@ -1,6 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { all } from 'axios'
-import { string } from 'slate'
 
 type SnackType = null | {
   text: string
@@ -28,6 +26,7 @@ export interface UISliceType {
   chatListCat: chatListType
   addMemberModal: boolean
   channelImageId: number
+  activeChatRow: number
 }
 
 export const UISlice = createSlice({
@@ -51,6 +50,7 @@ export const UISlice = createSlice({
     chatListCat: null,
     addMemberModal: false,
     channelImageId: 0,
+    activeChatRow: -1,
   },
   reducers: {
     openInfoColumn: (state: UISliceType) => {
@@ -148,6 +148,12 @@ export const UISlice = createSlice({
     },
     setChannelImageId: (state: UISliceType, action: { payload: number }) => {
       state.channelImageId = action.payload
+    },
+    setActiveChatRow: (state: UISliceType, action: { payload: number }) => {
+      state.activeChatRow = action.payload
+    },
+    resetActiveChatRow: (state: UISliceType) => {
+      state.activeChatRow = -1
     },
   },
 })

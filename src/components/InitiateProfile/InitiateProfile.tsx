@@ -115,7 +115,7 @@ export default function InitiateProfile({ active }: InitiateProfileProps) {
             />
           </label>
           <ModalContainer
-            child={
+            children={
               <ImageInput
                 isActive={true}
                 image={image}

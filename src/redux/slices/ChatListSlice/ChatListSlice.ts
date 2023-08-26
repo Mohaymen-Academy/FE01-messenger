@@ -10,7 +10,7 @@ export interface chatBoxType {
   type: string
   lastMessageTime: string
   lastMessageText: string
-  profileId: number
+  profileId: number | null
 }
 
 export interface ChatListSliceType {

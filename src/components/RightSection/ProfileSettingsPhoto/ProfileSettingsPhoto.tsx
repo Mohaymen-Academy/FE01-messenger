@@ -140,28 +140,20 @@ export default function ProfileSettingsPhoto() {
           </div>
         </div>
       </label>
-      <ModalContainer
-        child={
-          <ImageInput
-            isActive={imageCropperActive}
-            image={image}
-            fileName={fileName}
-            mode="profileEditor"
-          />
-        }
-        isOpen={openModal}
-        onClose={handleClose}
-      />
-      <ModalContainer
-        child={
-          <img
-            className="h-96 w-96"
-            src={`data:image/png;base64,${profileImage.data}`}
-          />
-        }
-        isOpen={openImageModal}
-        onClose={closeProfileModal}
-      />
+      <ModalContainer isOpen={openModal} onClose={handleClose}>
+        <ImageInput
+          isActive={imageCropperActive}
+          image={image}
+          fileName={fileName}
+          mode="profileEditor"
+        />
+      </ModalContainer>
+      <ModalContainer isOpen={openImageModal} onClose={closeProfileModal}>
+        <img
+          className="h-96 w-96"
+          src={`data:image/png;base64,${profileImage.data}`}
+        />
+      </ModalContainer>
     </div>
   )
 }

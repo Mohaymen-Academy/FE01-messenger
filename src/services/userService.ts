@@ -5,6 +5,7 @@ import { UISlice } from '@/redux/slices/UISlice'
 import { UserSlice } from '@/redux/slices/UserSlice'
 import store from '@/redux/store'
 import { createChatService } from './dataService'
+import setActiveChatService from './activeService'
 
 export function loginService(email: string, password: string) {
   login({ email, password })
@@ -76,7 +77,14 @@ export function registerService(email: string, password: string) {
 export function startChatService(id: string) {
   getProfile(id)
     .then(res => {
-      if (res.status == 200) {
+      console.log(res.data)
+      const prevChat = store
+        .getState()
+        .chatList.chatBoxes.find(ele => ele.profileId == id)
+      console.log('prevChat', prevChat)
+      if (prevChat != undefined) {
+        setActiveChatService(prevChat.id, prevChat.type, prevChat)
+      } else if (res.status == 200) {
         createChatService(id)
       }
     })
