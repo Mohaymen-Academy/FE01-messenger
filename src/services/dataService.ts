@@ -220,11 +220,11 @@ export function uploadChannelPhotoService(file: FormData) {
     .catch(err => {})
 }
 
-export function editProfilePhotoService(file: FormData, photoId: number) {
-  editFile({ file, photoId })
+export function editProfilePhotoService(photoId: number) {
+  console.log(photoId)
+  editFile({ photoId })
     .then(res => {
       console.log(res.data)
-      store.dispatch(UserSlice.actions.setImageId(res.data))
     })
     .catch(err => {})
 }

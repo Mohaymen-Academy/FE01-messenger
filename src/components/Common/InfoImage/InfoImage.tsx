@@ -15,8 +15,7 @@ export default function InfoImage({
   type,
   subscription,
 }: InfoImageProps) {
-  // console.log(img)
-
+  // console.log(img.data)
   return (
     <div className="relative mb-4 flex w-full justify-center">
       <div className="block h-[370px] w-full content-center overflow-hidden text-center focus:outline-none">
@@ -29,7 +28,8 @@ export default function InfoImage({
         <img
           style={{ display: img ? 'block' : 'none' }}
           className="absolute max-h-[370px] w-full content-center object-cover max-sm:object-contain"
-          src={`data:image/png;base64, ${img}`}
+          src={`data:image/png;base64,${img.data}`}
+          // src={img}
         />
       </div>
       <div className="absolute bottom-0 right-0 z-10 w-full bg-gradient-to-t from-[#00000088] to-transparent pb-5 pr-5">

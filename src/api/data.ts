@@ -58,10 +58,8 @@ export const uploadFile = (data: { file: FormData }) =>
     headers: { 'Content-Type': 'multipart/form-data' },
   })
 
-export const editFile = (data: { file: FormData; photoId: number }) =>
-  axiosInstance.put(`${apiUrl}/profile/photo/${data.photoId}`, data.file, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  })
+export const editFile = (data: { photoId: number }) =>
+  axiosInstance.put(`${apiUrl}/profile/photo/${data.photoId}`)
 
 export const deletePhoto = () => axiosInstance.delete(`${apiUrl}/profile/photo`)
 

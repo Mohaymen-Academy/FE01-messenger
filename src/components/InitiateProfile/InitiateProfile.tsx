@@ -52,6 +52,7 @@ export default function InitiateProfile({ active }: InitiateProfileProps) {
     }
     if (files != null) {
       reader.readAsDataURL(files[0])
+      // console.log(`files[0]: ${files[0].lastModified}`)
       setFileName(files[0].name)
     }
     dispatch(UISlice.actions.initialProfileImageCropperHandler(true))

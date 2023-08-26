@@ -24,6 +24,7 @@ export default function ProfileSettingsPhoto() {
   const [openImageModal, setOpenImageModal] = useState(false)
 
   const profileImage = useSelector((state: storeStateTypes) => state.user.image)
+  // console.log(profileImage)
   const [fileName, setFileName] = useState('')
   const cropImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation()
@@ -87,7 +88,8 @@ export default function ProfileSettingsPhoto() {
           <img
             style={{ display: profileImage ? '' : 'none' }}
             className="h-full w-full content-center rounded-full  bg-black  object-cover group-hover:blur-none "
-            src={profileImage}
+            // src={profileImage.data}
+            src={`data:image/png;base64,${profileImage.data}`}
           />
           <div className="absolute right-32 top-[86px] transition-all duration-500 ease-in-out">
             <img
@@ -151,7 +153,12 @@ export default function ProfileSettingsPhoto() {
         onClose={handleClose}
       />
       <ModalContainer
-        child={<img className="h-96 w-96" src={profileImage} />}
+        child={
+          <img
+            className="h-96 w-96"
+            src={`data:image/png;base64,${profileImage.data}`}
+          />
+        }
         isOpen={openImageModal}
         onClose={closeProfileModal}
       />

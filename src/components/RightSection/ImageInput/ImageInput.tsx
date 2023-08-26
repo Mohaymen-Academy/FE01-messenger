@@ -31,32 +31,35 @@ export default function ImageInput({
 
   const confirmCropData = () => {
     if (typeof cropperRef.current?.cropper !== 'undefined') {
-      const dataurl = cropperRef.current?.cropper.getCroppedCanvas().toDataURL()
-      const arr = dataurl.split(',')
-      const bstr = atob(arr[arr.length - 1])
-      let n = bstr.length
-      const u8arr = new Uint8Array(n)
-      while (n > 0) {
-        u8arr[n] = bstr.charCodeAt(n)
-        n -= 1
-      }
-      const file = new File([u8arr], fileName)
-      const fd = new FormData()
-      fd.append('file', file)
-      if (mode === 'initiate') {
-        uploadProfilePhotoService(fd)
-        dispatch(
-          UserSlice.actions.setImage(
-            cropperRef.current?.cropper.getCroppedCanvas().toDataURL()
-          )
-        )
-        dispatch(UISlice.actions.initialProfileImageCropperHandler(false))
-      } else if (mode === 'profileEditor') {
-        editProfilePhotoService(fd, Number(photoId))
-      } else if (mode === 'newChannel') {
-        dispatch(UISlice.actions.initialProfileImageCropperHandler(false))
-        uploadChannelPhotoService(fd)
-      }
+      cropperRef.current?.cropper.getCroppedCanvas().toBlob(blob => {
+        const fd = new FormData()
+        fd.append('file', blob)
+        if (mode === 'initiate') {
+          uploadProfilePhotoService(fd)
+          dispatch(UISlice.actions.initialProfileImageCropperHandler(false))
+        } else if (mode === 'profileEditor') {
+          uploadProfilePhotoService(fd)
+          const editId = localStorage.getItem('imageId')
+          console.log(editId)
+          editProfilePhotoService(Number(editId))
+        } else if (mode === 'newChannel') {
+          dispatch(UISlice.actions.initialProfileImageCropperHandler(false))
+          uploadChannelPhotoService(fd)
+        }
+      })
+      // const arr = dataurl.split(',')
+      // const bstr = atob(arr[arr.length - 1])
+      // let n = bstr.length
+      // const u8arr = new Uint8Array(n)
+      // while (n > 0) {
+      //   u8arr[n] = bstr.charCodeAt(n)
+      //   n -= 1
+      // }
+      // const file = new File([dataurl], fileName)
+      // console.log(`cropped file: ${file.arrayBuffer()}`)
+      // const fd = new FormData()
+      // fd.append('file', file)
+
       dispatch(UISlice.actions.closeCropperModal())
     }
   }
