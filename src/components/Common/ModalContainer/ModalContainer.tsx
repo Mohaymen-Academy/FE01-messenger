@@ -4,13 +4,13 @@ import { ReactElement } from 'react'
 interface ModalContainerProps {
   isOpen: boolean
   onClose: () => void
-  child: ReactElement
+  children: ReactElement
 }
 
 export default function ModalContainer({
   isOpen,
   onClose,
-  child,
+  children,
 }: ModalContainerProps) {
   return (
     <Modal
@@ -19,7 +19,7 @@ export default function ModalContainer({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box className="mt-32 flex items-center justify-center">{child}</Box>
+      <Box className="mt-32 flex items-center justify-center">{children}</Box>
     </Modal>
   )
 }

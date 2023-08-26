@@ -14,11 +14,12 @@ import { MessageSlice } from '@/redux/slices/MessageSlice'
 import { ActiveChatSlice } from '@/redux/slices/ActiveChatSlice'
 import { ChatListSlice } from '@/redux/slices/ChatListSlice'
 import { getMessages, sendMessage } from '@/api/message'
+import setActiveChatService from './activeService'
 
 export function ChatListDataService() {
   chatListData()
     .then(res => {
-      console.log('THIS', res)
+      // console.log('THIS', res)
       if (res.status === 200) {
         store.dispatch(ChatListSlice.actions.setChatBox(res.data))
       }
@@ -42,17 +43,17 @@ export function getMessagesService(chatId: string, type: string) {
         .then(res => {
           // console.log(res)
           if (res.status == 200) {
+            // store.dispatch(
+            //   ActiveChatSlice.actions.setActiveChat({
+            //     id: parseInt(chatId, 10),
+            //     type: 'PV',
+            //   })
+            // )
             store.dispatch(
               MessageSlice.actions.setData({
                 id: chatId,
                 messages: res.data.messages.reverse(),
                 pin: res.data.pinned,
-              })
-            )
-            store.dispatch(
-              ActiveChatSlice.actions.setActiveChat({
-                id: parseInt(chatId, 10),
-                type: 'PV',
               })
             )
           } else {
@@ -84,17 +85,39 @@ export function sendFileService(file: string, chatId: string, type: string) {
 
 export function createChatService(profileId: string) {
   createChat({ profileId })
-    .then(res => {
+    .then(async res => {
       if (res.status == 200) {
-        console.log(res)
-        store.dispatch(
-          ActiveChatSlice.actions.setActiveChat({
-            id: res.data.chatId,
-            type: 'PV',
+        console.log('cheat created', res)
+        await chatListData()
+          .then(innerRes => {
+            // console.log('THIS', res)
+            if (innerRes.status === 200) {
+              store.dispatch(ChatListSlice.actions.setChatBox(innerRes.data))
+            }
           })
-        )
+          .catch(err => {
+            store.dispatch(
+              UISlice.actions.openSnack({
+                text: `Login failed:${err}`,
+                severity: 'error',
+              })
+            )
+          })
       }
     })
+    .then(() => {
+      console.log('chat list data service finished')
+      const prof = store
+        .getState()
+        .chatList.chatBoxes.find(ele => ele.profileId == profileId)
+      console.log('prof', prof, 'profile id', profileId)
+      setActiveChatService(
+        prof?.id as number,
+        prof?.type as string,
+        prof as chatBoxType
+      )
+    })
+
     .catch(err => {
       store.dispatch(
         UISlice.actions.openSnack({

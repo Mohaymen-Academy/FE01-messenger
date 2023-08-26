@@ -6,7 +6,10 @@ import camera from '@/assets/camera-add.svg'
 import { storeStateTypes } from '@/types/types'
 import ImageInput from '@/components/RightSection/ImageInput'
 import { UISlice } from '@/redux/slices/UISlice'
-import { newChannelService, newGroupService } from '@/services/communicationService'
+import {
+  newChannelService,
+  newGroupService,
+} from '@/services/communicationService'
 import ModalContainer from '../ModalContainer'
 import TextInput from '../TextInput'
 
@@ -87,11 +90,9 @@ export default function NewChat({ type }: NewChatProps) {
             accept="image/png , image/jpeg"
           />
         </label>
-        <ModalContainer
-          child={<ImageInput isActive={true} image={image} mode="initiate" />}
-          isOpen={openModal}
-          onClose={handleClose}
-        />
+        <ModalContainer isOpen={openModal} onClose={handleClose}>
+          <ImageInput isActive={true} image={image} mode="initiate" />
+        </ModalContainer>
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}

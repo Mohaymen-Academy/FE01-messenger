@@ -135,12 +135,12 @@ export default function ProfileSettingsPhoto() {
         </div>
       </label>
       <ModalContainer
-        child={<ImageInput isActive={imageCropperActive} image={image} />}
+        children={<ImageInput isActive={imageCropperActive} image={image} />}
         isOpen={openModal}
         onClose={handleClose}
       />
       <ModalContainer
-        child={<img src={profileImage} />}
+        children={<img src={profileImage} />}
         isOpen={openImageModal}
         onClose={closeProfileModal}
       />
