@@ -86,7 +86,7 @@ export default function NewChatCreator({}: NewChatCreatorProps) {
                 e.stopPropagation()
                 dispatch(UISlice.actions.createGroupHandler(false))
               }}
-              child={<NewChat type="group" />}
+              children={<NewChat type="group" />}
             />
           </div>
         </MenuItem>
@@ -104,7 +104,7 @@ export default function NewChatCreator({}: NewChatCreatorProps) {
               e.stopPropagation()
               dispatch(UISlice.actions.createChannelHandler(false))
             }}
-            child={<NewChat type="channel" />}
+            children={<NewChat type="channel" />}
           />
         </MenuItem>
       </Menu>

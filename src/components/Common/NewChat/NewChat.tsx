@@ -90,11 +90,9 @@ export default function NewChat({ type }: NewChatProps) {
             accept="image/png , image/jpeg"
           />
         </label>
-        <ModalContainer
-          child={<ImageInput isActive={true} image={image} mode="newChannel" />}
-          isOpen={openModal}
-          onClose={handleClose}
-        />
+        <ModalContainer isOpen={openModal} onClose={handleClose}>
+          <ImageInput isActive={true} image={image} mode="initiate" />
+        </ModalContainer>
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
