@@ -8,6 +8,7 @@ import { UISlice } from '@/redux/slices/UISlice'
 import { UserSlice } from '@/redux/slices/UserSlice'
 import camera from '@/assets/camera-add.svg'
 import ModalContainer from '@/components/Common/ModalContainer/ModalContainer'
+import { deleteProfilePhotoService } from '@/services/dataService'
 import ImageInput from '../ImageInput'
 
 export default function ProfileSettingsPhoto() {
@@ -23,6 +24,8 @@ export default function ProfileSettingsPhoto() {
   const [openImageModal, setOpenImageModal] = useState(false)
 
   const profileImage = useSelector((state: storeStateTypes) => state.user.image)
+  // console.log(profileImage)
+  const [fileName, setFileName] = useState('')
   const cropImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation()
     let files
@@ -35,6 +38,7 @@ export default function ProfileSettingsPhoto() {
     }
     if (files != null) {
       reader.readAsDataURL(files[0])
+      setFileName(files[0].name)
     }
     setImageCropperActive(true)
     dispatch(UISlice.actions.openCropperModal())
@@ -57,6 +61,7 @@ export default function ProfileSettingsPhoto() {
     e.preventDefault()
     e.stopPropagation()
     dispatch(UserSlice.actions.deleteImage())
+    deleteProfilePhotoService()
   }
 
   // show Image Modal
@@ -83,7 +88,8 @@ export default function ProfileSettingsPhoto() {
           <img
             style={{ display: profileImage ? '' : 'none' }}
             className="h-full w-full content-center rounded-full  bg-black  object-cover group-hover:blur-none "
-            src={profileImage}
+            // src={profileImage.data}
+            src={`data:image/png;base64,${profileImage.data}`}
           />
           <div className="absolute right-32 top-[86px] transition-all duration-500 ease-in-out">
             <img
@@ -134,16 +140,20 @@ export default function ProfileSettingsPhoto() {
           </div>
         </div>
       </label>
-      <ModalContainer
-        child={<ImageInput isActive={imageCropperActive} image={image} />}
-        isOpen={openModal}
-        onClose={handleClose}
-      />
-      <ModalContainer
-        child={<img src={profileImage} />}
-        isOpen={openImageModal}
-        onClose={closeProfileModal}
-      />
+      <ModalContainer isOpen={openModal} onClose={handleClose}>
+        <ImageInput
+          isActive={imageCropperActive}
+          image={image}
+          fileName={fileName}
+          mode="profileEditor"
+        />
+      </ModalContainer>
+      <ModalContainer isOpen={openImageModal} onClose={closeProfileModal}>
+        <img
+          className="h-96 w-96"
+          src={`data:image/png;base64,${profileImage.data}`}
+        />
+      </ModalContainer>
     </div>
   )
 }

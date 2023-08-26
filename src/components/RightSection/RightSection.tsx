@@ -19,7 +19,7 @@ export default function RightSection() {
   const shouldClose = useSelector(
     (state: storeStateTypes) => state.UI.midColumn
   )
-  
+
   const navMenuHandler = () => {
     setSettingsActivate(true)
     dispatch(UISlice.actions.chatColumnHandler(false))
@@ -32,8 +32,8 @@ export default function RightSection() {
   return (
     <div
       className={classNames(
-        'relative right-0 transition-all duration-500 top-0 h-full w-96 overflow-hidden bg-primary text-primary max-sm:absolute max-sm:z-30 max max-sm:max-w-[400px]',
-        shouldClose ? 'max-sm:-right-full' : ''
+        'relative right-0 transition-all duration-500 top-0 h-full w-96 overflow-hidden bg-primary text-primary max-md:absolute max-md:z-30 max-md:max-w-[400px] max-sm:w-full',
+        shouldClose ? 'max-md:-right-full' : ''
       )}
     >
       <ChatsColumn onClick={navMenuHandler} isActive={chatColumnActive} />
@@ -41,7 +41,6 @@ export default function RightSection() {
         onClick={closeSettingsHandler}
         isActive={settingsActivate}
       />
-
       <EditSettingsColumn isActive={profileSettingsActive} />
     </div>
   )

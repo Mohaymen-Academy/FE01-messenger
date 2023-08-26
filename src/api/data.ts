@@ -23,7 +23,7 @@ export const initiateProfile = (data: {
   firstName: string
   lastName: string
   bio: string
-  picture: null
+  photoId: number
 }): AxiosPromise =>
   axiosInstance.post(`${apiUrl}/profile`, {
     ...data,
@@ -41,6 +41,7 @@ export const myProfile = (): AxiosPromise<{
   firstName: string
   lastName: string
   bio: string
+  photo: string
 }> => axiosInstance.get(`${apiUrl}/profile/me`)
 
 export const getProfile = (
@@ -56,3 +57,20 @@ export const uploadFile = (data: { file: FormData }) =>
   axiosInstance.post(`${apiUrl}/file`, data.file, {
     headers: { 'Content-Type': 'multipart/form-data' },
   })
+
+export const editFile = (data: { photoId: number }) =>
+  axiosInstance.put(`${apiUrl}/profile/photo/${data.photoId}`)
+
+export const deletePhoto = () => axiosInstance.delete(`${apiUrl}/profile/photo`)
+
+export const getFile = (data: { photoId: number }) =>
+  axiosInstance.get(`${apiUrl}/file/${data.photoId}`)
+
+export const getChannelChat = (data: { chatId: number }) =>
+  axiosInstance.get(`${apiUrl}/chat/${data.chatId}`)
+
+export const getMembers = (data: { chatId: number }) =>
+  axiosInstance.get(`${apiUrl}/chat/${data.chatId}/subscribers`)
+
+export const getLeftProfile = (data: { profileId: number }) =>
+  axiosInstance.get(`${apiUrl}/profile/${data.profileId}`)

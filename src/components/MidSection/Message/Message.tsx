@@ -1,12 +1,15 @@
 import classNames from 'classnames'
 import { useTextWidth } from '@tag0/use-text-width'
 import { useLayoutEffect, useRef, useState } from 'react'
-import { Menu, MenuItem } from '@mui/material'
+import { Menu, MenuItem, Modal } from '@mui/material'
+import { useDispatch } from 'react-redux'
 import Checkmark from '@/components/Common/Checkmark/Checkmark'
 import { parseMessage, parseDate } from '@/utils/parser'
 import { pinMessageService } from '@/services/messageService'
 import DUMMY_IMAGE from '@/assets/login-wp.jpg'
 import { ImageType } from '@/redux/slices/MessageSlice/MessageSlice'
+import { UISlice } from '@/redux/slices/UISlice'
+import ForwardModal from '../ForwardModal/ForwardModal'
 
 interface MessageProps {
   self?: boolean
@@ -16,6 +19,8 @@ interface MessageProps {
   header?: { title: string; text: string; mode: 'forward' | 'reply' }
   image: ImageType
   pinMessage?: () => void
+  id: string
+  onReply?: () => void
 }
 
 export default function Message({
@@ -26,16 +31,22 @@ export default function Message({
   header,
   image,
   pinMessage,
+  id,
+  onReply,
 }: MessageProps) {
   const [width, setWidth] = useState(0)
-  const [menuOpen, isMenuOpen] = useState<{
+  const [menuOpen, setMenuOpen] = useState<{
     open: boolean
     x: number
     y: number
   }>({ open: false, x: 0, y: 0 })
+  const [forwardOpen, setForwardOpen] = useState<undefined | string>(undefined)
   const ref = useRef<HTMLDivElement>(null)
-  console.log('image: ', image)
+  const dispatch = useDispatch()
 
+  const closeForward = () => {
+    setForwardOpen(undefined)
+  }
   useLayoutEffect(() => {
     if (ref.current?.getBoundingClientRect().width)
       setWidth(
@@ -59,30 +70,46 @@ export default function Message({
         e.preventDefault()
         e.stopPropagation()
         // show pin and reply modal in mouse location with mui
-        isMenuOpen({ open: true, x: e.clientX, y: e.clientY })
+        setMenuOpen({ open: true, x: e.clientX, y: e.clientY })
       }}
     >
+      <Modal open={!!forwardOpen} onClose={closeForward}>
+        <div className="flex h-full w-full flex-col items-center justify-center py-20">
+          <span className="text-xl text-white">فوروارد پیام به:</span>
+          <ForwardModal messageId={id} onClose={closeForward} />
+        </div>
+      </Modal>
       <Menu
         open={menuOpen.open}
-        onClose={() => isMenuOpen(s => ({ ...s, open: false }))}
+        onClose={() => setMenuOpen(s => ({ ...s, open: false }))}
         anchorReference="anchorPosition"
         anchorPosition={{ top: menuOpen.y, left: menuOpen.x }}
         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
       >
-        <MenuItem onClick={() => isMenuOpen(s => ({ ...s, open: false }))}>
+        <MenuItem
+          onClick={() => {
+            if (onReply) onReply()
+            setMenuOpen(s => ({ ...s, open: false }))
+          }}
+        >
           Reply
         </MenuItem>
         {pinMessage && (
           <MenuItem
             onClick={() => {
               pinMessage()
-              isMenuOpen(s => ({ ...s, open: false }))
+              setMenuOpen(s => ({ ...s, open: false }))
             }}
           >
             Pin
           </MenuItem>
         )}
-        <MenuItem onClick={() => isMenuOpen(s => ({ ...s, open: false }))}>
+        <MenuItem
+          onClick={() => {
+            setMenuOpen(s => ({ ...s, open: false }))
+            setForwardOpen(id)
+          }}
+        >
           Forward
         </MenuItem>
       </Menu>
@@ -107,13 +134,13 @@ export default function Message({
           <div className="ml-1 mt-2 border-l-2 border-replyBorder pl-2 pr-1 text-sm">
             <span
               dir="auto"
-              className="relative line-clamp-1 rounded-l-md font-bold"
+              className="relative line-clamp-1 rounded-l-md text-left font-bold"
             >
-              {header.mode === 'forward' ? 'Forwarded from: ' : ''}
+              {header.mode === 'forward' ? 'فوروارد شده از: ' : ''}
               {header.title}
             </span>
             <span dir="auto" className="relative line-clamp-2 rounded-l-md">
-              {header.text}
+              {parseMessage(header.text)}
             </span>
           </div>
         )}

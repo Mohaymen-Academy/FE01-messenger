@@ -10,6 +10,7 @@ export interface chatBoxType {
   type: string
   lastMessageTime: string
   lastMessageText: string
+  profileId: number | null
 }
 
 export interface ChatListSliceType {
@@ -137,6 +138,7 @@ export const ChatListSlice = createSlice({
             data: string
             sentAt: string
           }
+          profileId: number
         }[]
       }
     ) => {
@@ -150,6 +152,7 @@ export const ChatListSlice = createSlice({
         type: item.chatType,
         lastMessageTime: item.lastMessage?.sentAt ?? '',
         lastMessageText: item.lastMessage?.data ?? '',
+        profileId: item.profileId,
       }))
     },
   },

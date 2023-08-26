@@ -15,11 +15,11 @@ export default function SearchList() {
 
   const searchBoxOnClick = useCallback(
     (id: number, type: string, profile: searchBoxType) => {
-      console.log('open chat box')
+      // console.log('open chat box')
       dispatch(UISlice.actions.openMidColumn())
       startChatService(id.toString())
       // dispatch(ActiveChatSlice.actions.setActiveUser({ id, type, profile }))
-      console.log('chatbox id:', id)
+      // console.log('chatbox id:', id)
       // createChatService(id.toString())
       // dispatch(ChatListSlice.actions.setActive({ id }))
       // dispatch(SearchSlice.actions.setActive({ id }))

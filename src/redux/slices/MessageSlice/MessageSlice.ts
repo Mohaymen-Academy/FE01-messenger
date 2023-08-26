@@ -72,7 +72,7 @@ export const MessageSlice = createSlice({
       } else {
         state.chats[index].messages.push({
           id: '1',
-          fullName: '1',
+          fullName: '',
           type: 'text',
           text: message,
           self: true,

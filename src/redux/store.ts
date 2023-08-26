@@ -6,6 +6,7 @@ import { ActiveChatSlice } from './slices/ActiveChatSlice'
 import { UISlice } from './slices/UISlice'
 import { MessageSlice } from './slices/MessageSlice'
 import { SearchSlice } from './slices/SearchSlice'
+import { LeftSectionSlice } from './slices/LeftSectionSlice'
 
 export default configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export default configureStore({
     UI: UISlice.reducer,
     message: MessageSlice.reducer,
     search: SearchSlice.reducer,
+    LeftSection: LeftSectionSlice.reducer,
   },
   // middleware: getDefaultMiddleware =>
   //   getDefaultMiddleware().concat(loginMiddleware),

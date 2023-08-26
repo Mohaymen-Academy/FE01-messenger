@@ -2,6 +2,13 @@ import { AxiosError } from 'axios'
 import {
   chatListData,
   createChat,
+  deletePhoto,
+  editFile,
+  getChannelChat,
+  getChat,
+  getFile,
+  getLeftProfile,
+  getMembers,
   initiateProfile,
   myProfile,
   uploadFile,
@@ -13,12 +20,15 @@ import store from '@/redux/store'
 import { MessageSlice } from '@/redux/slices/MessageSlice'
 import { ActiveChatSlice } from '@/redux/slices/ActiveChatSlice'
 import { ChatListSlice } from '@/redux/slices/ChatListSlice'
+import LeftSection from '@/components/LeftSection/LeftSection'
+import { LeftSectionSlice } from '@/redux/slices/LeftSectionSlice'
 import { getMessages, sendMessage } from '@/api/message'
+import setActiveChatService from './activeService'
 
 export function ChatListDataService() {
   chatListData()
     .then(res => {
-      console.log('THIS', res)
+      // console.log('THIS', res)
       if (res.status === 200) {
         store.dispatch(ChatListSlice.actions.setChatBox(res.data))
       }
@@ -34,7 +44,7 @@ export function ChatListDataService() {
 }
 export function getMessagesService(chatId: string, type: string) {
   // console.log('type', type)
-  if (type === 'PV') {
+  if (type === 'PV' || type === 'SELF') {
     // store.dispatch(ActiveChatSlice.actions.setActiveChat({ id: chatId }))
     // get chat messages
     return setInterval(() => {
@@ -42,17 +52,17 @@ export function getMessagesService(chatId: string, type: string) {
         .then(res => {
           // console.log(res)
           if (res.status == 200) {
+            // store.dispatch(
+            //   ActiveChatSlice.actions.setActiveChat({
+            //     id: parseInt(chatId, 10),
+            //     type: 'PV',
+            //   })
+            // )
             store.dispatch(
               MessageSlice.actions.setData({
                 id: chatId,
                 messages: res.data.messages.reverse(),
                 pin: res.data.pinned,
-              })
-            )
-            store.dispatch(
-              ActiveChatSlice.actions.setActiveChat({
-                id: parseInt(chatId, 10),
-                type: 'PV',
               })
             )
           } else {
@@ -84,17 +94,39 @@ export function sendFileService(file: string, chatId: string, type: string) {
 
 export function createChatService(profileId: string) {
   createChat({ profileId })
-    .then(res => {
+    .then(async res => {
       if (res.status == 200) {
-        console.log(res)
-        store.dispatch(
-          ActiveChatSlice.actions.setActiveChat({
-            id: res.data.chatId,
-            type: 'PV',
+        console.log('cheat created', res)
+        await chatListData()
+          .then(innerRes => {
+            // console.log('THIS', res)
+            if (innerRes.status === 200) {
+              store.dispatch(ChatListSlice.actions.setChatBox(innerRes.data))
+            }
           })
-        )
+          .catch(err => {
+            store.dispatch(
+              UISlice.actions.openSnack({
+                text: `Login failed:${err}`,
+                severity: 'error',
+              })
+            )
+          })
       }
     })
+    .then(() => {
+      console.log('chat list data service finished')
+      const prof = store
+        .getState()
+        .chatList.chatBoxes.find(ele => ele.profileId == profileId)
+      console.log('prof', prof, 'profile id', profileId)
+      setActiveChatService(
+        prof?.id as number,
+        prof?.type as string,
+        prof as chatBoxType
+      )
+    })
+
     .catch(err => {
       store.dispatch(
         UISlice.actions.openSnack({
@@ -109,9 +141,9 @@ export function initiateProfileService(
   firstName: string,
   lastName: string,
   bio: string,
-  picture: null
+  photoId: number
 ) {
-  initiateProfile({ username, firstName, lastName, bio, picture })
+  initiateProfile({ username, firstName, lastName, bio, photoId })
     .then(res => {
       if (res.status === 200) {
         store.dispatch(
@@ -167,6 +199,7 @@ export function myProfileService() {
         store.dispatch(UserSlice.actions.setFirstName(res.data.firstName))
         store.dispatch(UserSlice.actions.setLastName(res.data.lastName))
         store.dispatch(UserSlice.actions.setBio(res.data.bio))
+        // store.dispatch(UserSlice.actions.setImage(res.data.photo))
       } else {
         store.dispatch(
           UISlice.actions.openSnack({
@@ -182,18 +215,79 @@ export function myProfileService() {
         console.log('inside if')
         store.dispatch(UserSlice.actions.deleteToken())
       }
-      store.dispatch(
-        UISlice.actions.openSnack({
-          text: `خطای پروفایل :${err.message}`,
-          severity: 'error',
-        })
-      )
     })
 }
 export function uploadProfilePhotoService(file: FormData) {
   uploadFile({ file })
     .then(res => {
-      console.log('*********************************************')
+      console.log(res.data.id)
+      localStorage.setItem('imageId', String(res.data.id))
+      store.dispatch(UserSlice.actions.setImageId(res.data.id))
+    })
+    .catch(err => {})
+}
+
+export function deleteProfilePhotoService() {
+  deletePhoto()
+    .then(res => {
+      console.log(1)
+    })
+    .catch(err => {})
+}
+export function uploadChannelPhotoService(file: FormData) {
+  uploadFile({ file })
+    .then(res => {
+      console.log(res.data.id)
+      store.dispatch(UISlice.actions.setChannelImageId(res.data.id))
+    })
+    .catch(err => {})
+}
+
+export function editProfilePhotoService(photoId: number) {
+  console.log(photoId)
+  editFile({ photoId })
+    .then(res => {
+      console.log(res.data)
+    })
+    .catch(err => {})
+}
+
+export function getProfilePhotoService(photoId: number) {
+  getFile({ photoId })
+    .then(res => {
+      console.log(res.data)
+      store.dispatch(UserSlice.actions.setImage(res.data))
+    })
+    .catch(err => {})
+}
+
+export function channelLeftSectionService(chatId: number) {
+  getChannelChat({ chatId })
+    .then(res => {
+      store.dispatch(
+        LeftSectionSlice.actions.setDescription(res.data.description)
+      )
+      store.dispatch(LeftSectionSlice.actions.setName(res.data.fullName))
+      store.dispatch(LeftSectionSlice.actions.setImage(res.data.photo))
+    })
+    .catch(err => {})
+}
+export function channelMemberService(chatId: number) {
+  getMembers({ chatId })
+    .then(res => {
+      console.log(res.data)
+      store.dispatch(LeftSectionSlice.actions.setMembers(res.data))
+    })
+    .catch(err => {})
+}
+
+export function getLeftProfileService(profileId: number) {
+  getLeftProfile({ profileId })
+    .then(res => {
+      store.dispatch(LeftSectionSlice.actions.setBio(res.data.bio))
+      store.dispatch(LeftSectionSlice.actions.setName(res.data.fullName))
+      store.dispatch(LeftSectionSlice.actions.setImage(res.data.photo))
+      store.dispatch(LeftSectionSlice.actions.setUserName(res.data.username))
     })
     .catch(err => {})
 }

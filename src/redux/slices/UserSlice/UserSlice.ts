@@ -5,7 +5,7 @@ export interface UserSliceType {
   lastName: string
   userName: string
   image: string
-  imageColor: string
+  imageId: number
   bio: string
   number: string
   theme: string
@@ -19,7 +19,7 @@ export const UserSlice = createSlice({
     lastName: '',
     userName: '',
     image: '',
-    imageColor: '',
+    imageId: 0,
     bio: '',
     number: '',
     theme: '',
@@ -54,8 +54,8 @@ export const UserSlice = createSlice({
       state.token = ''
       localStorage.setItem('token', '')
     },
-    setProfileId: (state: UserSliceType, action: { payload: string }) => {
-      state.profileId = action.payload
+    setImageId: (state: UserSliceType, action: { payload: number }) => {
+      state.imageId = action.payload
     },
   },
 })

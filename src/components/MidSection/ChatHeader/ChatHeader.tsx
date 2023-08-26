@@ -20,6 +20,7 @@ export default function ChatHeader() {
     (state: storeStateTypes) => state.UI.addMemberModal
   )
   const activeId = useSelector((state: storeStateTypes) => state.activeChat.id)
+  // console.log(`active id: ${activeId}`)
   const activeChat = useSelector((state: storeStateTypes) =>
     state.chatList.chatBoxes.find(compo => compo.id === activeId)
   )
@@ -28,6 +29,14 @@ export default function ChatHeader() {
     (state: storeStateTypes) =>
       state.message.chats.find(compo => compo.id === activeId.toString())?.pin
   )
+
+  const pinIdInChat = useSelector(
+    (state: storeStateTypes) =>
+      state.message.chats
+        .find(compo => compo.id === activeId.toString())
+        ?.messages.findIndex(message => message.id === pin?.id) ?? -1
+  )
+
   // const activeSearchChat = useSelector((state: storeStateTypes) =>
   //   state.search.chatBoxes.find(compo => compo.id === activeId)
   // )
@@ -38,7 +47,10 @@ export default function ChatHeader() {
   // } else {
   //   active = activeSearchChat
   // }
-
+  const img = useSelector(
+    (state: storeStateTypes) => state.activeChat.profile.image
+  )
+  const type = useSelector((state: storeStateTypes) => state.activeChat.type)
   const addMemberHandler = () => {
     dispatch(UISlice.actions.addMemberHandler(true))
   }
@@ -51,20 +63,30 @@ export default function ChatHeader() {
       />
       <div onClick={openInfoColumn} className="flex w-0 grow justify-between">
         <div className="mx-4 my-2 h-12 w-12 cursor-pointer rounded-full bg-blue-500 bg-cover bg-center bg-no-repeat">
-          <img className="rounded-full" src={mrHashemi} />
+          <img className="rounded-full" src={img} />
         </div>
         <div className="flex flex-1 cursor-pointer flex-col justify-center overflow-hidden">
           <div className="overflow-hidden whitespace-nowrap text-base font-medium leading-tight text-primary/100">
             {active?.name}
           </div>
           {/* remove overflow hidden */}
-          <div className="overflow-hidden whitespace-nowrap text-sm font-medium leading-tight text-gray-600">
-            {active?.online ? 'آنلاین' : 'آخرین بازدید به تازگی'}
-          </div>
+          {active?.name != 'saved message' && (
+            <div
+              style={{ display: type === 'PV' ? '' : 'none' }}
+              className="overflow-hidden whitespace-nowrap text-sm font-medium leading-tight text-gray-600"
+            >
+              {active?.online ? 'آنلاین' : 'آخرین بازدید به تازگی'}
+            </div>
+          )}
         </div>
       </div>
       {pin && (
-        <div className="relative my-auto ml-2 w-0 max-w-fit grow cursor-pointer border-l-2 border-replyBorder pl-2">
+        <div
+          className="relative my-auto ml-2 w-0 max-w-fit grow cursor-pointer border-l-2 border-replyBorder pl-2"
+          onClick={() =>
+            dispatch(UISlice.actions.setActiveChatRow(pinIdInChat))
+          }
+        >
           <div className="line-clamp-1 text-base text-primary">
             {parseMessage(pin.text)}
           </div>
@@ -92,7 +114,7 @@ export default function ChatHeader() {
               onClose={() => {
                 dispatch(UISlice.actions.addMemberHandler(false))
               }}
-              child={<AddMember />}
+              children={<AddMember />}
             />
             <BsThreeDotsVertical
               className={classNames(

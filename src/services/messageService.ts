@@ -1,4 +1,10 @@
-import { getMessages, pinMessage, sendMessage } from '@/api/message'
+import {
+  forwardMessage,
+  getMessages,
+  pinMessage,
+  sendMessage,
+  sendReply,
+} from '@/api/message'
 import { ActiveChatSlice } from '@/redux/slices/ActiveChatSlice'
 import { MessageSlice } from '@/redux/slices/MessageSlice'
 import { UISlice } from '@/redux/slices/UISlice'
@@ -13,7 +19,11 @@ export function getMessagesService(chatId: string, type: string) {
       getMessages({ chatId })
         .then(res => {
           // console.log(res)
-          if (res.status == 200) {
+          if (
+            res.status == 200 &&
+            store.getState().activeChat.id == parseInt(chatId, 10)
+          ) {
+            console.log(chatId)
             store.dispatch(
               MessageSlice.actions.setData({
                 id: chatId,
@@ -46,6 +56,27 @@ export function getMessagesService(chatId: string, type: string) {
     }, 150)
   }
   return 0
+}
+
+export function sendReplyMessageService(
+  message: string,
+  messageId: string,
+  type: string
+) {
+  sendReply({ message, messageId, type })
+    .then(res => {
+      if (res.status == 200) {
+        // store.dispatch(MessageSlice.actions.sendMessage({ message, messageId }))
+      }
+    })
+    .catch(err => {
+      store.dispatch(
+        UISlice.actions.openSnack({
+          text: `sending message failed:${err}`,
+          severity: 'error',
+        })
+      )
+    })
 }
 
 export function sendMessageService(
@@ -91,4 +122,27 @@ export function pinMessageService(messageId: string, chatId: string) {
         })
       )
     })
+}
+
+export function forwardMessageService(messageId: string, chatId: string) {
+  forwardMessage({ messageId, chatId })
+    .then(res => {
+      if (res.status == 200) {
+        store.dispatch(
+          UISlice.actions.openSnack({
+            text: 'پیام مورد نظر فوروارد شد',
+            severity: 'success',
+          })
+        )
+      }
+    })
+    .catch(() => {
+      store.dispatch(
+        UISlice.actions.openSnack({
+          text: `مشکلی در ارسال پیام پیش آمد`,
+          severity: 'error',
+        })
+      )
+    })
+  console.log(messageId, chatId)
 }

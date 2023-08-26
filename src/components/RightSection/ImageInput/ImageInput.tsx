@@ -1,17 +1,22 @@
 import { useRef } from 'react'
 import 'cropperjs/dist/cropper.css'
 import { Cropper, ReactCropperElement } from 'react-cropper'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { UserSlice } from '@/redux/slices/UserSlice'
 import { UISlice } from '@/redux/slices/UISlice'
-import { uploadProfilePhotoService } from '@/services/dataService'
-import { uploadFile } from '@/api/data'
+import {
+  editProfilePhotoService,
+  uploadChannelPhotoService,
+  uploadProfilePhotoService,
+} from '@/services/dataService'
+import { uploadProfilePhoto, uploadFile } from '@/api/data'
+import { storeStateTypes } from '@/types/types'
 
 interface ImageInputProps {
   isActive: boolean
   image: string
-  mode?: 'initiate' | 'editor'
-  fileName: string
+  mode?: 'initiate' | 'profileEditor' | 'newChannel'
+  fileName?: string
 }
 
 export default function ImageInput({
@@ -21,28 +26,40 @@ export default function ImageInput({
   fileName,
 }: ImageInputProps) {
   const cropperRef = useRef<ReactCropperElement>(null)
-
+  const photoId = localStorage.getItem('imageId')
   const dispatch = useDispatch()
 
   const confirmCropData = () => {
     if (typeof cropperRef.current?.cropper !== 'undefined') {
-      const dataurl = cropperRef.current?.cropper.getCroppedCanvas().toDataURL()
-      const arr = dataurl.split(',')
-      const bstr = atob(arr[arr.length - 1])
-      let n = bstr.length
-      const u8arr = new Uint8Array(n)
-      while (n > 0) {
-        u8arr[n] = bstr.charCodeAt(n)
-        n -= 1
-      }
-      const file = new File([u8arr], fileName)
-      const fd = new FormData()
-      fd.append('file', file)
-      uploadProfilePhotoService(fd)
+      cropperRef.current?.cropper.getCroppedCanvas().toBlob(blob => {
+        const fd = new FormData()
+        fd.append('file', blob)
+        if (mode === 'initiate') {
+          uploadProfilePhotoService(fd)
+          dispatch(UISlice.actions.initialProfileImageCropperHandler(false))
+        } else if (mode === 'profileEditor') {
+          uploadProfilePhotoService(fd)
+          const editId = localStorage.getItem('imageId')
+          console.log(editId)
+          editProfilePhotoService(Number(editId))
+        } else if (mode === 'newChannel') {
+          dispatch(UISlice.actions.initialProfileImageCropperHandler(false))
+          uploadChannelPhotoService(fd)
+        }
+      })
+      // const arr = dataurl.split(',')
+      // const bstr = atob(arr[arr.length - 1])
+      // let n = bstr.length
+      // const u8arr = new Uint8Array(n)
+      // while (n > 0) {
+      //   u8arr[n] = bstr.charCodeAt(n)
+      //   n -= 1
+      // }
+      // const file = new File([dataurl], fileName)
+      // console.log(`cropped file: ${file.arrayBuffer()}`)
+      // const fd = new FormData()
+      // fd.append('file', file)
 
-      if (mode === 'initiate') {
-        dispatch(UISlice.actions.initialProfileImageCropperHandler(false))
-      }
       dispatch(UISlice.actions.closeCropperModal())
     }
   }
