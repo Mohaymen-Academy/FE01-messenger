@@ -74,7 +74,7 @@ export default function ChatBox({
           <img
             style={{ display: img ? 'flex' : 'none' }}
             className="h-12 w-12 rounded-full"
-            src={img}
+            src={`data:image/png;base64,${img}`}
           />
           <div
             style={{

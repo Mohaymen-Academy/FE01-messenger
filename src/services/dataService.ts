@@ -232,7 +232,7 @@ export function editProfilePhotoService(photoId: number) {
 export function getProfilePhotoService(photoId: number) {
   getFile({ photoId })
     .then(res => {
-      console.log(res.data)
+      // console.log(res.data)
       store.dispatch(UserSlice.actions.setImage(res.data))
     })
     .catch(err => {})
@@ -245,6 +245,7 @@ export function channelLeftSectionService(chatId: number) {
         LeftSectionSlice.actions.setDescription(res.data.description)
       )
       store.dispatch(LeftSectionSlice.actions.setName(res.data.fullName))
+      console.log(res.data.photo)
       store.dispatch(LeftSectionSlice.actions.setImage(res.data.photo))
     })
     .catch(err => {})
