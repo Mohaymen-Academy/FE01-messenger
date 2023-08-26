@@ -28,6 +28,8 @@ import { activeChatSelectors } from '@/redux/slices/ActiveChatSlice'
 import { sendFileService } from '@/services/dataService'
 import { sendMessageService } from '@/services/messageService'
 import serialize from './utils'
+import axiosInstance from '@/api/axiosInstance'
+import { apiUrl } from '@/utils/constants'
 
 const theme = {
   editor: 'w-full h-full',
@@ -38,6 +40,7 @@ export default function MessageBox() {
   // TODO use SLATE
   const [pickerOpen, setPickerOpen] = useState(false)
   const [toolboxOpen, setToolboxOpen] = useState(false)
+  const [fileId, setFileId] = useState<string | null>(null)
   const dispatch = useDispatch()
   const activeChat = useSelector(activeChatSelectors.ActiveChat)
 
@@ -71,7 +74,8 @@ export default function MessageBox() {
       sendMessageService(
         serialize(editor) as string,
         activeChat.id?.toString(),
-        activeChat.type
+        activeChat.type,
+        fileId
       )
       while (editor.children.length > 0) {
         Transforms.removeNodes(editor, {})
@@ -139,6 +143,16 @@ export default function MessageBox() {
     setPickerOpen(!pickerOpen)
   }, [pickerOpen])
 
+  const uploadFile = async (
+    file: File,
+    callbackFn: (id: string | null) => void
+  ) => {
+    const fd = new FormData()
+    fd.append('file', file)
+    const response = await axiosInstance.post(`${apiUrl}/file`, fd)
+    callbackFn(response.data.id ?? null)
+  }
+
   // const addEmoji = useCallback((emoji: { native: string }) => {
   //   setText(text => ({ ...text, message: text.message + emoji.native }))
   // }, [])
@@ -195,14 +209,20 @@ export default function MessageBox() {
             className="no-scrollbar relative h-full max-h-28 w-0 grow overflow-y-scroll rounded-lg p-1 text-base text-gray-900 placeholder:text-gray-700 focus:outline-none"
           />
           <div
-            className="relative z-10 my-2 flex items-center self-end"
+            className="relative z-10 my-2 flex items-center self-end h-8"
             onClick={() => sendFileService()}
           >
-            <IconButton
-              icon={
-                <BsPaperclip className="h-6 w-6 text-inherit hover:text-blue-500" />
-              }
-            />
+            <label className='h-full flex'>
+              {fileId && <p>{`فایل آپلود شد (${fileId})`}</p>}
+              <BsPaperclip className="h-6 w-6 text-inherit hover:text-blue-500" />
+              <input
+                type="file"
+                onChange={async e => {
+                  await uploadFile(e.target.files[0], setFileId)
+                }}
+                className="hidden"
+              />
+            </label>
           </div>
           <div
             className="relative z-10 m-2 flex items-center self-end"

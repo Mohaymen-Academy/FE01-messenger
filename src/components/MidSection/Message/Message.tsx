@@ -5,7 +5,7 @@ import { Menu, MenuItem } from '@mui/material'
 import Checkmark from '@/components/Common/Checkmark/Checkmark'
 import { parseMessage, parseDate } from '@/utils/parser'
 import { pinMessageService } from '@/services/messageService'
-import DUMMY_IMAGE from "@/assets/login-wp.jpg";
+import DUMMY_IMAGE from '@/assets/login-wp.jpg'
 import { ImageType } from '@/redux/slices/MessageSlice/MessageSlice'
 
 interface MessageProps {
@@ -34,7 +34,7 @@ export default function Message({
     y: number
   }>({ open: false, x: 0, y: 0 })
   const ref = useRef<HTMLDivElement>(null)
-  console.log("image: ", image);
+  console.log('image: ', image)
 
   useLayoutEffect(() => {
     if (ref.current?.getBoundingClientRect().width)
@@ -95,8 +95,14 @@ export default function Message({
           oneLiner ? 'w-fit' : 'w-full'
         )}
       >
-        {image && <img src={`data:image/jpeg;base64,${image}`} alt='image here!' className='object-contain'/>}
-        
+        {image && (
+          <img
+            src={`data:image/jpeg;base64,${image}`}
+            alt="image here!"
+            className="object-contain"
+          />
+        )}
+
         {header && (
           <div className="ml-1 mt-2 border-l-2 border-replyBorder pl-2 pr-1 text-sm">
             <span
