@@ -73,6 +73,7 @@ export default function Conversation() {
                         style={style}
                       >
                         <Message
+                          image={messages[index].file}
                           id={messages[index].id}
                           message={messages[index].text}
                           mode="sent"

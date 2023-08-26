@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux'
 import Checkmark from '@/components/Common/Checkmark/Checkmark'
 import { parseMessage, parseDate } from '@/utils/parser'
 import { pinMessageService } from '@/services/messageService'
+import DUMMY_IMAGE from '@/assets/login-wp.jpg'
+import { ImageType } from '@/redux/slices/MessageSlice/MessageSlice'
 import { UISlice } from '@/redux/slices/UISlice'
 import ForwardModal from '../ForwardModal/ForwardModal'
 
@@ -14,7 +16,8 @@ interface MessageProps {
   message: string
   mode: 'loading' | 'sent' | 'seen'
   time: string
-  header?: { title: string; text?: string; mode: 'forward' | 'reply' }
+  header?: { title: string; text: string; mode: 'forward' | 'reply' }
+  image: ImageType
   pinMessage?: () => void
   id: string
   onReply?: () => void
@@ -26,6 +29,7 @@ export default function Message({
   mode,
   time,
   header,
+  image,
   pinMessage,
   id,
   onReply,
@@ -118,6 +122,14 @@ export default function Message({
           oneLiner ? 'w-fit' : 'w-full'
         )}
       >
+        {image && (
+          <img
+            src={`data:image/jpeg;base64,${image}`}
+            alt="image here!"
+            className="object-contain"
+          />
+        )}
+
         {header && (
           <div className="ml-1 mt-2 border-l-2 border-replyBorder pl-2 pr-1 text-sm">
             <span

@@ -82,10 +82,11 @@ export function sendReplyMessageService(
 export function sendMessageService(
   message: string,
   chatId: string,
-  type: string
+  type: string,
+  fileId: string | null
 ) {
   store.dispatch(MessageSlice.actions.sendMessage({ message, chatId }))
-  sendMessage({ message, chatId, type })
+  sendMessage({ message, chatId, type, fileId })
     .then(res => {
       if (res.status == 200) {
         // store.dispatch(MessageSlice.actions.sendMessage({ message, chatId }))

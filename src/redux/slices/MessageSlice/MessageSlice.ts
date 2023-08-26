@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+export type ImageType = string | null | undefined
+
 interface baseMessageType {
   id: string
   fullName: string
@@ -7,14 +9,15 @@ interface baseMessageType {
   text: string
   createdAt: string
   self?: boolean
+  file: ImageType
 }
-interface textMessageType extends baseMessageType {
-  text: string
-}
-interface imageMessageType extends baseMessageType {
-  image: string
-}
-export type messageType = textMessageType | imageMessageType
+// interface textMessageType extends baseMessageType {
+//   text: string
+// }
+// interface imageMessageType extends baseMessageType {
+//   image: string
+// }
+export type messageType = baseMessageType
 
 export interface MessageSliceType {
   chats: {
