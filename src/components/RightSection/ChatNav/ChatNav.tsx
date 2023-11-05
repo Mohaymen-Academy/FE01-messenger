@@ -1,25 +1,39 @@
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import TabButton from '@/components/Common/TabButton'
-import { useState } from 'react'
+import { UISlice } from '@/redux/slices/UISlice'
 
-interface ChatNavProps {}
+export default function ChatNav() {
+  const [activate, setActivation] = useState<boolean[]>(new Array(5))
+  const dispatch = useDispatch()
+  const changeIndexActivate = (index: number) => {
+    const s = new Array(5).fill(false)
+    s[index] = true
+    setActivation(s)
+  }
+  useEffect(() => {
+    changeIndexActivate(0)
+    dispatch(UISlice.actions.chatListHandler({ chatList: 'all' }))
+  }, [])
 
-export default function ChatNav({}: ChatNavProps) {
-  const [activate, setActivation] = useState([false, false, false, false])
   const changeActive = (e: React.MouseEvent<HTMLDivElement>) => {
-    // @ts-ignore
-    const title = e.target.innerText
+    const title = e.currentTarget.innerText
     if (title === 'تمامی گفتگوها') {
-      setActivation([true, false, false, false])
+      changeIndexActivate(0)
+      dispatch(UISlice.actions.chatListHandler({ chatList: 'all' }))
     } else if (title === 'شخصی') {
-      setActivation([false, true, false, false])
+      changeIndexActivate(1)
+      dispatch(UISlice.actions.chatListHandler({ chatList: 'PV' }))
     } else if (title === 'گروه ها') {
-      setActivation([false, false, true, false])
+      changeIndexActivate(2)
+      dispatch(UISlice.actions.chatListHandler({ chatList: 'GROUP' }))
     } else if (title === 'کانال ها') {
-      setActivation([false, false, false, true])
+      changeIndexActivate(3)
+      dispatch(UISlice.actions.chatListHandler({ chatList: 'CHANNEL' }))
     }
   }
   return (
-    <nav className="flex flex-row items-center px-2 border-b">
+    <nav className="flex flex-row items-center  bg-primary/100 px-2">
       <TabButton
         onClick={changeActive}
         text="تمامی گفتگوها"

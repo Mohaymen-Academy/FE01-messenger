@@ -1,5 +1,84 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Vazir';
+  src: url('./assets/font/Vazirmatn-FD-Light.ttf');
+}
+@layer utilities {
+  .ltr {
+    direction: ltr;
+  }
+  .rtl {
+    direction: rtl;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+@layer components {
+  .tail-left:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 100%;
+    transform: translate(-100%, -100%);
+    width: 0;
+    height: 0;
+    border: 1em solid transparent;
+    border-right-color: inherit;
+    border-left: 0;
+    border-bottom: 0;
+  }
+
+  .tail-right:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 100%;
+    transform: translate(100%, -100%);
+    width: 0;
+    height: 0;
+    border: 1em solid transparent;
+    border-left-color: inherit;
+    border-right: 0;
+    border-bottom: 0;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
 :root {
+  --background-color-50: 170 170 170;
+  --background-color-100: 255 255 255;
+  --background-color-200: 96 167 240;
+  --background-color-300: 22 160 133;
+  --chatbox-hover: #efefef;
+  --background-color-500: 0 0 0;
+  --background-color-600: 239 18 41;
+  --reply-border-color: #e57373;
+  --reply-bg-color: #ffcdd2;
+  --self-chat-bg-color: #ffebee;
+  --background-color-700: 229 231 235;
+}
+.dark {
+  --background-color-50: 170 170 170;
+  --background-color-100: 15 15 15;
+  --background-color-200: 118 106 200;
+  --background-color-300: 123 113 198;
+  --chatbox-hover: #2f3259;
+  --background-color-500: 255 255 255;
+  --background-color-600: 118 105 200;
+  --reply-border-color: #e57373;
+  --reply-bg-color: #ffcdd2;
+  --self-chat-bg-color: #b71c1c;
+  --background-color-700: 156 163 175;
 }

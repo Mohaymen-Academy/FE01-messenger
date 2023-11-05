@@ -1,19 +1,47 @@
-import IconButton from '../Common/IconButton/IconButton'
-import ChatList from './ChatList'
-import ChatNav from './ChatNav'
-import RightHeader from './RightHeader/RightHeader'
+import { useState } from 'react'
+import classNames from 'classnames'
+import { useDispatch, useSelector } from 'react-redux'
+import { storeStateTypes } from '@/types/types'
+import { UISlice } from '@/redux/slices/UISlice'
+import ChatsColumn from './ChatsColumn/ChatsColumn'
+import SettingsColumn from './SettingsColumn/SettingsColumn'
+import EditSettingsColumn from './ProfileSettingsColumn'
 
-interface RightSectionProps {}
+export default function RightSection() {
+  const dispatch = useDispatch()
+  const [settingsActivate, setSettingsActivate] = useState(false)
+  const chatColumnActive = useSelector(
+    (state: storeStateTypes) => state.UI.chatColumnActive
+  )
+  const profileSettingsActive = useSelector(
+    (state: storeStateTypes) => state.UI.profileSettings
+  )
+  const shouldClose = useSelector(
+    (state: storeStateTypes) => state.UI.midColumn
+  )
 
-export default function RightSection({}: RightSectionProps) {
+  const navMenuHandler = () => {
+    setSettingsActivate(true)
+    dispatch(UISlice.actions.chatColumnHandler(false))
+  }
+  const closeSettingsHandler = () => {
+    setSettingsActivate(false)
+    dispatch(UISlice.actions.chatColumnHandler(true))
+  }
+
   return (
-    <div>
-      <div className="relative h-full w-96 border-r border-gray-300 bg-white shadow-xl transition-all duration-500 ease-in-out md:block">
-        <RightHeader />
-        <ChatNav />
-        <ChatList />
-        <IconButton />
-      </div>
+    <div
+      className={classNames(
+        'relative right-0 transition-all duration-500 top-0 h-full w-96 overflow-hidden bg-primary text-primary max-md:absolute max-md:z-30 max-md:max-w-[400px] max-sm:w-full',
+        shouldClose ? 'max-md:-right-full' : ''
+      )}
+    >
+      <ChatsColumn onClick={navMenuHandler} isActive={chatColumnActive} />
+      <SettingsColumn
+        onClick={closeSettingsHandler}
+        isActive={settingsActivate}
+      />
+      <EditSettingsColumn isActive={profileSettingsActive} />
     </div>
   )
 }

@@ -1,5 +1,1 @@
-interface BubbleProps {
-}
-
-export default function Bubble({}: BubbleProps) {
-}
+export default function Bubble() {}

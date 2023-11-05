@@ -1,140 +1,82 @@
+import { useDispatch, useSelector } from 'react-redux'
+import { useCallback, useEffect } from 'react'
+import { storeStateTypes } from '@/types/types'
+import { ChatListDataService } from '@/services/dataService'
+import { UISlice } from '@/redux/slices/UISlice'
+import { chatBoxType } from '@/redux/slices/ChatListSlice/ChatListSlice'
+import {
+  setActiveChatService,
+  stopUpdatingChat,
+} from '@/services/activeService'
 import ChatBox from '../ChatBox'
-import img from '@/assets/download.jpeg'
 
-interface ChatListProps {}
+export default function ChatList() {
+  const dispatch = useDispatch()
+  const chatBoxes = useSelector(
+    (state: storeStateTypes) => state.chatList.chatBoxes
+  )
+  console.log(chatBoxes)
+  const activeChat = useSelector(
+    (state: storeStateTypes) => state.activeChat.id
+  )
+  const chatListCat = useSelector(
+    (state: storeStateTypes) => state.UI.chatListCat
+  )
+  useEffect(() => {
+    ChatListDataService()
+    const interval = setInterval(() => ChatListDataService(), 1000)
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
+  const chatBoxOnClick = useCallback(
+    (id: number, type: string, profile: chatBoxType) => {
+      console.log('open chat box')
+      stopUpdatingChat()
+      setActiveChatService(id, type, profile)
+      dispatch(UISlice.actions.openMidColumn())
+      // dispatch(ActiveChatSlice.actions.setActiveUser({ id, type, profile }))
+      // console.log('chatbox id:', id)
+      // createChatService(id.toString())
+      // dispatch(ChatListSlice.actions.setActive({ id }))
+      // dispatch(SearchSlice.actions.setActive({ id }))
+    },
+    [dispatch]
+  )
 
-export default function ChatList({}: ChatListProps) {
+  // ChatListDataService()
+  // console.log(typeof chatBoxes)
+
+  // console.log(chatBoxes)
   return (
-    <div className="relative mt-2 mb-4 overflow-x-hidden h-[calc(100%_-_40px)] overflow-y-auto scrolling-touch lg:max-h-sm scrollbar-w-2 scrollbar-track-gray-lighter scrollbar-thumb-rounded scrollbar-thumb-gray">
-      <div className="flex flex-col w-full h-screen px-2">
-        <ChatBox
-          unReadMessage={3}
-          seen={true}
-          senderName="Mr.Hashemi"
-          lastMessageTime="12:00"
-          online={true}
-          textMessage="سلام"
-          seenEnable={true}
-          img={img}
-        />
-        <ChatBox
-          unReadMessage={1}
-          seen={false}
-          textMessage="سلام آقای هاشمی؟"
-          senderName="Mr.Hashemi"
-          lastMessageTime="12:00"
-          online={false}
-          seenEnable={true}
-        />
-        <ChatBox
-          unReadMessage={1}
-          seen={false}
-          textMessage="سلام آقای هاشمی؟"
-          senderName="Atefe"
-          lastMessageTime="12:00"
-          online={false}
-          seenEnable={true}
-        />
-        <ChatBox
-          unReadMessage={1}
-          seen={false}
-          textMessage="سلام آقای هاشمی؟"
-          senderName="Mohammad"
-          lastMessageTime="12:00"
-          online={true}
-          seenEnable={false}
-        />
-        <ChatBox
-          unReadMessage={1}
-          seen={false}
-          textMessage="سلام آقای هاشمی؟"
-          senderName="احمد"
-          lastMessageTime="12:00"
-          online={false}
-          seenEnable={false}
-          img={img}
-        />
-        <ChatBox
-          unReadMessage={1}
-          seen={false}
-          textMessage="سلام آقای هاشمی؟"
-          senderName="کارگر افغانی مظلوم"
-          lastMessageTime="12:00"
-          online={false}
-          seenEnable={false}
-        />
-        <ChatBox
-          unReadMessage={1}
-          seen={true}
-          textMessage="سلام آقای هاشمی؟"
-          senderName="Mr.Hashemi"
-          lastMessageTime="12:00"
-          online={false}
-          seenEnable={true}
-        />
-        <ChatBox
-          unReadMessage={1}
-          seen={false}
-          textMessage="سلام آقای هاشمی؟"
-          senderName="Mr.Hashemi"
-          lastMessageTime="12:00"
-          online={false}
-          seenEnable={false}
-        />
-        <ChatBox
-          unReadMessage={1}
-          seen={false}
-          textMessage="سلام آقای هاشمی؟"
-          senderName="Mr.Hashemi"
-          lastMessageTime="12:00"
-          online={false}
-          seenEnable={false}
-        />
-        <ChatBox
-          unReadMessage={1}
-          seen={false}
-          textMessage="سلام آقای هاشمی؟"
-          senderName="Mr.Hashemi"
-          lastMessageTime="12:00"
-          online={false}
-          seenEnable={true}
-        />
-        <ChatBox
-          unReadMessage={1}
-          seen={false}
-          textMessage="سلام آقای هاشمی؟"
-          senderName="Mr.Hashemi"
-          lastMessageTime="12:00"
-          online={false}
-          seenEnable={false}
-        />
-        <ChatBox
-          unReadMessage={1}
-          seen={false}
-          textMessage="سلام آقای هاشمی؟"
-          senderName="Mr.Hashemi"
-          lastMessageTime="12:00"
-          online={false}
-          seenEnable={false}
-        />
-        <ChatBox
-          unReadMessage={1}
-          seen={false}
-          textMessage="سلام آقای هاشمی؟"
-          senderName="Mr.Hashemi"
-          lastMessageTime="12:00"
-          online={true}
-          seenEnable={false}
-        />
-        <ChatBox
-          unReadMessage={1}
-          seen={false}
-          textMessage="سلام آقای هاشمی؟"
-          senderName="Mr.Hashemi"
-          lastMessageTime="12:00"
-          online={false}
-          seenEnable={false}
-        />
+    <div className="no-scrollbar relative mt-2 h-0 grow cursor-pointer overflow-x-hidden">
+      <div className="flex h-screen w-full flex-col px-2">
+        {chatBoxes.map(item => {
+          // console.log(chatListCat, item.type)
+          if (
+            item.type == chatListCat?.chatList ||
+            chatListCat?.chatList == 'all'
+          )
+            return (
+              <>
+                <ChatBox
+                  key={item.id}
+                  unReadMessage={item.unReadMessage}
+                  seen={item.seen}
+                  senderName={item.name}
+                  lastMessageTime={item.lastMessageTime}
+                  online={item.online}
+                  lastMessageText={item.lastMessageText}
+                  img={item.image}
+                  id={item.id}
+                  active={item.id == activeChat}
+                  onClick={() => chatBoxOnClick(item.id, item.type, item)}
+                  type={item.type}
+                />
+              </>
+            )
+          return ''
+        })}
       </div>
     </div>
   )
